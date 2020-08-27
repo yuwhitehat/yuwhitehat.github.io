@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>git pull的使用 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="git pull的使用原因在实际应用中，有时候会出现本地仓库和线上仓库不一致的情况，因为在企业级的开发中往往是多人协同，这个时候就需要 git pull 抓取远程仓库的内容。比如本地内容是[1,2],线上的内容是[2,3],那么pull之后本地内容就会变成[1,2,3]。如下，  代码冲突举例子：  比如仓库原有的内容为[2],小明和小红分别负责开发1和3， git clone 之后本地都是[2]">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git pull的使用">
+<meta property="og:url" content="http://yoursite.com/2020/08/27/git%20pull%E7%9A%84%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="git pull的使用原因在实际应用中，有时候会出现本地仓库和线上仓库不一致的情况，因为在企业级的开发中往往是多人协同，这个时候就需要 git pull 抓取远程仓库的内容。比如本地内容是[1,2],线上的内容是[2,3],那么pull之后本地内容就会变成[1,2,3]。如下，  代码冲突举例子：  比如仓库原有的内容为[2],小明和小红分别负责开发1和3， git clone 之后本地都是[2]">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/png/564594/1598534311811-b4d7e88b-862f-44f4-b075-6f49d352b898.png#align=left&display=inline&height=514&margin=%5Bobject%20Object%5D&originHeight=514&originWidth=1000&size=0&status=done&style=none&width=1000">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/png/564594/1598535244255-71d79e1d-3acc-426b-9289-f44206a04579.png#align=left&display=inline&height=398&margin=%5Bobject%20Object%5D&originHeight=398&originWidth=774&size=0&status=done&style=none&width=774">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/png/564594/1598536326263-6d0735c1-1602-44c5-b731-3aa4bc4688d3.png#align=left&display=inline&height=340&margin=%5Bobject%20Object%5D&name=%E5%9B%BE3%281%29.png&originHeight=398&originWidth=774&size=30310&status=done&style=none&width=662">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/png/564594/1598536376167-912ee246-435c-46a6-b000-fc8cc850aa1c.png#align=left&display=inline&height=324&margin=%5Bobject%20Object%5D&name=%E5%9B%BE4%281%29.png&originHeight=398&originWidth=774&size=31221&status=done&style=none&width=631">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/png/564594/1598536391119-be9dbed2-4788-422f-892e-03ca1cb8afd9.png#align=left&display=inline&height=323&margin=%5Bobject%20Object%5D&name=%E5%9B%BE5%281%29.png&originHeight=398&originWidth=774&size=31171&status=done&style=none&width=628">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/png/564594/1598536401160-db0d567d-51ee-4412-bcd2-644098f55940.png#align=left&display=inline&height=313&margin=%5Bobject%20Object%5D&name=%E5%9B%BE6%281%29.png&originHeight=398&originWidth=774&size=29684&status=done&style=none&width=609">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/png/564594/1598537001658-1b4f8422-50a2-4ea4-b28d-0b524659982a.png#align=left&display=inline&height=874&margin=%5Bobject%20Object%5D&name=%E5%9B%BE7.png&originHeight=874&originWidth=1758&size=145935&status=done&style=none&width=1758">
+<meta property="article:published_time" content="2020-08-27T14:14:46.000Z">
+<meta property="article:modified_time" content="2020-08-27T14:16:23.991Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.nlark.com/yuque/0/2020/png/564594/1598534311811-b4d7e88b-862f-44f4-b075-6f49d352b898.png#align=left&display=inline&height=514&margin=%5Bobject%20Object%5D&originHeight=514&originWidth=1000&size=0&status=done&style=none&width=1000">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-git pull的使用" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/08/27/git%20pull%E7%9A%84%E4%BD%BF%E7%94%A8/" class="article-date">
+  <time datetime="2020-08-27T14:14:46.000Z" itemprop="datePublished">2020-08-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      git pull的使用
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="git-pull的使用原因"><a href="#git-pull的使用原因" class="headerlink" title="git pull的使用原因"></a>git pull的使用原因</h2><p>在实际应用中，有时候会出现本地仓库和线上仓库不一致的情况，因为在企业级的开发中往往是多人协同，这个时候就需要 <code>git pull</code> 抓取远程仓库的内容。比如本地内容是[1,2],线上的内容是[2,3],那么pull之后本地内容就会变成[1,2,3]。如下，<br /><img src="https://cdn.nlark.com/yuque/0/2020/png/564594/1598534311811-b4d7e88b-862f-44f4-b075-6f49d352b898.png#align=left&display=inline&height=514&margin=%5Bobject%20Object%5D&originHeight=514&originWidth=1000&size=0&status=done&style=none&width=1000" alt=""><br /></p>
+<p><a name="5o0Qc"></a></p>
+<h2 id="代码冲突"><a href="#代码冲突" class="headerlink" title="代码冲突"></a>代码冲突</h2><p>举例子：</p>
+<blockquote>
+<p>比如仓库原有的内容为[2],小明和小红分别负责开发1和3， <code>git clone</code> 之后本地都是[2],小红先完成了开发，提交到GitHub，远程仓库的内容就变成了[2,3]。当小明完成开发后，就必须先pull一下，否则无法提交代码。</p>
+</blockquote>
+<p>小明 <code>git pull</code> 之后本地内容就变成了[1,2,3],再 <code>git push</code> 远程仓库就变成了[1,2,3]。<br /><strong>所以在协同开发时，每一次提交之前， **`</strong>git pull**` 是一个好习惯，避免冲突。<br><a name="wAfN7"></a></p>
+<h2 id="什么情况下可以提交"><a href="#什么情况下可以提交" class="headerlink" title="什么情况下可以提交"></a>什么情况下可以提交</h2><p><strong>远程仓库的代码和本地仓库的代码彼此有一方是对方的真子集。</strong></p>
+<ol>
+<li><strong>本地仓库是远程仓库的真子集，可以提交</strong></li>
+</ol>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/564594/1598535244255-71d79e1d-3acc-426b-9289-f44206a04579.png#align=left&display=inline&height=398&margin=%5Bobject%20Object%5D&originHeight=398&originWidth=774&size=0&status=done&style=none&width=774" alt=""></p>
+<ol start="2">
+<li><strong>远程仓库是本地仓库的真子集，可以提交</strong></li>
+</ol>
+<p><strong><img src="https://cdn.nlark.com/yuque/0/2020/png/564594/1598536326263-6d0735c1-1602-44c5-b731-3aa4bc4688d3.png#align=left&display=inline&height=340&margin=%5Bobject%20Object%5D&name=%E5%9B%BE3%281%29.png&originHeight=398&originWidth=774&size=30310&status=done&style=none&width=662" alt="图3(1).png"></strong><br /></p>
+<ol start="3">
+<li><strong>修改后也可以提交到远程仓库</strong></li>
+</ol>
+<p><strong><br /></strong><img src="https://cdn.nlark.com/yuque/0/2020/png/564594/1598536376167-912ee246-435c-46a6-b000-fc8cc850aa1c.png#align=left&display=inline&height=324&margin=%5Bobject%20Object%5D&name=%E5%9B%BE4%281%29.png&originHeight=398&originWidth=774&size=31221&status=done&style=none&width=631" alt="图4(1).png">**<br /></p>
+<ol start="4">
+<li><strong>如果是例子中的情况，彼此不为对方的真子集，就不可以提交</strong></li>
+</ol>
+<p><br /><img src="https://cdn.nlark.com/yuque/0/2020/png/564594/1598536391119-be9dbed2-4788-422f-892e-03ca1cb8afd9.png#align=left&display=inline&height=323&margin=%5Bobject%20Object%5D&name=%E5%9B%BE5%281%29.png&originHeight=398&originWidth=774&size=31171&status=done&style=none&width=628" alt="图5(1).png"></p>
+<ol start="5">
+<li><strong>如果本地内容和远程内容一致，也不可成功提交，会有提示无需提交</strong></li>
+</ol>
+<p><br /><img src="https://cdn.nlark.com/yuque/0/2020/png/564594/1598536401160-db0d567d-51ee-4412-bcd2-644098f55940.png#align=left&display=inline&height=313&margin=%5Bobject%20Object%5D&name=%E5%9B%BE6%281%29.png&originHeight=398&originWidth=774&size=29684&status=done&style=none&width=609" alt="图6(1).png"><br><a name="Vjo2W"></a></p>
+<h2 id="手动解决冲突的情况"><a href="#手动解决冲突的情况" class="headerlink" title="手动解决冲突的情况"></a>手动解决冲突的情况</h2><p><br />场景：</p>
+<ol>
+<li>仓库原有的内容为[A,2],小A负责修改文件 <code>A</code> ,小A负责开发文件 <code>3</code> ， <code>git clone</code> 后本地都是[A,2]</li>
+<li>小B本来只负责修改 <code>3</code> ,但是出于种种原因，他修改了 <code>A</code> 的代码，变成了文件 <code>a</code> ,然后完成开发提交到了远程仓库，远程仓库的内容变成了[a,2,3]。</li>
+<li>当小A完成开发后，本地内容为[A1,2]，和远程仓库的内容出现了冲突，就无法提交， <code>git pull</code> 之后需要手动找到并把小B修改的部分还原才可以提交。</li>
+</ol>
+<p><br /><img src="https://cdn.nlark.com/yuque/0/2020/png/564594/1598537001658-1b4f8422-50a2-4ea4-b28d-0b524659982a.png#align=left&display=inline&height=874&margin=%5Bobject%20Object%5D&name=%E5%9B%BE7.png&originHeight=874&originWidth=1758&size=145935&status=done&style=none&width=1758" alt="图7.png"><br /></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/08/27/git%20pull%E7%9A%84%E4%BD%BF%E7%94%A8/" data-id="ckecw78bs0000twv83y1d0j63" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/07/06/mood/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">mood</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/08/27/git%20pull%E7%9A%84%E4%BD%BF%E7%94%A8/">git pull的使用</a>
+          </li>
+        
+          <li>
+            <a href="/2020/07/06/mood/">mood</a>
+          </li>
+        
+          <li>
+            <a href="/2020/07/06/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2020/07/06/hello/">hello</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

@@ -64,6 +64,77 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Java注解" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/09/22/Java%E6%B3%A8%E8%A7%A3/" class="article-date">
+  <time datetime="2020-09-22T09:26:05.000Z" itemprop="datePublished">2020-09-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/09/22/Java%E6%B3%A8%E8%A7%A3/">Java注解</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="https://cdn.nlark.com/yuque/0/2020/png/564594/1599724639999-1c51fdd5-2f79-4b7b-b036-dbc30ed4dfa8.png" alt=""><a name="3RaZe"></a></p>
+<h2 id="注解的工作机制"><a href="#注解的工作机制" class="headerlink" title="注解的工作机制"></a>注解的工作机制</h2><p>举个例子：<br /><code>@Service</code> 注解- 声明引用该注解的Java类为 <code>Service</code> 对象<br />如下可以看出，注解其实也是一个类，而且类里可以继续引用其他的注解类，所以一个 <code>Annotation</code> 是由多个 <code>Annotation</code> 组合而成的。<br /><img src="https://cdn.nlark.com/yuque/0/2020/svg/564594/1599716707569-8d1fa00a-fb1a-4328-90a2-4f6b1fdf1c14.svg#align=left&display=inline&height=647&margin=%5Bobject%20Object%5D&originHeight=741&originWidth=747&size=0&status=done&style=none&width=652" alt=""><br><a name="1l4NL"></a></p>
+<h3 id="1-Target"><a href="#1-Target" class="headerlink" title="1. Target"></a>1. Target</h3><p><code>java.lang.annotation.Target</code> 也是一个注解，只有一个数组属性，<strong>作用是设定注解的作用范围，</strong>比如作用于方法或者类等，可以同时设定多个范围。<br />具体可以作用的类型配置在 <code>java.lang.annotation.ElementType</code> 枚举类中，常用如下：</p>
+<ol>
+<li><p><code>ElementType.TYPE</code>  - 可以作用于类 、 接口类、 枚举类上</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MessageServiceImpl</span> <span class="keyword">implements</span> <span class="title">MessageService</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getMessage</span><span class="params">()</span> </span>&#123;</span><br><span class="line">         <span class="keyword">return</span> <span class="string">"Hello World!"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>ElementType.FIELD</code>  - 可以作用于类的属性上</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MessageServiceImpl</span> <span class="keyword">implements</span> <span class="title">MessageService</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> WorkspaceService workspaceService;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>ElementType.METHOD</code>  - 可以作用于类的方法上</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MessageServiceImpl</span> <span class="keyword">implements</span> <span class="title">MessageService</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@ResponseBody</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getMessage</span><span class="params">()</span> </span>&#123;</span><br><span class="line">         <span class="keyword">return</span> <span class="string">"Hello World!"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>ElementTyep.PARAMETER</code>  - 可以作用于类的参数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MessageServiceImpl</span> <span class="keyword">implements</span> <span class="title">MessageService</span></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getMessage</span><span class="params">(@RequestParam(<span class="string">"msg"</span>)</span>String msg) </span>&#123;</span><br><span class="line">         <span class="keyword">return</span> <span class="string">"Hello "</span>+msg;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果想同时作用于类和方法上就可以：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(&#123;ElementType.TYPE,ElementType.METHOD&#125;)</span><br></pre></td></tr></table></figure>
+<p><a name="3lcT5"></a></p>
+<h3 id="2-Retention"><a href="#2-Retention" class="headerlink" title="2. Retention"></a>2. Retention</h3><p><code>java.lang.annotation.Retention</code> 自身也是一个注解， <strong>用于声明注解的生命周期</strong> ，就是在Java编译、运行的哪个阶段有效，它的值定义在 <code>java.lang.annotation.RetentionPolicy.RUNTIME</code> 枚举类中，有三个值可以选择：</p>
+</li>
+<li><p><code>SOURCE</code>  - 纯注释作用</p>
+</li>
+<li><p><code>CLASS</code>  - 编译阶段有效</p>
+</li>
+<li><p><code>RUNTIME</code> - 运行阶段有效</p>
+</li>
+</ol>
+<p>如果是自定义的 <code>Annotation</code> ,一般都会设置成 <code>RUNTIME</code><br><a name="QjoC3"></a></p>
+<h3 id="3-Documented"><a href="#3-Documented" class="headerlink" title="3. Documented"></a>3. Documented</h3><p><code>java.lang.annotation.Documented</code> 自身也是一个注解， <strong>作用是将注解中的元素包含到 Java Doc文档中</strong> ，一般情况下，都会添加这个注解的。<br><a name="PQVW3"></a></p>
+<h3 id="4-interface"><a href="#4-interface" class="headerlink" title="4. @interface"></a>4. <code>@interface</code></h3><p>作用是声明当前的Java类型是 Annotation ,固定语法<br><a name="QBMlA"></a></p>
+<h3 id="5-Annotation-属性"><a href="#5-Annotation-属性" class="headerlink" title="5. Annotation 属性"></a>5. Annotation 属性</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">String <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br></pre></td></tr></table></figure>
+<p>Annotation 的属性约定了属性的类型(String、boolean、 int 、long)和属性名称（默认名称是 <code>value</code> ）, <code>default</code>  是默认值。属性是可以有多个的。<br /><code>@Service</code> 也可以写成</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span>(value=<span class="string">"Demo"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>或</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span>(<span class="string">"Demo"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Demo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/09/22/Java%E6%B3%A8%E8%A7%A3/" data-id="ckfdr8ylf0000vsv8b1sygqfv" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Maven基础" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/09/22/Maven%E5%9F%BA%E7%A1%80/" class="article-date">
@@ -137,7 +208,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/09/22/Maven%E5%9F%BA%E7%A1%80/" data-id="ckfdr0mw600000cv89m6u0fua" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/09/22/Maven%E5%9F%BA%E7%A1%80/" data-id="ckfdr8ylm0002vsv859nl94jj" class="article-share-link">Share</a>
       
       
     </footer>
@@ -208,7 +279,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/09/13/%E4%B8%89%E8%A7%92%E5%BD%A2%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C/" data-id="ckfdr0mwp00050cv8gf037hrb" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/09/13/%E4%B8%89%E8%A7%92%E5%BD%A2%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C/" data-id="ckfdr8ylr0007vsv8hdj51p0k" class="article-share-link">Share</a>
       
       
     </footer>
@@ -269,7 +340,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/09/09/%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E5%BA%8F%E5%88%97/" data-id="ckfdr0mwz00070cv80bm0911i" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/09/09/%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E5%BA%8F%E5%88%97/" data-id="ckfdr8ym80008vsv8hu2lhoa8" class="article-share-link">Share</a>
       
       
     </footer>
@@ -350,7 +421,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/09/02/LeetCode%E4%B9%8B%E4%BA%8C%E4%B8%89%E5%9B%9B%E6%95%B0%E4%B9%8B%E5%92%8C/" data-id="ckfdr0mwm00030cv8589i3mev" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/09/02/LeetCode%E4%B9%8B%E4%BA%8C%E4%B8%89%E5%9B%9B%E6%95%B0%E4%B9%8B%E5%92%8C/" data-id="ckfdr8ylk0001vsv8cmfi3bv8" class="article-share-link">Share</a>
       
       
     </footer>
@@ -421,7 +492,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/08/27/git%20pull%E7%9A%84%E4%BD%BF%E7%94%A8/" data-id="ckfdr0mwq00060cv8auqk2haq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/08/27/git%20pull%E7%9A%84%E4%BD%BF%E7%94%A8/" data-id="ckfdr8yln0003vsv82kfrbwh3" class="article-share-link">Share</a>
       
       
     </footer>
@@ -572,7 +643,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/07/06/mood/" data-id="ckfdr0mwo00040cv8h8mdb2t7" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/07/06/mood/" data-id="ckfdr8ylr0006vsv88vro53s5" class="article-share-link">Share</a>
       
       
     </footer>
@@ -621,7 +692,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/07/06/hello-world/" data-id="ckfdr0mwg00010cv8buxt1z40" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/07/06/hello-world/" data-id="ckfdr8ylo0004vsv81kyo6mw3" class="article-share-link">Share</a>
       
       
     </footer>
@@ -657,7 +728,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/07/06/hello/" data-id="ckfdr0mwk00020cv8go41hhey" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/07/06/hello/" data-id="ckfdr8ylq0005vsv8c88aepu6" class="article-share-link">Share</a>
       
       
     </footer>
@@ -698,6 +769,10 @@
       <ul>
         
           <li>
+            <a href="/2020/09/22/Java%E6%B3%A8%E8%A7%A3/">Java注解</a>
+          </li>
+        
+          <li>
             <a href="/2020/09/22/Maven%E5%9F%BA%E7%A1%80/">Maven基础</a>
           </li>
         
@@ -711,10 +786,6 @@
         
           <li>
             <a href="/2020/09/02/LeetCode%E4%B9%8B%E4%BA%8C%E4%B8%89%E5%9B%9B%E6%95%B0%E4%B9%8B%E5%92%8C/">LeetCode之二三四数之和</a>
-          </li>
-        
-          <li>
-            <a href="/2020/08/27/git%20pull%E7%9A%84%E4%BD%BF%E7%94%A8/">git pull的使用</a>
           </li>
         
       </ul>

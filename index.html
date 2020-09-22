@@ -64,6 +64,89 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-Maven基础" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/09/22/Maven%E5%9F%BA%E7%A1%80/" class="article-date">
+  <time datetime="2020-09-22T09:19:24.000Z" itemprop="datePublished">2020-09-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/09/22/Maven%E5%9F%BA%E7%A1%80/">Maven基础</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="https://cdn.nlark.com/yuque/0/2020/png/564594/1599275676319-7d776caf-5af4-4fd9-8c2f-ee0a5f94047c.png" alt=""><a name="yallj"></a></p>
+<h2 id="Apache-Maven是做什么的"><a href="#Apache-Maven是做什么的" class="headerlink" title="Apache Maven是做什么的"></a>Apache Maven是做什么的</h2><p><a name="rQrc7"></a></p>
+<h3 id="maven系统架构"><a href="#maven系统架构" class="headerlink" title="maven系统架构"></a>maven系统架构</h3><p><br /><img src="https://cdn.nlark.com/yuque/0/2020/png/564594/1599227375527-6f128db8-8231-4b04-82c0-9714c48835c6.png#align=left&display=inline&height=475&margin=%5Bobject%20Object%5D&name=image.png&originHeight=699&originWidth=772&size=53198&status=done&style=none&width=525" alt="image.png"><br /><code>Maven</code> 使用惯例优于配置的原则，要求在没有定制之前，所有的项目都有如下的结构：<br />一个 <code>Maven</code> 项目在默认情况下会产生JAR文件，JAR文件会放在 <code>${basedir}/target</code> 下面。<br /><img src="https://cdn.nlark.com/yuque/0/2020/png/564594/1599227759284-1f1e0ce7-e288-472d-b5db-41c07ac19187.png#align=left&display=inline&height=281&margin=%5Bobject%20Object%5D&name=image.png&originHeight=331&originWidth=736&size=44473&status=done&style=none&width=625" alt="image.png"><br><a name="Y8E8O"></a></p>
+<h2 id="Maven命令"><a href="#Maven命令" class="headerlink" title="Maven命令"></a>Maven命令</h2><p><code>mvn compile exec:java -Dexec.mainClass=${main}</code> <br />这个命令的意思是在 <code>compile</code> 执行完后，执行运行Java的命令，具体执行哪个类是由 <code>-Dexec.mainClass=${main}</code> 参数指定的， <code>${mian}</code> 是要换成具体的类的。<br><a name="GeEtY"></a></p>
+<h2 id="pom-xml"><a href="#pom-xml" class="headerlink" title="pom.xml"></a>pom.xml</h2><p><a name="qzsPm"></a></p>
+<h3 id="POM-Project-Object-Model"><a href="#POM-Project-Object-Model" class="headerlink" title="POM (Project Object Model)"></a>POM (Project Object Model)</h3><p><img src="https://cdn.nlark.com/yuque/0/2020/svg/564594/1599229263369-08bb6440-4bcf-44cc-aa46-5dfcdad47a89.svg#align=left&display=inline&height=941&margin=%5Bobject%20Object%5D&originHeight=941&originWidth=505&size=0&status=done&style=none&width=505" alt=""><br><a name="El0M4"></a></p>
+<h4 id="1-Maven坐标"><a href="#1-Maven坐标" class="headerlink" title="1. Maven坐标"></a>1. Maven坐标</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.youkeda.course<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>app<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">packaging</span>&gt;</span>jar<span class="tag">&lt;/<span class="name">packaging</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">version</span>&gt;</span>1.0-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>Maven</code> 坐标决定了这个 <code>maven</code> 工程部署后存在仓库的文件位置，所以这个坐标信息是必须指定的。</p>
+<ol>
+<li><code>groupId</code> 像一个文件夹一样，命名和包比较一致。每个公司都有自己的 <code>groupId</code> ，避免和其他公司重合，个人开发者也可以设置自己的 <code>groupId</code> .</li>
+</ol>
+<ol start="2">
+<li><code>artifactId</code> 有些像文件名一样，在一个 <code>groupId</code> 内，它应该是唯一的，从规范上来说，只能使用小写的英文字母、 <code>.</code> 、 <code>-</code> 、 <code>_</code> 。比如， <code>app 、member.share</code> 这些都OK。</li>
+</ol>
+<ol start="3">
+<li><code>packaging</code> 用来指定工程执行完要打包的文件格式，默认情况下， <code>packaging</code> 的值是 <code>jar</code> 。如果没有声明这个标签，就是 <code>jar</code> 。</li>
+</ol>
+<p><code>packaging</code> 的格式有： <code>jar</code> , <code>war</code> , <code>ear</code> , <code>pom</code><br /></p>
+<ol start="4">
+<li><code>version</code> 基本上遵守了软件工程中对版本号的约定。在 Maven 的世界里，会把一个工程分为两种状态，也是软件工程里最常用的规范。<blockquote>
+<p><strong>SNAPSHOT</strong> 表示当前工程还处于不稳定的阶段，随时可以修改，在开发的时候就会用这个。<br><strong>RELEASE</strong>  表示稳定版本，正式发布的时候就用这个。可以不用特意加，因为只要不是 <code>SNAPSHOT</code> 就是             <code>RELEASE</code> 。</p>
+</blockquote>
+</li>
+</ol>
+<p><strong>版本号的约定:</strong>一般是三位数字来表示版本号, <code>x.x.x</code> 这样的格式 .有时也可能是两位版本,因为有些时候不需要主版本号,总之只要团队约定好就可以.</p>
+<ul>
+<li>第一位表示主版本号 - 主版本号一般是团队约定的</li>
+<li>第二位代表的是新增功能</li>
+<li>第三位表示的是 bugfix 后的版本</li>
+</ul>
+<p>还有一个约定,就是执行 <code>mvn package/mvn install</code> 命令生成的 jar 文件名是 <code>[artifactId]-[version].jar</code> .<br><a name="CvzMN"></a></p>
+<h4 id="2-Maven-属性配置"><a href="#2-Maven-属性配置" class="headerlink" title="2. Maven 属性配置"></a>2. Maven 属性配置</h4><p>属性配置就是用来做参数设置的. <code>properties</code> 内的标签可以自定义.</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">properties</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">java.version</span>&gt;</span>1.8<span class="tag">&lt;/<span class="name">java.version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">maven.compiler.source</span>&gt;</span>$&#123;java.version&#125;<span class="tag">&lt;/<span class="name">maven.compiler.source</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">project.build.sourceEncoding</span>&gt;</span>UTF-8<span class="tag">&lt;/<span class="name">project.build.sourceEncoding</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">maven.compiler.target</span>&gt;</span>$&#123;java.version&#125;<span class="tag">&lt;/<span class="name">maven.compiler.target</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">properties</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>java.version</code> 代表设置一个参数,值为 <code>1.8</code> </li>
+<li><code>maven.compiler.source</code> 指定 Maven 编译时候源代码的 JDK 版本.</li>
+<li><code>project.build.sourceEncodin</code> 指定工程代码源文件的文件编码格式,一般都设置为 <code>UTF-8</code> </li>
+<li><code>maven.compiler.target</code> 这个参数作用是按照这个值来进行编译源代码,比如上面的例子中就是按照 JDK1.8进行编译.<br><a name="IX07e"></a><h4 id="3-依赖管理-dependencies"><a href="#3-依赖管理-dependencies" class="headerlink" title="3. 依赖管理 dependencies"></a>3. 依赖管理 dependencies</h4>用于指定当前工程依赖其他代码库.一旦我们在 pom.xml 声明了 dependencies 信息, 会先去本地用户目录下的 <code>.m2</code> 文件内查找对应的文件,如果没有找到就会触发从中央仓库下载行为.<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.alibaba<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>fastjson<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2.62<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+其实可以看出   <code>dependency</code> 标签的内容就是 <strong>Maven 坐标</strong> ,所以说只要有坐标就可以建立依赖.<blockquote>
+<p>一般把别人写的代码库称为三方库,自己写的叫二方库</p>
+</blockquote>
+</li>
+</ul>
+<p>间接依赖是 mvn 成功的核心要素,简单来说,如果工程A依赖了 <code>okhttp</code> 库,而工程B依赖了工程A,那么工程B 就会自动依赖 <code>okhttp</code> 库.<br><a name="KokjL"></a></p>
+<h4 id="4-插件体系-plugins"><a href="#4-插件体系-plugins" class="headerlink" title="4. 插件体系 plugins"></a>4. 插件体系 plugins</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.maven.plugins<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>maven-compiler-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.8.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>这里声明了一个插件用于执行 <code>maven compile</code> ,maven 的插件也是放在中央仓库的坐标,也就是一切都是 <code>jar</code> .</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/09/22/Maven%E5%9F%BA%E7%A1%80/" data-id="ckfdr0mw600000cv89m6u0fua" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-三角形最小路径和" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/09/13/%E4%B8%89%E8%A7%92%E5%BD%A2%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C/" class="article-date">
@@ -125,7 +208,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/09/13/%E4%B8%89%E8%A7%92%E5%BD%A2%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C/" data-id="ckf0vlcyx0005zov85rpoavgg" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/09/13/%E4%B8%89%E8%A7%92%E5%BD%A2%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C/" data-id="ckfdr0mwp00050cv8gf037hrb" class="article-share-link">Share</a>
       
       
     </footer>
@@ -186,7 +269,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/09/09/%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E5%BA%8F%E5%88%97/" data-id="ckf0vlcyy0006zov873bwcdsh" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/09/09/%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E5%BA%8F%E5%88%97/" data-id="ckfdr0mwz00070cv80bm0911i" class="article-share-link">Share</a>
       
       
     </footer>
@@ -267,7 +350,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/09/02/LeetCode%E4%B9%8B%E4%BA%8C%E4%B8%89%E5%9B%9B%E6%95%B0%E4%B9%8B%E5%92%8C/" data-id="ckf0vlcyt0002zov89ngx4x4t" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/09/02/LeetCode%E4%B9%8B%E4%BA%8C%E4%B8%89%E5%9B%9B%E6%95%B0%E4%B9%8B%E5%92%8C/" data-id="ckfdr0mwm00030cv8589i3mev" class="article-share-link">Share</a>
       
       
     </footer>
@@ -338,7 +421,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/08/27/git%20pull%E7%9A%84%E4%BD%BF%E7%94%A8/" data-id="ckf0vlcyr0001zov892xk9b89" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/08/27/git%20pull%E7%9A%84%E4%BD%BF%E7%94%A8/" data-id="ckfdr0mwq00060cv8auqk2haq" class="article-share-link">Share</a>
       
       
     </footer>
@@ -489,7 +572,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/07/06/mood/" data-id="ckf0vlcyw0004zov8ft2r3q6a" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/07/06/mood/" data-id="ckfdr0mwo00040cv8h8mdb2t7" class="article-share-link">Share</a>
       
       
     </footer>
@@ -538,7 +621,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/07/06/hello-world/" data-id="ckf0vlcym0000zov8a01nfm8r" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/07/06/hello-world/" data-id="ckfdr0mwg00010cv8buxt1z40" class="article-share-link">Share</a>
       
       
     </footer>
@@ -574,7 +657,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/07/06/hello/" data-id="ckf0vlcyu0003zov845vp85zl" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/07/06/hello/" data-id="ckfdr0mwk00020cv8go41hhey" class="article-share-link">Share</a>
       
       
     </footer>
@@ -615,6 +698,10 @@
       <ul>
         
           <li>
+            <a href="/2020/09/22/Maven%E5%9F%BA%E7%A1%80/">Maven基础</a>
+          </li>
+        
+          <li>
             <a href="/2020/09/13/%E4%B8%89%E8%A7%92%E5%BD%A2%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C/">三角形最小路径和</a>
           </li>
         
@@ -628,10 +715,6 @@
         
           <li>
             <a href="/2020/08/27/git%20pull%E7%9A%84%E4%BD%BF%E7%94%A8/">git pull的使用</a>
-          </li>
-        
-          <li>
-            <a href="/2020/07/06/mood/">mood</a>
           </li>
         
       </ul>

@@ -68,9 +68,9 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-常见设计模式" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-常用设计模式" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2020/09/28/%E5%B8%B8%E8%A7%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="article-date">
+    <a href="/2020/09/28/%E5%B8%B8%E7%94%A8%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="article-date">
   <time datetime="2020-09-28T12:02:47.000Z" itemprop="datePublished">2020-09-28</time>
 </a>
     
@@ -82,7 +82,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/28/%E5%B8%B8%E8%A7%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">常见设计模式</a>
+      <a class="article-title" href="/2020/09/28/%E5%B8%B8%E7%94%A8%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">常用设计模式</a>
     </h1>
   
 
@@ -90,10 +90,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="常用设计模式"><a href="#常用设计模式" class="headerlink" title="常用设计模式"></a>常用设计模式</h1><blockquote>
+        <blockquote>
 <p>最困难的时候，也就是离成功不远的时候。—拿破仑</p>
 </blockquote>
-<p><img src="https://cdn.nlark.com/yuque/0/2020/png/564594/1601214513621-50e37d7a-6a70-4124-a589-aa4b25097b02.png" alt=""><a name="pXYCM"></a></p>
 <h2 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h2><p>一个班级只能有一个班主任，所以就要保证一个班主任类只有一个实例，单例模式就是为了解决这种问题，<strong>保证一个类仅有一个实例</strong>。<br />核心办法就是把构造函数设置为私有 <code>private</code> 的。这意味着除了 <code>ClassMaster</code> 自己，其他任何类都不能实例化 <code>ClassMaster</code> 对象。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassMaster</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> String id;</span><br><span class="line">  <span class="comment">// 班主任名称</span></span><br><span class="line">  <span class="keyword">private</span> String name;</span><br><span class="line">  <span class="keyword">private</span> String gender;</span><br><span class="line">    </span><br><span class="line">  <span class="comment">//唯一实例 必须用static修饰符 ，否则会造成递归的严重的错误</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> ClassMaster instance = <span class="keyword">new</span> ClassMaster();</span><br><span class="line">    </span><br><span class="line">  <span class="comment">//将构造函数设置为私有的</span></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">ClassMaster</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>我们需要增加一个方法允许其他类访问这个单例的实例，因为类 <code>new</code> 出一个实例的目的就是要给其他类使用的。</p>
@@ -157,7 +156,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/09/28/%E5%B8%B8%E8%A7%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" data-id="ckfmhi14j0005ccv851a33bk5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/09/28/%E5%B8%B8%E7%94%A8%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" data-id="ckfmhle640009lgv84fwk5v19" class="article-share-link">Share</a>
       
       
     </footer>
@@ -228,7 +227,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/09/22/Java%E6%B3%A8%E8%A7%A3/" data-id="ckfmhi13q0000ccv88vn4bfoh" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/09/22/Java%E6%B3%A8%E8%A7%A3/" data-id="ckfmhle5s0001lgv8fyd53ezr" class="article-share-link">Share</a>
       
       
     </footer>
@@ -311,7 +310,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/09/22/Maven%E5%9F%BA%E7%A1%80/" data-id="ckfmhi14m0006ccv88t6h3grz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/09/22/Maven%E5%9F%BA%E7%A1%80/" data-id="ckfmhle5u0002lgv81zgqgnhu" class="article-share-link">Share</a>
       
       
     </footer>
@@ -382,7 +381,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/09/13/%E4%B8%89%E8%A7%92%E5%BD%A2%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C/" data-id="ckfmhi1690008ccv849sleujd" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/09/13/%E4%B8%89%E8%A7%92%E5%BD%A2%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C/" data-id="ckfmhle610006lgv8228c5qny" class="article-share-link">Share</a>
       
       
     </footer>
@@ -443,7 +442,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/09/09/%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E5%BA%8F%E5%88%97/" data-id="ckfmhi16c0009ccv85bgxapqa" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/09/09/%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E5%BA%8F%E5%88%97/" data-id="ckfmhle630008lgv8411mhavn" class="article-share-link">Share</a>
       
       
     </footer>
@@ -524,7 +523,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/09/02/LeetCode%E4%B9%8B%E4%BA%8C%E4%B8%89%E5%9B%9B%E6%95%B0%E4%B9%8B%E5%92%8C/" data-id="ckfmhi1410001ccv8dxj33ipm" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/09/02/LeetCode%E4%B9%8B%E4%BA%8C%E4%B8%89%E5%9B%9B%E6%95%B0%E4%B9%8B%E5%92%8C/" data-id="ckfmhle5l0000lgv8453u5sru" class="article-share-link">Share</a>
       
       
     </footer>
@@ -595,7 +594,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/08/27/git%20pull%E7%9A%84%E4%BD%BF%E7%94%A8/" data-id="ckfmhi14g0004ccv8dgo3c9j8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/08/27/git%20pull%E7%9A%84%E4%BD%BF%E7%94%A8/" data-id="ckfmhle5w0003lgv81pnfe3iw" class="article-share-link">Share</a>
       
       
     </footer>
@@ -746,7 +745,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/07/06/mood/" data-id="ckfmhi14d0003ccv879l91jic" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/07/06/mood/" data-id="ckfmhle620007lgv86rum4h1v" class="article-share-link">Share</a>
       
       
     </footer>
@@ -795,7 +794,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/07/06/hello-world/" data-id="ckfmhi15m0007ccv88xwpg8vh" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/07/06/hello-world/" data-id="ckfmhle5y0004lgv8hqfle7sp" class="article-share-link">Share</a>
       
       
     </footer>
@@ -831,7 +830,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/07/06/hello/" data-id="ckfmhi1480002ccv8f2j1gtp5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/07/06/hello/" data-id="ckfmhle600005lgv81iy36i5j" class="article-share-link">Share</a>
       
       
     </footer>
@@ -872,7 +871,7 @@
       <ul>
         
           <li>
-            <a href="/2020/09/28/%E5%B8%B8%E8%A7%81%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">常见设计模式</a>
+            <a href="/2020/09/28/%E5%B8%B8%E7%94%A8%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">常用设计模式</a>
           </li>
         
           <li>

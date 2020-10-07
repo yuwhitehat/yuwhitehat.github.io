@@ -90,7 +90,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="浏览器渲染过程"><a href="#浏览器渲染过程" class="headerlink" title="浏览器渲染过程"></a>浏览器渲染过程</h2><p>问：在浏览器中，从输入UR到页面展示，这中间发生了什么？<br />如下图，一个浏览器有三个进程，浏览器进程、网络进程以及渲染进程。</p>
+        <h2 id="浏览器渲染过程"><a href="#浏览器渲染过程" class="headerlink" title="浏览器渲染过程"></a>浏览器渲染过程</h2><p>问：在浏览器中，从输入URL到页面展示，这中间发生了什么？<br />如下图，一个浏览器有三个进程，浏览器进程、网络进程以及渲染进程。</p>
 <p><img src="https://cdn.nlark.com/yuque/0/2020/png/564594/1596854886412-90932145-fc74-43b2-b116-e33deb199665.png#align=left&display=inline&height=281&margin=%5Bobject%20Object%5D&name=image.png&originHeight=519&originWidth=1380&size=472637&status=done&style=none&width=746" alt="image.png"></p>
 <ol>
 <li>网络进程中，发起url请求后有可能会进行一个重定向，然后读取响应头信息（这个信息会告诉浏览器我是HTML还是其他的谁），读取响应体数据（就是网页源代码）。</li>
@@ -117,13 +117,10 @@
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//箭头函数就是回调函数</span></span><br><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">'click'</span>,()=&gt;&#123;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <p><a name="Oi4PR"></a></p>
 <h4 id="为什么会出现回调函数？"><a href="#为什么会出现回调函数？" class="headerlink" title="为什么会出现回调函数？"></a>为什么会出现回调函数？</h4></li>
-<li><p>理解同步和异步：</p>
-</li>
 </ol>
+<p>1.理解同步和异步：</p>
 <p>同步要等待其他事做完才会接着做下面的事，是按顺序执行（烧完水才能吃东西）<br />异步在做一件事的同时还可以做其他事（一边烧水，一边吃东西）</p>
-<ol start="2">
-<li>异步很方便，JS中通过使用回调函数来进行异步操作</li>
-</ol>
+<p>2.异步很方便，JS中通过使用回调函数来进行异步操作</p>
 <p>例子：进入优课达网站要进行： 登录=&gt;获取用户信息=&gt;获取我的课程=&gt;初始化</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">login</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="comment">//模拟一下登录需要1s</span></span><br><span class="line">  setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'登录成功'</span>);</span><br><span class="line">  &#125;,<span class="number">1000</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getUserInfo</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'获取用户信息成功'</span>);</span><br><span class="line">  &#125;,<span class="number">2000</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getMyCourse</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'获取课程信息成功'</span>);</span><br><span class="line">  &#125;,<span class="number">3000</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">init</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  login();</span><br><span class="line">  getUserInfo();</span><br><span class="line">  getMyCourse();</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'初始化成功'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">init();</span><br><span class="line"></span><br><span class="line">------------------</span><br><span class="line">输出结果：</span><br><span class="line">初始化成功</span><br><span class="line">登录成功</span><br><span class="line">获取用户信息成功</span><br><span class="line">获取课程信息成功</span><br></pre></td></tr></table></figure>
 <p>这里就出现了问题，虽然是异步执行的（登录需要1s，所以就先去执行初始化了），但是还没有登录，也没有获取到用户信息如何初始化呢？这时就需要回调函数了。</p>
@@ -138,7 +135,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/10/07/JavaScript%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/" data-id="ckfz5ttjs0000i4v84x2w53k1" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/10/07/JavaScript%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/" data-id="ckfz6ai3100019gv84nxzdqpp" class="article-share-link">Share</a>
       
       
     </footer>
@@ -236,7 +233,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/09/28/%E5%B8%B8%E7%94%A8%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" data-id="ckfz5ttku0007i4v85slzfwe4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/09/28/%E5%B8%B8%E7%94%A8%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" data-id="ckfz6ai3f00099gv8eddj6tai" class="article-share-link">Share</a>
       
       
     </footer>
@@ -307,7 +304,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/09/22/Java%E6%B3%A8%E8%A7%A3/" data-id="ckfz5ttk30001i4v825ox84od" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/09/22/Java%E6%B3%A8%E8%A7%A3/" data-id="ckfz6ai2t00009gv877rh6pma" class="article-share-link">Share</a>
       
       
     </footer>
@@ -390,7 +387,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/09/22/Maven%E5%9F%BA%E7%A1%80/" data-id="ckfz5ttkq0006i4v8gkc04aox" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/09/22/Maven%E5%9F%BA%E7%A1%80/" data-id="ckfz6ai3700039gv82kqsgz1a" class="article-share-link">Share</a>
       
       
     </footer>
@@ -461,7 +458,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/09/13/%E4%B8%89%E8%A7%92%E5%BD%A2%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C/" data-id="ckfz5ttl0000ai4v8by247van" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/09/13/%E4%B8%89%E8%A7%92%E5%BD%A2%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C/" data-id="ckfz6ai3e00089gv8e91798l6" class="article-share-link">Share</a>
       
       
     </footer>
@@ -522,7 +519,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/09/09/%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E5%BA%8F%E5%88%97/" data-id="ckfz5ttkz0009i4v85howbfxk" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/09/09/%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E5%BA%8F%E5%88%97/" data-id="ckfz6ai3f000a9gv8amh73i4r" class="article-share-link">Share</a>
       
       
     </footer>
@@ -603,7 +600,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/09/02/LeetCode%E4%B9%8B%E4%BA%8C%E4%B8%89%E5%9B%9B%E6%95%B0%E4%B9%8B%E5%92%8C/" data-id="ckfz5ttk50002i4v8fgtaauhn" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/09/02/LeetCode%E4%B9%8B%E4%BA%8C%E4%B8%89%E5%9B%9B%E6%95%B0%E4%B9%8B%E5%92%8C/" data-id="ckfz6ai3500029gv8hiet5gpj" class="article-share-link">Share</a>
       
       
     </footer>
@@ -674,7 +671,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/08/27/git%20pull%E7%9A%84%E4%BD%BF%E7%94%A8/" data-id="ckfz5ttkz0008i4v8an9f3gb8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/08/27/git%20pull%E7%9A%84%E4%BD%BF%E7%94%A8/" data-id="ckfz6ai3800049gv868yuf8ae" class="article-share-link">Share</a>
       
       
     </footer>
@@ -825,7 +822,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/07/06/mood/" data-id="ckfz5ttkc0005i4v8bth24oqe" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/07/06/mood/" data-id="ckfz6ai3d00079gv868y00bx1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -874,7 +871,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/07/06/hello-world/" data-id="ckfz5ttk80004i4v8fwyl5any" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/07/06/hello-world/" data-id="ckfz6ai3a00059gv8giuka916" class="article-share-link">Share</a>
       
       
     </footer>

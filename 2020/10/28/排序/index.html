@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>排序 | YU</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="冒泡排序冒泡排序是最基础，最经典的排序算法。联想一下可乐，最大的气泡总是会最快的上升到最上面。所以，冒泡的原理就是，对于一个数组， 每一次循环都让最大的元素冒泡到最后面 。核心规则：  从数组的第一个元素开始，比较相邻两个元素的大小； 如果前者比后者大，就交换位置； 如果后者比前者大，位置不改变； 依次后移，每次循环都让最大的元素排到最后面。  代码如下： 12345678910111213141">
+<meta property="og:type" content="article">
+<meta property="og:title" content="排序">
+<meta property="og:url" content="http://yoursite.com/2020/10/28/%E6%8E%92%E5%BA%8F/index.html">
+<meta property="og:site_name" content="YU">
+<meta property="og:description" content="冒泡排序冒泡排序是最基础，最经典的排序算法。联想一下可乐，最大的气泡总是会最快的上升到最上面。所以，冒泡的原理就是，对于一个数组， 每一次循环都让最大的元素冒泡到最后面 。核心规则：  从数组的第一个元素开始，比较相邻两个元素的大小； 如果前者比后者大，就交换位置； 如果后者比前者大，位置不改变； 依次后移，每次循环都让最大的元素排到最后面。  代码如下： 12345678910111213141">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/svg/564594/1602126542822-daaeccca-de38-495e-8b63-c0856b230289.svg#align=left&display=inline&height=438&margin=%5Bobject%20Object%5D&originHeight=438&originWidth=416&size=0&status=done&style=none&width=416">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/svg/564594/1602126596942-d8ad6e2d-c8d0-494b-92c4-a8871a55a130.svg#align=left&display=inline&height=558&margin=%5Bobject%20Object%5D&originHeight=558&originWidth=441&size=0&status=done&style=none&width=441">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/svg/564594/1602126629295-0aabb2fb-9917-4c85-84ac-3896d6a88c8e.svg#align=left&display=inline&height=438&margin=%5Bobject%20Object%5D&originHeight=438&originWidth=396&size=0&status=done&style=none&width=396">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/svg/564594/1602143342897-8211f21c-4737-4121-96e2-6e4a342f474d.svg#align=left&display=inline&height=301&margin=%5Bobject%20Object%5D&originHeight=301&originWidth=635&size=0&status=done&style=none&width=635">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/svg/564594/1602155805649-f17bfeb4-22ed-4b09-9748-fce569ef3eab.svg#align=left&display=inline&height=432&margin=%5Bobject%20Object%5D&originHeight=432&originWidth=471&size=0&status=done&style=none&width=471">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2020/svg/564594/1602156898807-99feb58e-2ab8-444f-8be1-e001aba10c82.svg#align=left&display=inline&height=518&margin=%5Bobject%20Object%5D&originHeight=702&originWidth=782&size=0&status=done&style=none&width=577">
+<meta property="article:published_time" content="2020-10-28T04:30:00.000Z">
+<meta property="article:modified_time" content="2020-10-28T04:30:43.940Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.nlark.com/yuque/0/2020/svg/564594/1602126542822-daaeccca-de38-495e-8b63-c0856b230289.svg#align=left&display=inline&height=438&margin=%5Bobject%20Object%5D&originHeight=438&originWidth=416&size=0&status=done&style=none&width=416">
+  
+    <link rel="alternate" href="/atom.xml" title="YU" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">YU</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Think of Wind.</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-排序" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/10/28/%E6%8E%92%E5%BA%8F/" class="article-date">
+  <time datetime="2020-10-28T04:30:00.000Z" itemprop="datePublished">2020-10-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      排序
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><p>冒泡排序是最基础，最经典的排序算法。联想一下可乐，最大的气泡总是会最快的上升到最上面。所以，冒泡的原理就是，对于一个数组， <strong>每一次循环都让最大的元素冒泡到最后面</strong> 。<br>核心规则：</p>
+<ol>
+<li>从数组的第一个元素开始，比较相邻两个元素的大小；</li>
+<li>如果前者比后者大，就交换位置；</li>
+<li>如果后者比前者大，位置不改变；</li>
+<li>依次后移，每次循环都让最大的元素排到最后面。</li>
+</ol>
+<p>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 冒泡排序</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">bubbleSort</span><span class="params">(<span class="keyword">int</span>[] array)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 1. 每次循环，都能冒泡出剩余元素中最大的元素，因此需要循环 array.length 次</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; array.length; i++) &#123;</span><br><span class="line">        <span class="comment">// 2. 每次遍历，只需要遍历 0 到 array.length - i - 1中元素，因为之后的元素都已经是最大的了</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; array.length - i - <span class="number">1</span>; j++) &#123;</span><br><span class="line">            <span class="comment">//3. 交换元素</span></span><br><span class="line">            <span class="keyword">if</span> (array[j] &gt; array[j + <span class="number">1</span>]) &#123;</span><br><span class="line">                <span class="keyword">int</span> temp = array[j + <span class="number">1</span>];</span><br><span class="line">                array[j + <span class="number">1</span>] = array[j];</span><br><span class="line">                array[j] = temp;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="时间复杂度分析"><a href="#时间复杂度分析" class="headerlink" title="时间复杂度分析"></a>时间复杂度分析</h3><p>比较的次数为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">N + (N - <span class="number">1</span>) + (N - <span class="number">2</span>) + ... + <span class="number">2</span> + <span class="number">1</span> = (N^<span class="number">2</span> + N)/<span class="number">2</span></span><br></pre></td></tr></table></figure>
+<p>最坏情况下，每次比较都要交换，所以交换的次数为 <code>(N^2 + N)/2</code><br>所以时间复杂度为 <code>O(N^2)</code> 。</p>
+<h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><p>选择排序的重点在于 <strong>选择</strong> ，每次从剩余数组中， <strong>选择最大或者最小</strong> 的一个，放到数组的一端。<br>核心规则：</p>
+<ol>
+<li>维护两个变量，一个用来存储当前最大值，另一个用来存储最大值的索引</li>
+<li>将当前最大值依次与后面的元素进行比较，如果比当前最大值大，就更新最大值及其索引</li>
+<li>遍历结束，将最大值放到数组的最右边，即将最右边的元素位置和最大值的位置进行交换</li>
+<li>重复上面的步骤，直到完成排序</li>
+</ol>
+<p>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 选择排序</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">selectSort</span><span class="params">(<span class="keyword">int</span>[] array)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 遍历N次，每次选择数组剩余元素中最大的元素</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; array.length; i++) &#123;</span><br><span class="line">      <span class="comment">// 暂时把第一个元素当做最大元素，并且记录最大元素的索引</span></span><br><span class="line">      <span class="keyword">int</span> maxIndex = <span class="number">0</span>;</span><br><span class="line">      <span class="keyword">int</span> max = array[<span class="number">0</span>];</span><br><span class="line">      <span class="comment">// 注意 j 从 索引1 开始，到 array.length - i 截止</span></span><br><span class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt; array.length - i; j++) &#123;</span><br><span class="line">        <span class="comment">// 如果元素大于当前最大值，则替换 max，maxIndex</span></span><br><span class="line">        <span class="keyword">if</span> (array[j] &gt; max) &#123;</span><br><span class="line">          max = array[j];</span><br><span class="line">          maxIndex = j;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 交换最大值元素 和 数组末尾元素</span></span><br><span class="line">      <span class="keyword">int</span> temp = array[maxIndex];</span><br><span class="line">      array[maxIndex] = array[array.length - i - <span class="number">1</span>];</span><br><span class="line">      array[array.length - i - <span class="number">1</span>] = temp;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="时间复杂度分析-1"><a href="#时间复杂度分析-1" class="headerlink" title="时间复杂度分析"></a>时间复杂度分析</h3><p>比较次数：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">N + (N - <span class="number">1</span>) + (N - <span class="number">2</span>) + ... + <span class="number">2</span> + <span class="number">1</span> = (N^<span class="number">2</span> + N)/<span class="number">2</span></span><br></pre></td></tr></table></figure>
+<h3 id="冒泡-vs-选择"><a href="#冒泡-vs-选择" class="headerlink" title="冒泡 vs 选择"></a>冒泡 vs 选择</h3><p>和冒泡排序一样，时间复杂度为 <code>O(N^2)</code> ，但是明显 <strong>选择排序要快一点</strong> ，因为冒泡排序需要频繁的交换相邻的两个元素，而选择排序每次遍历只需要交换一次，所以 <strong>选择排序真实情况速度要比冒泡快一倍</strong> 。</p>
+<h2 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h2><p>插入排序的重点是 <strong>插入</strong> ，每次抽离一个元素当作临时元素，将临时元素依次和后面的元素比较，通过比较的大小移动后面元素的位置，找到临时元素最合适的位置插入。<br>核心规则：</p>
+<ol>
+<li>第一轮，先将倒数第二个元素抽离作为临时元素</li>
+<li>将临时元素与后面的元素进行比较，如果后面的元素小于临时元素，则后面的元素左移</li>
+<li>如果后面的元素大于临时元素，或者已经到达数组末尾，就将临时元素插入当前空隙位置</li>
+<li>重复上面步骤，完成排序</li>
+</ol>
+<p><strong>插入排序已经不是选择最大元素，而是通过每次迭代，将部分元素排好序，以达到全部排序的效果。</strong><br>这里用图解来解释以上步骤：</p>
+<ol>
+<li>第一次迭代</li>
+</ol>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/svg/564594/1602126542822-daaeccca-de38-495e-8b63-c0856b230289.svg#align=left&display=inline&height=438&margin=%5Bobject%20Object%5D&originHeight=438&originWidth=416&size=0&status=done&style=none&width=416" alt=""></p>
+<ol start="2">
+<li>第二次迭代</li>
+</ol>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/svg/564594/1602126596942-d8ad6e2d-c8d0-494b-92c4-a8871a55a130.svg#align=left&display=inline&height=558&margin=%5Bobject%20Object%5D&originHeight=558&originWidth=441&size=0&status=done&style=none&width=441" alt=""></p>
+<ol start="3">
+<li>第三次迭代</li>
+</ol>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/svg/564594/1602126629295-0aabb2fb-9917-4c85-84ac-3896d6a88c8e.svg#align=left&display=inline&height=438&margin=%5Bobject%20Object%5D&originHeight=438&originWidth=396&size=0&status=done&style=none&width=396" alt=""><br>可以看到，每次迭代都将 <strong>末尾元素排好序</strong> 。<br>代码如下：<br>一定要记得处理到达尾部的情况。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 插入排序</span></span><br><span class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">insertSort</span><span class="params">(<span class="keyword">int</span>[] array)</span> </span>&#123;</span><br><span class="line">   <span class="comment">// 从倒数第二位开始，遍历到底0位，遍历 N-1 次</span></span><br><span class="line">   <span class="keyword">for</span> (<span class="keyword">int</span> i = array.length - <span class="number">2</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">     <span class="comment">// 存储当前抽离的元素</span></span><br><span class="line">     <span class="keyword">int</span> temp = array[i];</span><br><span class="line">     <span class="comment">// 从抽离元素的右侧开始遍历</span></span><br><span class="line">     <span class="keyword">int</span> j = i + <span class="number">1</span>;</span><br><span class="line">     <span class="keyword">while</span> (j &lt;= array.length - <span class="number">1</span>) &#123;</span><br><span class="line">       <span class="comment">// 如果某个元素，小于临时元素，则这个元素左移</span></span><br><span class="line">       <span class="keyword">if</span> (array[j] &lt; temp) &#123;</span><br><span class="line">         array[j - <span class="number">1</span>] = array[j];</span><br><span class="line">       &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">         <span class="comment">// 如果大于，则直接将临时元素插入，然后退出循环。</span></span><br><span class="line">         array[j - <span class="number">1</span>] = temp;</span><br><span class="line">         <span class="keyword">break</span>;</span><br><span class="line">       &#125;</span><br><span class="line">       j++;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="comment">// 处理到达尾部的情况</span></span><br><span class="line">     <span class="keyword">if</span> (j == array.length) &#123;</span><br><span class="line">       array[j - <span class="number">1</span>] = temp;</span><br><span class="line">     &#125;</span><br><span class="line">   &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>也可以抽离第二个元素，比较其和前面的有序数组的大小来找到合适的位置。代码比较简洁：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 插入排序</span></span><br><span class="line"><span class="comment">     * 每次在排好序的数组中找到合适的位置插入</span></span><br><span class="line"><span class="comment">     * 插入排序的大部分时间都浪费在了移动元素上面</span></span><br><span class="line"><span class="comment">     * 升序-具体算法：</span></span><br><span class="line"><span class="comment">     * 1.将第一个元素作为有序数组，抽离后面一个元素</span></span><br><span class="line"><span class="comment">     * 2.从后向前扫描有序数组</span></span><br><span class="line"><span class="comment">     * 3.如果元素大于抽离的元素，就向后移动一位</span></span><br><span class="line"><span class="comment">     * 4.直到找到小于或者等于抽离元素的元素，将抽离元素插入到它的后面</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> nums</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">insertSorted</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (nums == <span class="keyword">null</span> || nums.length &lt; <span class="number">2</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">            <span class="keyword">int</span> temp = nums[i];</span><br><span class="line">            <span class="keyword">int</span> j = i - <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">while</span> (j &gt;= <span class="number">0</span> &amp;&amp; nums[j] &gt; temp) &#123;</span><br><span class="line">                nums[j + <span class="number">1</span>] = nums[j];</span><br><span class="line">                j--;</span><br><span class="line">            &#125;</span><br><span class="line">            nums[j + <span class="number">1</span>] = temp;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="时间复杂度分析-2"><a href="#时间复杂度分析-2" class="headerlink" title="时间复杂度分析"></a>时间复杂度分析</h3><ul>
+<li>最好情况下，数组本身就是升序的，每次迭代不需要进行移动，那么时间复杂度就是 <code>O(N)</code> </li>
+<li>最坏情况下，数组为降序排列，每次迭代每次比较都需要进行移动，那么比较次数为 <code>(N^2 + N)/2</code> ,</li>
+</ul>
+<p>移动次数为 <code>(N^2 + N)/2</code> ,时间复杂度为 <code>O(N^2)</code> </p>
+<h3 id="冒泡-vs-选择-vs-插入"><a href="#冒泡-vs-选择-vs-插入" class="headerlink" title="冒泡 vs 选择 vs 插入"></a>冒泡 vs 选择 vs 插入</h3><p>冒泡相比较而言肯定是最差的。<br>选择和插入就要分情况而定了，如果数组本身有很多元素就已经按照希望的顺序排好序了，那就使用插入排序，否则就使用选择排序。</p>
+<h2 id="插入排序的进阶-二分插入排序"><a href="#插入排序的进阶-二分插入排序" class="headerlink" title="插入排序的进阶-二分插入排序"></a>插入排序的进阶-二分插入排序</h2><p>插入排序的核心逻辑是找到临时元素的插入位置，而且是在 <strong>有序</strong> 数组中查找临时元素需要插入的位置，这就立刻可以想到 <strong>二分查找</strong> 。<br>所以可以写一个二分查找函数，用来查找元素的插入位置：<br><img src="https://cdn.nlark.com/yuque/0/2020/svg/564594/1602143342897-8211f21c-4737-4121-96e2-6e4a342f474d.svg#align=left&display=inline&height=301&margin=%5Bobject%20Object%5D&originHeight=301&originWidth=635&size=0&status=done&style=none&width=635" alt=""></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 查找应该插入的索引位置</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">searchIndex</span><span class="params">(<span class="keyword">int</span>[] array, <span class="keyword">int</span> left, <span class="keyword">int</span> right, <span class="keyword">int</span> aim)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 循环查找节点位置</span></span><br><span class="line">    <span class="keyword">while</span> (left &lt; right) &#123;</span><br><span class="line">        <span class="keyword">int</span> middle = (left + right) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span> (array[middle] &lt; aim) &#123;</span><br><span class="line">            left = middle + <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            right = middle - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 根据当前元素和目标元素进行对比，判断是否需要插入到当前元素之前</span></span><br><span class="line">    <span class="keyword">if</span>(array[left] &gt; aim)&#123;</span><br><span class="line">        <span class="keyword">return</span> left -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 否则就是当前位置</span></span><br><span class="line">    <span class="keyword">return</span> left;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>修改插入排序的代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 插入排序</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">insertSort</span><span class="params">(<span class="keyword">int</span>[] array)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 从倒数第二位开始，遍历到底0位，遍历 N-1 次</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = array.length - <span class="number">2</span>; i &gt;= <span class="number">0</span>; i--) &#123;</span><br><span class="line">        <span class="comment">// 存储当前抽离的元素</span></span><br><span class="line">        <span class="keyword">int</span> temp = array[i];</span><br><span class="line">        <span class="keyword">int</span> index = searchIndex(array, i + <span class="number">1</span>, array.length - <span class="number">1</span>, temp);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// #1. 根据插入的索引位置，进行数组的移动和插入</span></span><br><span class="line">        <span class="keyword">int</span> j = i + <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (j &lt;= index) &#123;</span><br><span class="line">            array[j - <span class="number">1</span>] = array[j];</span><br><span class="line">            j++;</span><br><span class="line">        &#125;</span><br><span class="line">        array[j - <span class="number">1</span>] = temp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注释 <code>#1</code> 处，已经找到了抽离元素的插入位置 <code>index</code> ，就需要让小于抽离元素的元素左移，然后插入 <code>temp</code> 。</p>
+<h2 id="归并排序-分治思想"><a href="#归并排序-分治思想" class="headerlink" title="归并排序-分治思想"></a>归并排序-分治思想</h2><p>分治就是将一个<strong>大问题分解为几个子问题进行求解</strong>，<strong>最后再合并几个子问题的解得到原问题的解</strong>。分治常常和递归一起使用。<br>生活中就有很多这样的例子，在疫情期间学校就有统计任务，学校会将任务分配给各个学院的院长，再由院长分配给各个年纪辅导员，辅导员再分配给各个班级的班长….<br><img src="https://cdn.nlark.com/yuque/0/2020/svg/564594/1602155805649-f17bfeb4-22ed-4b09-9748-fce569ef3eab.svg#align=left&display=inline&height=432&margin=%5Bobject%20Object%5D&originHeight=432&originWidth=471&size=0&status=done&style=none&width=471" alt=""><br>而利用分治的思想就实现了归并排序~<br>归并排序的核心思想就是将要排序的数组分解为小数组，将小数组排好序进行合并就得到排序数组。</p>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/svg/564594/1602156898807-99feb58e-2ab8-444f-8be1-e001aba10c82.svg#align=left&display=inline&height=518&margin=%5Bobject%20Object%5D&originHeight=702&originWidth=782&size=0&status=done&style=none&width=577" alt=""></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">int</span>[] nums = &#123;<span class="number">2</span>,<span class="number">45</span>,<span class="number">6</span>,<span class="number">8</span>,<span class="number">43</span>,<span class="number">24</span>,<span class="number">0</span>&#125;;</span><br><span class="line">      </span><br><span class="line">        mergeSort(nums,<span class="number">0</span>, nums.length - <span class="number">1</span>);</span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</span><br><span class="line">           System.out.print(nums[i] + <span class="string">" "</span>);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 归并排序 - 分治</span></span><br><span class="line"><span class="comment">    * 归并排序是先将数组拆分然后分别排好序再合并</span></span><br><span class="line"><span class="comment">    * 重点在于将两个排好序的数组进行合并</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> arr</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> left</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> right right = nums.length - 1,注意下标越界问题</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">mergeSort</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">if</span> (right &lt;= left) <span class="keyword">return</span>;</span><br><span class="line">       <span class="keyword">int</span> mid = (left + right) &gt;&gt; <span class="number">1</span>;<span class="comment">//右移一位相当于除以2</span></span><br><span class="line">       mergeSort(arr, left, mid);</span><br><span class="line">       mergeSort(arr, mid + <span class="number">1</span>, right);</span><br><span class="line">       merge(arr, left, mid, right);</span><br><span class="line">   &#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 将两个排好序的数组进行合并，并且保证合并之后的数组是排好序的</span></span><br><span class="line"><span class="comment">    * 具体算法：</span></span><br><span class="line"><span class="comment">    * 首先需要维护一个中间数组temp,用来放合并的元素</span></span><br><span class="line"><span class="comment">    * 循环遍历两个子数组，放入temp中</span></span><br><span class="line"><span class="comment">    * 记得将最后剩余的元素放入temp</span></span><br><span class="line"><span class="comment">    * 再复制</span></span><br><span class="line"><span class="comment">    给原数组</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> arr</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> left</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> mid</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> right</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> left, <span class="keyword">int</span> mid, <span class="keyword">int</span> right)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">int</span>[] temp = <span class="keyword">new</span> <span class="keyword">int</span>[right - left + <span class="number">1</span>];</span><br><span class="line">       <span class="comment">//i表示左数组的第一个元素的下标，j表示右数组的第一个元素下标，k用来记录放入temp中的元素个数</span></span><br><span class="line">       <span class="keyword">int</span> i = left,j = mid + <span class="number">1</span>,k = <span class="number">0</span>;</span><br><span class="line">       <span class="keyword">while</span> (i &lt;= mid &amp;&amp; j &lt;= right) &#123;</span><br><span class="line">           temp[k++] = arr[i] &lt;= arr[j] ? arr[i++] : arr[j++];</span><br><span class="line">       &#125;</span><br><span class="line"></span><br><span class="line">       <span class="keyword">while</span> (i &lt;= mid) temp[k++] = arr[i++];</span><br><span class="line">       <span class="keyword">while</span> (j &lt;= right) temp[k++] = arr[j++];</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> l = <span class="number">0</span>; l &lt; temp.length; l++) &#123;</span><br><span class="line">           arr[left + l] = temp[l];</span><br><span class="line">       &#125;</span><br><span class="line">       </span><br><span class="line">       <span class="comment">//System.arraycopy(temp, 0, arr, left, temp.length);</span></span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="快速排序-分治"><a href="#快速排序-分治" class="headerlink" title="快速排序 - 分治"></a>快速排序 - 分治</h2><p>快排也用到了分治的思想，但是和归并排序刚好是反过来的。<br>归并是先排序左右子数组，然后将有序子数组进行合并排序；快排是先调配出左右子数组，然后对两个子数组进行排序。<br>所以，快排的重点是如何调配出左右子数组。</p>
+<ol>
+<li>我们可以通过找到一个基准元素（这个基准元素可以随便选）</li>
+<li>将数组元素分别与基准元素比较</li>
+<li>比基准元素大的就放右边，比基准元素小的就放左边</li>
+<li>然后对分出的两个子数组进行排序</li>
+<li>达到全部排好序<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 快速排序</span></span><br><span class="line"><span class="comment">    * 快排是通过一个基准元素，将数组分为小于基准元素和大于基准元素的两个子数组</span></span><br><span class="line"><span class="comment">    * 然后分别排序以达到全排好序</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> arr</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> begin</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> end</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">quickSorted</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> begin, <span class="keyword">int</span> end)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">if</span> (end &lt;= begin) <span class="keyword">return</span>;</span><br><span class="line">       <span class="keyword">int</span> pivot = partition(arr, begin, end);</span><br><span class="line">       quickSorted(arr, begin, pivot - <span class="number">1</span>);</span><br><span class="line">       quickSorted(arr, pivot + <span class="number">1</span>, end);</span><br><span class="line">   &#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">    * 这个方法的作用就是返回基准元素pivot的下标</span></span><br><span class="line"><span class="comment">    * 且保证pivot左侧的元素都小于pivot，右侧的元素都大于pivot</span></span><br><span class="line"><span class="comment">    * 方法巧妙的地方在于维护一个变量counter记录小于pivot的数量，counter初始化为begin，</span></span><br><span class="line"><span class="comment">    * 只要有小于pivot的元素就和counter交换位置，最后counter就是基准元素的下标位置</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> arr</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> begin</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@param</span> end</span></span><br><span class="line"><span class="comment">    * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">   <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">partition</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> begin, <span class="keyword">int</span> end)</span> </span>&#123;</span><br><span class="line">       <span class="comment">//基准元素随便选</span></span><br><span class="line">       <span class="keyword">int</span> pivot = end, counter = begin;</span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">int</span> i = begin; i &lt; end; i++) &#123;</span><br><span class="line">           <span class="keyword">if</span> (arr[i] &lt; arr[pivot]) &#123;</span><br><span class="line">               <span class="keyword">int</span> temp = arr[counter];</span><br><span class="line">               arr[counter] = arr[i];</span><br><span class="line">               arr[i] = temp;</span><br><span class="line">               counter++;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">int</span> temp = arr[pivot];</span><br><span class="line">       arr[pivot] = arr[counter];</span><br><span class="line">       arr[counter] = temp;</span><br><span class="line">       <span class="keyword">return</span> counter;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/10/28/%E6%8E%92%E5%BA%8F/" data-id="ckgswj5jg000460v8hzog4dux" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2020/10/07/JavaScript%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">JavaScript实用技巧</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/10/28/%E6%8E%92%E5%BA%8F/">排序</a>
+          </li>
+        
+          <li>
+            <a href="/2020/10/07/JavaScript%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/">JavaScript实用技巧</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/28/%E5%B8%B8%E7%94%A8%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">常用设计模式</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/22/Java%E6%B3%A8%E8%A7%A3/">Java注解</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/22/Maven%E5%9F%BA%E7%A1%80/">Maven基础</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

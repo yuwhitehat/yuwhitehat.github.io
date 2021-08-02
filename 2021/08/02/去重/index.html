@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>去重 | YU</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="利用TreeSet去重1234567891011&#x2F;** * 利用TreeSet去重 * @param msgReceiverDTOList * @return *&#x2F;private List&lt;MsgReceiverDTO&gt; distinctByTreeSet(List&lt;MsgReceiverDTO&gt; msgReceiverDTOList) &amp;#123;    Set&lt;M">
+<meta property="og:type" content="article">
+<meta property="og:title" content="去重">
+<meta property="og:url" content="http://yoursite.com/2021/08/02/%E5%8E%BB%E9%87%8D/index.html">
+<meta property="og:site_name" content="YU">
+<meta property="og:description" content="利用TreeSet去重1234567891011&#x2F;** * 利用TreeSet去重 * @param msgReceiverDTOList * @return *&#x2F;private List&lt;MsgReceiverDTO&gt; distinctByTreeSet(List&lt;MsgReceiverDTO&gt; msgReceiverDTOList) &amp;#123;    Set&lt;M">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-08-02T06:21:12.000Z">
+<meta property="article:modified_time" content="2021-08-02T06:41:44.548Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="YU" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">YU</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Think of Wind.</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-去重" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/08/02/%E5%8E%BB%E9%87%8D/" class="article-date">
+  <time datetime="2021-08-02T06:21:12.000Z" itemprop="datePublished">2021-08-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      去重
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="利用TreeSet去重"><a href="#利用TreeSet去重" class="headerlink" title="利用TreeSet去重"></a>利用TreeSet去重</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 利用TreeSet去重</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> msgReceiverDTOList</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> List&lt;MsgReceiverDTO&gt; <span class="title">distinctByTreeSet</span><span class="params">(List&lt;MsgReceiverDTO&gt; msgReceiverDTOList)</span> </span>&#123;</span><br><span class="line">    Set&lt;MsgReceiverDTO&gt; set = <span class="keyword">new</span> TreeSet&lt;&gt;((o1, o2)-&gt;o1.getEmployeeNumber().compareTo(o2.getEmployeeNumber()));</span><br><span class="line">    set.addAll(msgReceiverDTOList);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;MsgReceiverDTO&gt;(set);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="利用stream流去重"><a href="#利用stream流去重" class="headerlink" title="利用stream流去重"></a>利用stream流去重</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * java8 stream流</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> msgReceiverDTOList</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> List&lt;MsgReceiverDTO&gt; <span class="title">distinctByStream</span><span class="params">(List&lt;MsgReceiverDTO&gt; msgReceiverDTOList)</span> </span>&#123;</span><br><span class="line">    List&lt;MsgReceiverDTO&gt; resultList = msgReceiverDTOList.stream().collect(</span><br><span class="line">            Collectors.collectingAndThen(</span><br><span class="line">                    Collectors.toCollection(() -&gt; <span class="keyword">new</span> TreeSet&lt;&gt;(Comparator.comparing(MsgReceiverDTO::getEmployeeNumber))), ArrayList::<span class="keyword">new</span>)</span><br><span class="line">    );</span><br><span class="line">    <span class="keyword">return</span> resultList;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>collectingAndThen</code> 这个方法的意思是: 将收集的结果转换为另一种类型,因此上面的方法可以理解为,把 <code>new TreeSet&lt;&gt;(Comparator.comparingLong(BookInfoVo::getRecordId))</code>这个<code>set</code>转换为 <code>ArrayList</code></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2021/08/02/%E5%8E%BB%E9%87%8D/" data-id="ckru9m3f700046ovbhkdd9o6f" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2021/07/22/%E8%BF%91%E6%9C%9F%E5%BF%83%E5%BE%97/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">近期心得</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2021/08/02/%E5%8E%BB%E9%87%8D/">去重</a>
+          </li>
+        
+          <li>
+            <a href="/2021/07/22/%E8%BF%91%E6%9C%9F%E5%BF%83%E5%BE%97/">近期心得</a>
+          </li>
+        
+          <li>
+            <a href="/2020/10/28/%E6%8E%92%E5%BA%8F/">排序</a>
+          </li>
+        
+          <li>
+            <a href="/2020/10/07/JavaScript%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/">JavaScript实用技巧</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/28/%E5%B8%B8%E7%94%A8%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">常用设计模式</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2021 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

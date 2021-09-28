@@ -15,7 +15,7 @@
 <meta property="og:description" content="git status1git status 帮助我们掌握仓库当前的状态 git diff1git diff 帮助我们查看具体的改动 git log1git log 可以查看历史记录 git reset --hard HEAD^HEAD表示当前版本 12345git reset --hard HEAD^ 表示回退到上一个版本git reset --hard HEAD^^ 表示回退到上上个版本...g">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-09-28T07:19:43.000Z">
-<meta property="article:modified_time" content="2021-09-28T08:34:38.112Z">
+<meta property="article:modified_time" content="2021-09-28T08:38:53.344Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -101,7 +101,10 @@
 <h3 id="git的工作区和暂存区"><a href="#git的工作区和暂存区" class="headerlink" title="git的工作区和暂存区"></a>git的工作区和暂存区</h3><p>工作区就是能够看到的目录，工作区有一个隐藏目录<code>.git</code>，这个不算工作区，而是Git的版本库。版本库里存放了一个名为<code>stage</code>的暂存区，<br>还有<code>git</code>为我们创建的分支<code>master</code>，以及指向指向<code>master</code>的指针<code>HEAD</code></p>
 <ol>
 <li>在执行<code>git add</code>的命令时，就是将改动的文件放入暂存区</li>
-<li>执行<code>git commit</code>后，会将暂存区的文件添加到当前分支<h3 id="撤销和修改"><a href="#撤销和修改" class="headerlink" title="撤销和修改"></a>撤销和修改</h3>三个场景：</li>
+<li>执行<code>git commit</code>后，会将暂存区的文件添加到当前分支</li>
+</ol>
+<h3 id="git的撤销和修改"><a href="#git的撤销和修改" class="headerlink" title="git的撤销和修改"></a>git的撤销和修改</h3><p>以下三个场景：</p>
+<ol>
 <li>想要撤销工作区的修改时，用命令<code>git checkout --file</code></li>
 <li>当工作区的修改添加到了暂存区，但是想要撤销时，分两步 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> git reset HEAD &lt;file&gt; 用来撤销暂存区的修改（unstage）</span><br><span class="line">git checkout --file 撤销工作区的修改（实际上是用版本库中的版本替换工作区的版本）</span><br></pre></td></tr></table></figure></li>
 <li>当修改已经提交到分支里了，但是没有推送到远程仓库，可以用<code>git reset --hard HEAD^</code> 回退到前一个版本</li>
@@ -110,7 +113,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2021/09/28/GIT%E6%97%B6%E5%85%89%E7%A9%BF%E6%A2%AD/" data-id="cku3tqmix000098vb6rz49jtj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2021/09/28/GIT%E6%97%B6%E5%85%89%E7%A9%BF%E6%A2%AD/" data-id="cku3tvy720000d4vb4tjk9j16" class="article-share-link">Share</a>
       
       
     </footer>

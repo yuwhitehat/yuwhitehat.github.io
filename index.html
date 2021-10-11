@@ -68,6 +68,60 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-GIT分支管理" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2021/10/11/GIT%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/" class="article-date">
+  <time datetime="2021-10-11T02:10:26.000Z" itemprop="datePublished">2021-10-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/10/11/GIT%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/">GIT分支管理</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="创建分支"><a href="#创建分支" class="headerlink" title="创建分支"></a>创建分支</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch 会列出所有分支，当前分支前会有一个*</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git branch dev 创建一个分支名为dev</span><br><span class="line">git checkout dev 切换到dev分支</span><br><span class="line"></span><br><span class="line">上面的两条命令可以合并为 一条</span><br><span class="line">git checkout -b dev</span><br></pre></td></tr></table></figure>
+<p>实际上，切换分支用<code>switch</code>更科学，因此，GIT提供新的<code>git switch</code>命令来切换分支</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git switch -c dev 创建并切换到新的分支</span><br><span class="line"></span><br><span class="line">git switch master 切换到已有分支</span><br><span class="line">### 合并分支</span><br><span class="line">在&#96;dev&#96;分支上提交后，切换到&#96;master&#96;分支，把&#96;dev&#96;分支合并到&#96;master&#96;</span><br></pre></td></tr></table></figure>
+<p>git merge dev 合并指定分支到当前分支</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">### 删除分支</span><br><span class="line">合并完成后，可以放心删除分支了</span><br></pre></td></tr></table></figure>
+<p>git branch -d dev</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">### 分支管理策略</span><br><span class="line">通常合并分支时，GIT会用&#96;Fast forward&#96;模式，但是这种模式下，删除分支后，会丢掉分支信息。如果要强制禁用&#96;Fast forward&#96;模式，Git就会在merge时生成一个新的&#96;commit&#96;，这样，从分支历史上就可以看出分支信息。</span><br><span class="line">合并&#96;dev&#96;分支时，用&#96;--no-ff&#96;参数表示禁用&#96;Fast forword&#96;模式</span><br><span class="line">因为本次合并要创建一个新的commit，所以加上-m参数，把commit描述写进去。</span><br></pre></td></tr></table></figure>
+<p>git merge –no-ff -m “merge with no–ff” dev</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">合并后，用&#96;git log&#96;查看分支历史</span><br><span class="line">### 储藏当前工作</span><br><span class="line">场景：当工作进行到一半，突然有个bug需要紧急修复，但是当前工作没办法提交，就可以用GIT提供的&#96;stash&#96;功能，把当前工作现场先存储起来。</span><br></pre></td></tr></table></figure>
+<p>git stash</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">用&#96;git status&#96;查看工作区是干净的，就可以放心创建分支修复bug。</span><br><span class="line">修复完后，&#96;git switch dev&#96;切换到dev分支，可以用&#96;git stash list&#96;命令查看之前存的工作现场。然后进行恢复。</span><br><span class="line">两种方式：</span><br></pre></td></tr></table></figure>
+<p>git stash apply<br>此命令恢复后，stash内容并没有删除，需要用git stash drop删除</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#96;&#96;&#96;</span><br><span class="line">git stash pop</span><br><span class="line">此命令恢复的同时会将stash内容一同删除</span><br></pre></td></tr></table></figure>
+<h3 id="复制特定提交到另一个分支"><a href="#复制特定提交到另一个分支" class="headerlink" title="复制特定提交到另一个分支"></a>复制特定提交到另一个分支</h3><p>我们只想复制<code>4c805e2 fix bug 101</code>这个提交所做的修改，并不是把整个master分支merge过来。<br>为了方便操作，Git专门提供了一个<code>cherry-pick</code>命令，让我们能复制一个特定的提交到当前分支：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git cherry-pick 4c8052e</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2021/10/11/GIT%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/" data-id="ckum4176x0001o4vbez65g6z4" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-GIT时光穿梭" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2021/09/28/GIT%E6%97%B6%E5%85%89%E7%A9%BF%E6%A2%AD/" class="article-date">
@@ -111,7 +165,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2021/09/28/GIT%E6%97%B6%E5%85%89%E7%A9%BF%E6%A2%AD/" data-id="cku3tvy720000d4vb4tjk9j16" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2021/09/28/GIT%E6%97%B6%E5%85%89%E7%A9%BF%E6%A2%AD/" data-id="ckum4176t0000o4vb14fw5fx8" class="article-share-link">Share</a>
       
       
     </footer>
@@ -150,7 +204,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2021/08/02/%E5%8E%BB%E9%87%8D/" data-id="cku3tvy7e000ad4vb6d5j6nft" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2021/08/02/%E5%8E%BB%E9%87%8D/" data-id="ckum41777000co4vbdvu18avj" class="article-share-link">Share</a>
       
       
     </footer>
@@ -189,7 +243,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2021/07/22/%E8%BF%91%E6%9C%9F%E5%BF%83%E5%BE%97/" data-id="cku3tvy7e000bd4vb8zp47wxu" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2021/07/22/%E8%BF%91%E6%9C%9F%E5%BF%83%E5%BE%97/" data-id="ckum41776000bo4vbfxkq3btx" class="article-share-link">Share</a>
       
       
     </footer>
@@ -294,7 +348,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/10/28/%E6%8E%92%E5%BA%8F/" data-id="cku3tvy7g000cd4vbbbvgdhhj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/10/28/%E6%8E%92%E5%BA%8F/" data-id="ckum41778000eo4vb73hf0z9t" class="article-share-link">Share</a>
       
       
     </footer>
@@ -371,7 +425,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/10/07/JavaScript%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/" data-id="cku3tvy780002d4vb5gl225lz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/10/07/JavaScript%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/" data-id="ckum4176y0002o4vbgoxlhwlj" class="article-share-link">Share</a>
       
       
     </footer>
@@ -469,7 +523,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/09/28/%E5%B8%B8%E7%94%A8%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" data-id="cku3tvy7h000dd4vb9jnf38zc" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/09/28/%E5%B8%B8%E7%94%A8%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" data-id="ckum4177z000fo4vb16ur1yif" class="article-share-link">Share</a>
       
       
     </footer>
@@ -540,7 +594,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/09/22/Java%E6%B3%A8%E8%A7%A3/" data-id="cku3tvy760001d4vbcnio7l1c" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/09/22/Java%E6%B3%A8%E8%A7%A3/" data-id="ckum417710005o4vbeetheqnh" class="article-share-link">Share</a>
       
       
     </footer>
@@ -623,7 +677,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/09/22/Maven%E5%9F%BA%E7%A1%80/" data-id="cku3tvy7a0005d4vbgrz080la" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/09/22/Maven%E5%9F%BA%E7%A1%80/" data-id="ckum417700004o4vbe99qepib" class="article-share-link">Share</a>
       
       
     </footer>
@@ -694,68 +748,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/09/13/%E4%B8%89%E8%A7%92%E5%BD%A2%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C/" data-id="cku3tvy7c0008d4vb5k6h55xb" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-最长公共子序列" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/09/09/%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E5%BA%8F%E5%88%97/" class="article-date">
-  <time datetime="2020-09-09T07:39:59.000Z" itemprop="datePublished">2020-09-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/09/%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E5%BA%8F%E5%88%97/">最长公共子序列</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p><a href="https://leetcode-cn.com/problems/longest-common-subsequence/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/longest-common-subsequence/</a></p>
-<p>题目描述：</p>
-<p>给定两个字符串 text1 和 text2，返回这两个字符串的最长公共子序列的长度。</p>
-<p>一个字符串的 子序列 是指这样一个新的字符串：它是由原字符串在不改变字符的相对顺序的情况下删除某些字符（也可以不删除任何字符）后组成的新字符串。</p>
-<p>例如，”ace” 是 “abcde” 的子序列，但 “aec” 不是 “abcde” 的子序列。两个字符串的「公共子序列」是这两个字符串所共同拥有的子序列。<br>若这两个字符串没有公共子序列，则返回 0。</p>
-<p>示例1：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：text1 &#x3D; &quot;abcde&quot;, text2 &#x3D; &quot;ace&quot; </span><br><span class="line">输出：3  </span><br><span class="line">解释：最长公共子序列是 &quot;ace&quot;，它的长度为 3。</span><br></pre></td></tr></table></figure>
-<p>示例2：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：text1 &#x3D; &quot;abc&quot;, text2 &#x3D; &quot;def&quot;</span><br><span class="line">输出：0</span><br><span class="line">解释：两个字符串没有公共子序列，返回 0。</span><br></pre></td></tr></table></figure>
-<h2 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h2><p>本题使用动态规划，动态规划的思想和递归没有本质上的区别，都是要找重复子问题，动态规划的关键是要看其是否有最优子结构，同时在找的时候可以淘汰次优解。</p>
-<p>动态规划最重要的步骤是分析出状态转移方程或者是画出一个DP表。</p>
-<ol>
-<li>先找到重复子问题 - 分为两种情况</li>
-</ol>
-<p>(1) 如果S的最后一位等于T的最后一位，则最大子序列就是{s1,s2,s3…si-1}和{t1,t2,t3…tj-1}的最大子序列+1</p>
-<p>(2) 如果S的最后一位不等于T的最后一位，那么最大子序列就是</p>
-<p>① {s1,s2,s3..si}和 {t1,t2,t3…tj-1} 最大子序列</p>
-<p>② {s1,s2,s3…si-1}和{t1,t2,t3….tj} 最大子序列</p>
-<p>以上两个自序列的最大值</p>
-<ol>
-<li>得到DP方程<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if text1[-1] &#x3D;&#x3D; text2[-1]:LCS[text1, text2] &#x3D; 1 + LCS[text1 - 1,text2 - 1];</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if text1[-1] !&#x3D; text2[-1]: LCS[text1, text2] &#x3D; Max(LCS[text1 - 1,text2], LCS[text1 , text2 - 1]);</span><br></pre></td></tr></table></figure>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2></li>
-</ol>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">longestCommonSubsequence</span><span class="params">(String text1, String text2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">char</span>[] s1 = text1.toCharArray();</span><br><span class="line">        <span class="keyword">char</span>[] s2 = text2.toCharArray();</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">int</span>[][] dp = <span class="keyword">new</span> <span class="keyword">int</span>[text1.length() + <span class="number">1</span>][text2.length() + <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>;i &lt; text1.length() + <span class="number">1</span>;i++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>;j &lt; text2.length() + <span class="number">1</span>;j++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (s1[i - <span class="number">1</span>] == s2[j - <span class="number">1</span>]) &#123;</span><br><span class="line">                    dp[i][j] = dp[i- <span class="number">1</span>][j - <span class="number">1</span>] + <span class="number">1</span>;</span><br><span class="line">                &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">                    dp[i][j] = Math.max(dp[i -<span class="number">1</span>][j],dp[i][j - <span class="number">1</span>]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">       <span class="keyword">return</span> dp[text1.length()][text2.length()];</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/09/09/%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E5%BA%8F%E5%88%97/" data-id="cku3tvy7n000ed4vbeo39aa9y" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/09/13/%E4%B8%89%E8%A7%92%E5%BD%A2%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C/" data-id="ckum417740009o4vb1qzz75yj" class="article-share-link">Share</a>
       
       
     </footer>
@@ -788,7 +781,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">September 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">October 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">September 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li></ul>
     </div>
   </div>
 
@@ -799,6 +792,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2021/10/11/GIT%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/">GIT分支管理</a>
+          </li>
         
           <li>
             <a href="/2021/09/28/GIT%E6%97%B6%E5%85%89%E7%A9%BF%E6%A2%AD/">GIT时光穿梭</a>
@@ -814,10 +811,6 @@
         
           <li>
             <a href="/2020/10/28/%E6%8E%92%E5%BA%8F/">排序</a>
-          </li>
-        
-          <li>
-            <a href="/2020/10/07/JavaScript%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/">JavaScript实用技巧</a>
           </li>
         
       </ul>

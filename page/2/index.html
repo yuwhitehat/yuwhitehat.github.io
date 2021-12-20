@@ -68,6 +68,104 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-常用设计模式" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/09/28/%E5%B8%B8%E7%94%A8%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" class="article-date">
+  <time datetime="2020-09-28T12:02:47.000Z" itemprop="datePublished">2020-09-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/09/28/%E5%B8%B8%E7%94%A8%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">常用设计模式</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>最困难的时候，也就是离成功不远的时候。—拿破仑</p>
+</blockquote>
+<h2 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h2><p>一个班级只能有一个班主任，所以就要保证一个班主任类只有一个实例，单例模式就是为了解决这种问题，<strong>保证一个类仅有一个实例</strong>。<br />核心办法就是把构造函数设置为私有 <code>private</code> 的。这意味着除了 <code>ClassMaster</code> 自己，其他任何类都不能实例化 <code>ClassMaster</code> 对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassMaster</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> String id;</span><br><span class="line">  <span class="comment">// 班主任名称</span></span><br><span class="line">  <span class="keyword">private</span> String name;</span><br><span class="line">  <span class="keyword">private</span> String gender;</span><br><span class="line">    </span><br><span class="line">  <span class="comment">//唯一实例 必须用static修饰符 ，否则会造成递归的严重的错误</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> ClassMaster instance = <span class="keyword">new</span> ClassMaster();</span><br><span class="line">    </span><br><span class="line">  <span class="comment">//将构造函数设置为私有的</span></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">ClassMaster</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们需要增加一个方法允许其他类访问这个单例的实例，因为类 <code>new</code> 出一个实例的目的就是要给其他类使用的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassMaster</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> String id;</span><br><span class="line">  <span class="comment">// 班主任名称</span></span><br><span class="line">  <span class="keyword">private</span> String name;</span><br><span class="line">  <span class="keyword">private</span> String gender;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 唯一实例</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> ClassMaster instance = <span class="keyword">new</span> ClassMaster();</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">private</span> <span class="title">ClassMaster</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 外部类可以通过这个方法访问唯一的实例</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ClassMaster <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> instance;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a name="UDoEe"></a></p>
+<h3 id="spring中的单例思想"><a href="#spring中的单例思想" class="headerlink" title="spring中的单例思想"></a>spring中的单例思想</h3><p>有时候从技术角度出发为了节省系统资源，在Spring中类变量使用 <code>@Autowried</code> 注解，能够实现自动注入实例对象。任何 <strong>自动</strong> 注入实例对象，默认只有一个实例对象，是单例的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> UsersService usersService;</span><br></pre></td></tr></table></figure>
+<p>Spring 会保证只生成一个 <code>UsersServiceImpl</code> 实例注入到多个 <code>Service</code> 或 <code>Control</code> 中。<br><a name="VigYn"></a></p>
+<h2 id="简单工厂模式"><a href="#简单工厂模式" class="headerlink" title="简单工厂模式"></a>简单工厂模式</h2><p>程序中的工厂就是生产 <strong>实例对象</strong> 的地方。<br><a name="GPccQ"></a></p>
+<h3 id="命名"><a href="#命名" class="headerlink" title="命名"></a>命名</h3><p>一般来说，工厂类命名为 <code>XXXXFactory</code> ,以 <code>Factory</code> 作为后缀可以提高辨识度，易于理解这个类的作用。<br />使用简单工厂完成功能开发时，重点就是要明确 <strong>什么条件下</strong> 创建 <strong>什么实例对象</strong> 的需求逻辑。<br><a name="A1SFO"></a></p>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p><strong>需求：</strong><br />第二汽车制造厂可以生产“富康牌”轿车以及“爱丽舍”轿车。要求4S店告诉工厂汽车品牌名称即可提取相应的轿车。<br /><strong>分析：</strong><br />我们需要将具体的汽车类抽象出一个接口 <code>Car</code> ，让具体的汽车类实现接口中的方法，让汽车工厂 <code>CarFactory</code> 生产实例对象就可以了。<br /><strong>类图：</strong> <br /><img src="https://cdn.nlark.com/yuque/0/2020/svg/564594/1601195281591-e2e8d4e5-1df2-4235-bdfc-326ee9ba67a0.svg#align=left&display=inline&height=402&margin=%5Bobject%20Object%5D&originHeight=455&originWidth=394&size=0&status=done&style=none&width=348" alt=""><br />注意类图中有一个抽象类 <code>AbstractCar</code> ，这是为了防止代码重复而创建，因为每个汽车的实现类都要写：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> String brand;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> String <span class="title">getBrand</span><span class="params">()</span> </span>&#123;</span><br><span class="line">       <span class="keyword">return</span> brand;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setBrand</span><span class="params">(String brand)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">this</span>.brand = brand;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>所以使用抽象类可以避免每个轿车重复定义 <code>brand</code> 属性。轿车类不再直接实现接口，而是继承 <code>AbstractCar</code> ，这样的话</p>
+<ul>
+<li>抽象类存放公共属性和方法</li>
+<li>每个实现类存放自己特有的属性和方法</li>
+</ul>
+<p><strong>代码实现：</strong> </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CarShop</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        CarFactory carFactory = <span class="keyword">new</span> CarFactory();</span><br><span class="line">        Car fukang = carFactory.makeCar(<span class="string">"fukang"</span>);</span><br><span class="line">        System.out.println(fukang.getBrand());</span><br><span class="line"></span><br><span class="line">        Car elysee = carFactory.makeCar(<span class="string">"elysee"</span>);</span><br><span class="line">        System.out.println(elysee.getBrand());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CarFactory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Car <span class="title">makeCar</span><span class="params">(String brand)</span> </span>&#123;</span><br><span class="line">        Car car = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (<span class="string">"fukang"</span>.equals(brand)) &#123;</span><br><span class="line">            FuKang fukang = <span class="keyword">new</span> FuKang();</span><br><span class="line">            fukang.setBrand(<span class="string">"富康"</span>);</span><br><span class="line">            car = fukang;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">"elysee"</span>.equals(brand)) &#123;</span><br><span class="line">            Elysee elysee = <span class="keyword">new</span> Elysee();</span><br><span class="line">            elysee.setBrand(<span class="string">"爱丽舍"</span>);</span><br><span class="line">            car = elysee;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> car;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Car</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getBrand</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractFood</span> <span class="keyword">implements</span> <span class="title">Food</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">	<span class="keyword">private</span> String Name;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.name =  name;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> name;</span><br><span class="line">    &#125;   </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Elysee</span> <span class="keyword">extends</span> <span class="title">AbstractFood</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">fukang</span> <span class="keyword">extends</span> <span class="title">AbstractFood</span></span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a name="vMVkU"></a></p>
+<h2 id="抽象工厂模式"><a href="#抽象工厂模式" class="headerlink" title="抽象工厂模式"></a>抽象工厂模式</h2><p>简单工厂是将多个产品抽象，使用一个工厂统一创建，抽象工厂的主要作用就是把多个工厂进一步抽象。<br />比如水果工厂只生产水果，而饮料工厂只生产饮料，但是超市既有水果也有饮料，这个时候就需要多个工厂搭配。<br><a name="5Ve6n"></a></p>
+<h3 id="类图"><a href="#类图" class="headerlink" title="类图"></a>类图</h3><p><img src="https://cdn.nlark.com/yuque/0/2020/svg/564594/1601203933934-ebd15de6-aabe-4a92-b1e7-d990824eacc9.svg#align=left&display=inline&height=561&margin=%5Bobject%20Object%5D&originHeight=597&originWidth=638&size=0&status=done&style=none&width=600" alt=""><br />进一步抽象出了工厂接口 <code>SnacksFactory</code> 。</p>
+<ol>
+<li><p>工厂接口规定工厂应该提供的商品种类，所以包含所有工厂的方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FruitFactory</span> <span class="keyword">implements</span> <span class="title">SnacksFactory</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> Fruit <span class="title">getFruit</span><span class="params">(Customer customer)</span> </span>&#123;</span><br><span class="line">        Fruit fruit = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">if</span> (<span class="string">"sweet"</span>.equals(customer.getFlavor())) &#123;</span><br><span class="line">            fruit = <span class="keyword">new</span> Watermelon();</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">"acid"</span>.equals(customer.getFlavor())) &#123;</span><br><span class="line">            fruit = <span class="keyword">new</span> Lemon();</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">"smelly"</span>.equals(customer.getFlavor())) &#123;</span><br><span class="line">            fruit = <span class="keyword">new</span> Durian();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> fruit;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//水果工厂不提供饮料，水果工厂实现工厂接口后，必须实现getDrink()方法，直接返回null即可</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Drink <span class="title">getDrink</span><span class="params">(Customer customer)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>SnacksFactroyBuilder</code> 称之为 <strong>生产工厂的工厂</strong> ，工厂用来生产产品实例， <code>SnacksFactroyBuilder</code> 用来生产工厂实例。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SnacksFactoryBuilder</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> SnacksFactory <span class="title">buildFactory</span><span class="params">(String choice)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (choice.equalsIgnoreCase(<span class="string">"fruit"</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> FruitFactory();</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (choice.equalsIgnoreCase(<span class="string">"drink"</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> DrinkFactory();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a name="9kUXL"></a></p>
+<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h3><p>不提倡在工厂中定义 <code>static</code> 方法，</p>
+</li>
+<li><p>因为复杂场景下，实例方法可以被继承，扩展性较好</p>
+</li>
+<li><p>在使用 <code>Spring</code> 框架的时候，可以为 <code>SnacksFactoryBuilder</code> 加上 <code>@Component</code> 注解，可以让框架管理实例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SnacksFactoryBuilder</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> SnacksFactory <span class="title">buildFactory</span><span class="params">(String choice)</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">XxxxxServiceImpl</span> <span class="keyword">implements</span> <span class="title">XxxxxService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> SnacksFactoryBuilder snacksFactoryBuilder;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a name="LBQSX"></a></p>
+<h2 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h2><p><a name="4W2fb"></a></p>
+<h3 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h3><p><a name="cJzoD"></a></p>
+<h4 id="1-被观察类-Observable"><a href="#1-被观察类-Observable" class="headerlink" title="1. 被观察类 - Observable"></a>1. 被观察类 - Observable</h4><p>比如天气变化的通知，核心是观察天气，先抽象出天气信息对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Observable;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WeatherData</span> <span class="keyword">extends</span> <span class="title">Observable</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 城市</span></span><br><span class="line">    <span class="keyword">private</span> String cityName;</span><br><span class="line">    <span class="comment">// 时间</span></span><br><span class="line">    <span class="keyword">private</span> String time;</span><br><span class="line">    <span class="comment">// 温度</span></span><br><span class="line">    <span class="keyword">private</span> String temp;</span><br><span class="line">    <span class="comment">// 城市固定了就不变了</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">WeatherData</span><span class="params">(String cityName)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.cityName = cityName;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 打印天气信息</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> cityName + <span class="string">"，"</span> + LocalDate.now().toString() + <span class="string">" "</span> + time + <span class="string">"，气温："</span> + temp + <span class="string">"摄氏度。"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getCityName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> cityName;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getTime</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> time;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getTemp</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> temp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>天气对象类继承了 <code>Observable</code> 类，这个类时Java提供的，继承后就表示是核心的、需要被观察的类。还需要注意的是，这个设计不太一样的地方是没有 <code>setter</code> 方法，因为一个 <code>WeatherData</code> 代表一个城市的天气，初始化后就不能改变了。<br><a name="pJQiC"></a></p>
+<h4 id="2-数据变化后发起通知"><a href="#2-数据变化后发起通知" class="headerlink" title="2. 数据变化后发起通知"></a>2. 数据变化后发起通知</h4><p>什么时间的气温是多少是要被监听的重要信息，所以要在 <code>WeatherData</code> 中增加一个新的方法来专门处理</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Observable;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WeatherData</span> <span class="keyword">extends</span> <span class="title">Observable</span> </span>&#123;</span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 一个城市的气温在某个时刻发生了变化</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">changeTemp</span><span class="params">(String time, String temp)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(time == <span class="keyword">null</span> || temp == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="comment">// 输入数据为空是有问题的，不处理</span></span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 与原数据不同，说明发生了变化</span></span><br><span class="line">        <span class="keyword">if</span>(!time.equals(<span class="keyword">this</span>.time) || !temp.equals(<span class="keyword">this</span>.temp)) &#123;</span><br><span class="line">            <span class="comment">// 标记变化</span></span><br><span class="line">            <span class="keyword">super</span>.setChanged();</span><br><span class="line">            <span class="keyword">this</span>.time = time;</span><br><span class="line">            <span class="keyword">this</span>.temp = temp;</span><br><span class="line">            <span class="comment">// 发出通知 this表示把数据对象自己发送出去</span></span><br><span class="line">            <span class="keyword">super</span>.notifyObservers(<span class="keyword">this</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a name="5DxqQ"></a></p>
+<h4 id="3-谁接收通知-Observer"><a href="#3-谁接收通知-Observer" class="headerlink" title="3. 谁接收通知 - Observer"></a>3. 谁接收通知 - Observer</h4><p><code>Observer</code> 是Java提供的观察者类，实现此接口表示作为观察者。并且要自己实现 <code>update()</code> 方法，方法签名是接口定义好的，属于固定写法。方法的作用就是接收通知。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Observable;</span><br><span class="line"><span class="keyword">import</span> java.util.Observer;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WeatherObserver</span> <span class="keyword">implements</span> <span class="title">Observer</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">(Observable o, Object arg)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (arg <span class="keyword">instanceof</span> WeatherData) &#123;</span><br><span class="line">            System.out.print(<span class="keyword">this</span>.name + <span class="string">" 观察到天气变化为："</span>);</span><br><span class="line">            System.out.println(arg.toString());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a name="beyxv"></a></p>
+<h4 id="4-调用"><a href="#4-调用" class="headerlink" title="4. 调用"></a>4. 调用</h4><p>观察者可以有多个，观察者对象与被观察者对象谁先 <code>new</code> 出来都可以，但是必须调用 <code>addObserver()</code> 方法把 <strong>观察者对象实例</strong>  添加到 *<em>被观察者实例 *</em> 中，然后再调用自定义的 <code>changeTemp</code> 方法变更天气，才能触发自动通知。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WeatherTest</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 在天气变化后发邮件的观察者</span></span><br><span class="line">        WeatherObserver w1 = <span class="keyword">new</span> WeatherObserver();</span><br><span class="line">        w1.setName(<span class="string">"天气邮件观察者"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 在天气变化后发短信的观察者</span></span><br><span class="line">        WeatherObserver w2 = <span class="keyword">new</span> WeatherObserver();</span><br><span class="line">        w2.setName(<span class="string">"天气短信观察者"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 城市天气数据</span></span><br><span class="line">        WeatherData weatherData = <span class="keyword">new</span> WeatherData(<span class="string">"余杭"</span>);</span><br><span class="line">        <span class="comment">// 添加观察者</span></span><br><span class="line">        weatherData.addObserver(w1);</span><br><span class="line">        weatherData.addObserver(w2);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 气温变化</span></span><br><span class="line">        weatherData.changeTemp(<span class="string">"11:08"</span>, <span class="string">"32.8"</span>);</span><br><span class="line">        <span class="comment">// 气温变化</span></span><br><span class="line">        weatherData.changeTemp(<span class="string">"14:46"</span>, <span class="string">"29.3"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a name="eqdSt"></a></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>跟工厂模式不同的是，观察者模式主要描述的是类的行为，而不是如何创建。<br />跟工厂模式相同的是，观察者模式让 观察者和被观察者双方的耦合度降到最低。</p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2020/09/28/%E5%B8%B8%E7%94%A8%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" data-id="ckxehzo55000djkvb20dad32y" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Java注解" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2020/09/22/Java%E6%B3%A8%E8%A7%A3/" class="article-date">
@@ -129,7 +227,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/09/22/Java%E6%B3%A8%E8%A7%A3/" data-id="ckxehsrvh0007f8vb4kd9eq8u" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/09/22/Java%E6%B3%A8%E8%A7%A3/" data-id="ckxehzo4i0006jkvb010c46zk" class="article-share-link">Share</a>
       
       
     </footer>
@@ -212,7 +310,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/09/22/Maven%E5%9F%BA%E7%A1%80/" data-id="ckxehsrvh0008f8vb750m6w79" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/09/22/Maven%E5%9F%BA%E7%A1%80/" data-id="ckxehzo4g0003jkvbbcq189z0" class="article-share-link">Share</a>
       
       
     </footer>
@@ -283,7 +381,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/09/13/%E4%B8%89%E8%A7%92%E5%BD%A2%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C/" data-id="ckxehsrvi0009f8vb7arz1rck" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/09/13/%E4%B8%89%E8%A7%92%E5%BD%A2%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E5%92%8C/" data-id="ckxehzo54000cjkvb4lpnaouc" class="article-share-link">Share</a>
       
       
     </footer>
@@ -344,7 +442,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/09/09/%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E5%BA%8F%E5%88%97/" data-id="ckxehsrw6000ff8vbbvmahlmq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/09/09/%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E5%BA%8F%E5%88%97/" data-id="ckxehzo57000hjkvb9q7c8ypy" class="article-share-link">Share</a>
       
       
     </footer>
@@ -425,7 +523,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/09/02/LeetCode%E4%B9%8B%E4%BA%8C%E4%B8%89%E5%9B%9B%E6%95%B0%E4%B9%8B%E5%92%8C/" data-id="ckxehsrvc0001f8vbf5fjes5o" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/09/02/LeetCode%E4%B9%8B%E4%BA%8C%E4%B8%89%E5%9B%9B%E6%95%B0%E4%B9%8B%E5%92%8C/" data-id="ckxehzo4g0004jkvb0e602kw4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -496,7 +594,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/08/27/git%20pull%E7%9A%84%E4%BD%BF%E7%94%A8/" data-id="ckxehsrvg0006f8vb6o3ncfm9" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/08/27/git%20pull%E7%9A%84%E4%BD%BF%E7%94%A8/" data-id="ckxehzo4h0005jkvb0tlp6qtt" class="article-share-link">Share</a>
       
       
     </footer>
@@ -647,7 +745,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/07/06/git%E5%92%8Chexo%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/" data-id="ckxehsrve0003f8vb36jw4n2i" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/07/06/git%E5%92%8Chexo%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%8D%9A%E5%AE%A2/" data-id="ckxehzo4m0008jkvbg55lf9hf" class="article-share-link">Share</a>
       
       
     </footer>
@@ -696,7 +794,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/07/06/hello-world/" data-id="ckxehsrvj000af8vbhpmw2bsa" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/07/06/hello-world/" data-id="ckxehzo4i0007jkvbhy3qaltk" class="article-share-link">Share</a>
       
       
     </footer>
@@ -732,7 +830,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/07/06/hello/" data-id="ckxehsrvg0005f8vb90t8dryb" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/07/06/hello/" data-id="ckxehzo4t0009jkvbalcz81ah" class="article-share-link">Share</a>
       
       
     </footer>
@@ -765,7 +863,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">October 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">September 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">October 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">September 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li></ul>
     </div>
   </div>
 
@@ -776,6 +874,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2021/12/20/%E3%80%8A%E4%B8%96%E7%95%8C%E5%B0%BD%E5%A4%B4%E7%9A%84%E5%92%96%E5%95%A1%E9%A6%86%E3%80%8B/">《世界尽头的咖啡馆》</a>
+          </li>
         
           <li>
             <a href="/2021/10/18/%E9%87%8D%E6%96%B0%E5%87%BA%E5%8F%91/">重新出发</a>
@@ -791,10 +893,6 @@
         
           <li>
             <a href="/2021/10/11/GIT%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/">GIT分支管理</a>
-          </li>
-        
-          <li>
-            <a href="/2021/09/28/GIT%E6%97%B6%E5%85%89%E7%A9%BF%E6%A2%AD/">GIT时光穿梭</a>
           </li>
         
       </ul>

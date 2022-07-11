@@ -68,6 +68,51 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-幂等性" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/07/11/%E5%B9%82%E7%AD%89%E6%80%A7/" class="article-date">
+  <time datetime="2022-07-11T08:56:44.000Z" itemprop="datePublished">2022-07-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/07/11/%E5%B9%82%E7%AD%89%E6%80%A7/">幂等性</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="什么是幂等性"><a href="#什么是幂等性" class="headerlink" title="什么是幂等性"></a>什么是幂等性</h2><p>保证幂等性就是保证同一个请求，不论请求多少次，对资源的作用都是一样的（不是结果一样），也就是保证结果的唯一性。用数学的语言来表达就是：f(x) = f(f(x))。比如，求绝对值的函数，abs(x) = abs(abs(x))。<br>例如这样的一个场景，A系统请求B系统接口创建单据，由于网络超时或者其他可能原因，<br>1、A系统的请求可能还没到达B系统就丢失了<br>2、或者B系统已经收到B系统的请求并且已经创建了单据，但是A系统没有收到B系统的响应结果<br>A系统进行重试的时候，如果是第2种情况，那B系统就有可能再次重复创建单据，这个时候，就对B系统产生了不一样的作用，正常情况下，同一个单据只会创建一次，而由于上述的原因，同一个单据重复创建了两次，说明这个接口需要做幂等性校验。</p>
+<h2 id="如何实现幂等性"><a href="#如何实现幂等性" class="headerlink" title="如何实现幂等性"></a>如何实现幂等性</h2><ol>
+<li>全局ID（SnowFlake）</li>
+</ol>
+<p>每次A系统调用B系统时传一个全局唯一ID，B系统先看是否已有这个全局唯一ID，如果有，说明已经创建了，不需要再次创建。A系统重试时要保证是同一个全局ID。</p>
+<ol start="2">
+<li>先通过分布式锁防止并发，再select、insert保证幂等</li>
+</ol>
+<p>A系统的请求过来以后，B系统先去select是否已有，如果没有再insert，如果有则不做处理，也能保证幂等性，但如果有并发的问题，比如当A系统同时有两个请求过来（比如用户连续点击两次这样的情况），第一个请求还没有insert，第二个请求接着来了，B系统select后发现没有也会进行insert，然后就会insert两条重复数据。所以需要前置条件就是防止并发。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2022/07/11/%E5%B9%82%E7%AD%89%E6%80%A7/" data-id="cl5gii4c9000drsvb5m7q1s11" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-《世界尽头的咖啡馆》" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2021/12/20/%E3%80%8A%E4%B8%96%E7%95%8C%E5%B0%BD%E5%A4%B4%E7%9A%84%E5%92%96%E5%95%A1%E9%A6%86%E3%80%8B/" class="article-date">
@@ -115,7 +160,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2021/12/20/%E3%80%8A%E4%B8%96%E7%95%8C%E5%B0%BD%E5%A4%B4%E7%9A%84%E5%92%96%E5%95%A1%E9%A6%86%E3%80%8B/" data-id="ckxehzo4z000ajkvbb6rs6hq5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2021/12/20/%E3%80%8A%E4%B8%96%E7%95%8C%E5%B0%BD%E5%A4%B4%E7%9A%84%E5%92%96%E5%95%A1%E9%A6%86%E3%80%8B/" data-id="cl5gii4c6000arsvb3g6vgbl3" class="article-share-link">Share</a>
       
       
     </footer>
@@ -152,7 +197,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2021/10/18/%E9%87%8D%E6%96%B0%E5%87%BA%E5%8F%91/" data-id="ckxehzo63000jjkvb416hajz9" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2021/10/18/%E9%87%8D%E6%96%B0%E5%87%BA%E5%8F%91/" data-id="cl5gii4cc000krsvbhril80vd" class="article-share-link">Share</a>
       
       
     </footer>
@@ -190,7 +235,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2021/10/12/%E6%97%A9%E4%B8%8A%E5%A5%BD/" data-id="ckxehzo56000fjkvb9qkj66vn" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2021/10/12/%E6%97%A9%E4%B8%8A%E5%A5%BD/" data-id="cl5gii4ca000frsvbah3h0s1a" class="article-share-link">Share</a>
       
       
     </footer>
@@ -237,7 +282,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2021/10/11/%E3%80%8A%E5%B1%80%E5%A4%96%E4%BA%BA%E3%80%8B/" data-id="ckxehzo51000bjkvb6nsahvbz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2021/10/11/%E3%80%8A%E5%B1%80%E5%A4%96%E4%BA%BA%E3%80%8B/" data-id="cl5gii4c8000crsvbah1fe52l" class="article-share-link">Share</a>
       
       
     </footer>
@@ -295,7 +340,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2021/10/11/GIT%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/" data-id="ckxehzo4e0001jkvb9xqx8qil" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2021/10/11/GIT%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/" data-id="cl5gii4bh0000rsvbejikezn4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -348,7 +393,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2021/09/28/GIT%E6%97%B6%E5%85%89%E7%A9%BF%E6%A2%AD/" data-id="ckxehzo4a0000jkvb5gqw8uun" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2021/09/28/GIT%E6%97%B6%E5%85%89%E7%A9%BF%E6%A2%AD/" data-id="cl5gii4bo0002rsvb6xob66om" class="article-share-link">Share</a>
       
       
     </footer>
@@ -387,7 +432,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2021/08/02/%E5%8E%BB%E9%87%8D/" data-id="ckxehzo57000gjkvbhu1ue9rn" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2021/08/02/%E5%8E%BB%E9%87%8D/" data-id="cl5gii4c9000ersvb6gfx2myi" class="article-share-link">Share</a>
       
       
     </footer>
@@ -426,7 +471,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2021/07/22/%E8%BF%91%E6%9C%9F%E5%BF%83%E5%BE%97/" data-id="ckxehzo58000ijkvba2ogh7e5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2021/07/22/%E8%BF%91%E6%9C%9F%E5%BF%83%E5%BE%97/" data-id="cl5gii4cb000hrsvb2ebqgtyj" class="article-share-link">Share</a>
       
       
     </footer>
@@ -531,84 +576,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/10/28/%E6%8E%92%E5%BA%8F/" data-id="ckxehzo56000ejkvbg8eo2eas" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-JavaScript实用技巧" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2020/10/07/JavaScript%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/" class="article-date">
-  <time datetime="2020-10-07T08:53:35.000Z" itemprop="datePublished">2020-10-07</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/10/07/JavaScript%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/">JavaScript实用技巧</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="浏览器渲染过程"><a href="#浏览器渲染过程" class="headerlink" title="浏览器渲染过程"></a>浏览器渲染过程</h2><p>问：在浏览器中，从输入URL到页面展示，这中间发生了什么？<br />如下图，一个浏览器有三个进程，浏览器进程、网络进程以及渲染进程。</p>
-<p><img src="https://cdn.nlark.com/yuque/0/2020/png/564594/1596854886412-90932145-fc74-43b2-b116-e33deb199665.png#align=left&display=inline&height=281&margin=%5Bobject%20Object%5D&name=image.png&originHeight=519&originWidth=1380&size=472637&status=done&style=none&width=746" alt="image.png"></p>
-<ol>
-<li>网络进程中，发起url请求后有可能会进行一个重定向，然后读取响应头信息（这个信息会告诉浏览器我是HTML还是其他的谁），读取响应体数据（就是网页源代码）。</li>
-<li>渲染过程</li>
-</ol>
-<p>a. 处理HTML构建DOM树<br />b. 处理CSS构建CSSOM树<br />c. 将DOM和CSSOM合并成一个渲染树<br />d. 根据渲染树布局，计算每个节点几何信息<br />e. 将几何信息绘制在屏幕上  <br /><br><br /><img src="https://cdn.nlark.com/yuque/0/2020/png/564594/1596855583674-0a8a3f99-ba87-4303-bc21-66565b3caba8.png#align=left&display=inline&height=242&margin=%5Bobject%20Object%5D&name=image.png&originHeight=484&originWidth=1017&size=177405&status=done&style=none&width=508.5" alt="image.png"><br /></p>
-<p><a name="EzqJz"></a></p>
-<h2 id="JavaScript实用技巧"><a href="#JavaScript实用技巧" class="headerlink" title="JavaScript实用技巧"></a>JavaScript实用技巧</h2><p><a name="cZsL3"></a></p>
-<h3 id="var-和-let-const"><a href="#var-和-let-const" class="headerlink" title="var 和 let/const"></a>var 和 let/const</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//我们想让这段代码隔0.1S打印0到9.但是结果打印了10个10</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>;i &lt; <span class="number">10</span>;i++) &#123;</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(i);&#125;,<span class="number">100</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//这是因为var会提升作用域，提升到全局。</span></span><br><span class="line"><span class="comment">//setTimeout延迟100ms，但是for循环瞬间就执行了10次，所以每次当100ms到的时候，i已经等于10了</span></span><br><span class="line"><span class="keyword">var</span> i = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (i = <span class="number">0</span>;i &lt; <span class="number">10</span>;i++) &#123;</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(i);&#125;,<span class="number">100</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//换成ES6的let就可以了</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>;i &lt; <span class="number">10</span>;i++) &#123;</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(i);&#125;,<span class="number">100</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>实际上当使用 <code>let</code> 的时候，编译器会将 <code>let</code> 换成 <code>var</code> ，就是将 <code>var</code> 的作用域变成块作用域.</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//编译之后大概是这样</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">print</span>(<span class="params">i</span>)</span>&#123;</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(i);&#125;,<span class="number">100</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>;i &lt; <span class="number">10</span>;i++) &#123;</span><br><span class="line">	print(i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><a name="HTuqC"></a></p>
-<h3 id="箭头函数"><a href="#箭头函数" class="headerlink" title="箭头函数"></a>箭头函数</h3><ol>
-<li><p>例子1</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>;i &lt; <span class="number">10</span>;i++) &#123;</span><br><span class="line">  setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(i);&#125;,<span class="number">1000</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用箭头函数</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>;i &lt; <span class="number">10</span>;i++) &#123;</span><br><span class="line">  setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(i);&#125;,<span class="number">1000</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>例子2</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">abc</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'abc'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用箭头函数</span></span><br><span class="line"><span class="keyword">const</span> abc = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'abc'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>例子3</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sum</span>(<span class="params">a,b</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> a+b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//使用箭头函数</span></span><br><span class="line"><span class="keyword">const</span> sum = <span class="function">(<span class="params">a,b</span>) =&gt;</span> &#123;</span><br><span class="line">	<span class="keyword">return</span> a+b;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//简化</span></span><br><span class="line"><span class="keyword">const</span> sum = <span class="function">(<span class="params">a,b</span>) =&gt;</span> a+b;</span><br></pre></td></tr></table></figure>
-<p><a name="u7tZy"></a></p>
-<h3 id="回调函数-amp-Promise"><a href="#回调函数-amp-Promise" class="headerlink" title="回调函数 &amp; Promise"></a>回调函数 &amp; Promise</h3><p>比如给一个元素添加一个监听事件就是是一个回调函数。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//箭头函数就是回调函数</span></span><br><span class="line"><span class="built_in">document</span>.addEventListener(<span class="string">'click'</span>,()=&gt;&#123;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p><a name="Oi4PR"></a></p>
-<h4 id="为什么会出现回调函数？"><a href="#为什么会出现回调函数？" class="headerlink" title="为什么会出现回调函数？"></a>为什么会出现回调函数？</h4></li>
-</ol>
-<p>1.理解同步和异步：</p>
-<p>同步要等待其他事做完才会接着做下面的事，是按顺序执行（烧完水才能吃东西）<br />异步在做一件事的同时还可以做其他事（一边烧水，一边吃东西）</p>
-<p>2.异步很方便，JS中通过使用回调函数来进行异步操作</p>
-<p>例子：进入优课达网站要进行： 登录=&gt;获取用户信息=&gt;获取我的课程=&gt;初始化</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">login</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="comment">//模拟一下登录需要1s</span></span><br><span class="line">  setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'登录成功'</span>);</span><br><span class="line">  &#125;,<span class="number">1000</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getUserInfo</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'获取用户信息成功'</span>);</span><br><span class="line">  &#125;,<span class="number">2000</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getMyCourse</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'获取课程信息成功'</span>);</span><br><span class="line">  &#125;,<span class="number">3000</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">init</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  login();</span><br><span class="line">  getUserInfo();</span><br><span class="line">  getMyCourse();</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'初始化成功'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">init();</span><br><span class="line"></span><br><span class="line">------------------</span><br><span class="line">输出结果：</span><br><span class="line">初始化成功</span><br><span class="line">登录成功</span><br><span class="line">获取用户信息成功</span><br><span class="line">获取课程信息成功</span><br></pre></td></tr></table></figure>
-<p>这里就出现了问题，虽然是异步执行的（登录需要1s，所以就先去执行初始化了），但是还没有登录，也没有获取到用户信息如何初始化呢？这时就需要回调函数了。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//模拟回调函数callback 登录成功以后你再来调用我</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">login</span>(<span class="params">callback</span>)</span>&#123;</span><br><span class="line">  <span class="comment">//模拟一下登录需要1s</span></span><br><span class="line">  setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'登录成功'</span>);</span><br><span class="line">    callback();</span><br><span class="line">  &#125;,<span class="number">1000</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//获取到信息以后你再来调用我</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getUserInfo</span>(<span class="params">callback</span>)</span>&#123;</span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'获取用户信息成功'</span>);</span><br><span class="line">  callback();</span><br><span class="line">  &#125;,<span class="number">2000</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//获取到我的课程以后再来调用我</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getMyCourse</span>(<span class="params">callback</span>)</span>&#123;</span><br><span class="line">setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'获取课程信息成功'</span>);</span><br><span class="line">    callback();</span><br><span class="line">  &#125;,<span class="number">3000</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">init</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">  login的回调函数调用getUserInfo,</span></span><br><span class="line"><span class="comment">  getUserInfo的回调函数调用getMyCourse，</span></span><br><span class="line"><span class="comment">  getMyCourse的回调里面初始化成功</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  login(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">    getUserInfo(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">      getMyCourse(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'初始化成功'</span>);</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">init();</span><br><span class="line">----------------------</span><br><span class="line">输出结果：</span><br><span class="line"></span><br><span class="line">登录成功</span><br><span class="line">获取用户信息成功</span><br><span class="line">获取课程信息成功</span><br><span class="line">初始化成功</span><br></pre></td></tr></table></figure>
-<p>上面的写法结果是正确的，完全可。但是实际情况是每一个函数里面都有复杂的逻辑，而且还会有更多的请求函数，比如还要获取当前的打卡进度，获取课程进度等，那就需要一直回调，就变成了 <strong>回调地狱</strong> 。<br><a name="HWyRy"></a></p>
-<h4 id="ES6出现Promise-解决回调地狱"><a href="#ES6出现Promise-解决回调地狱" class="headerlink" title="ES6出现Promise 解决回调地狱"></a>ES6出现Promise 解决回调地狱</h4><p><code>Promise</code> 的出现就是为了去掉回调。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//promise会自动传一个resolve进来，函数执行完以后调用一下resolve就行了</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">login</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>) =&gt;</span> &#123;</span><br><span class="line">    setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'登录成功'</span>);</span><br><span class="line">      resolve();</span><br><span class="line">    &#125;,<span class="number">1000</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getUserInfo</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>) =&gt;</span> &#123;</span><br><span class="line">    setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'获取用户信息成功'</span>);</span><br><span class="line">      resolve();</span><br><span class="line">    &#125;,<span class="number">2000</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getMyCourse</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>) =&gt;</span> &#123;</span><br><span class="line">    setTimeout(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(<span class="string">'获取课程信息成功'</span>);</span><br><span class="line">      resolve();</span><br><span class="line">    &#125;,<span class="number">3000</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">init</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">//先登录然后执行一个函数，这个函数里面执行getUserInfo()</span></span><br><span class="line">  <span class="comment">//然后再执行个函数里面执行getMyCourse</span></span><br><span class="line">  login()</span><br><span class="line">   .then(<span class="function"><span class="params">()</span>=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> getUserInfo();</span><br><span class="line">    &#125;)</span><br><span class="line">   .then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> getMyCourse();</span><br><span class="line">    &#125;)</span><br><span class="line">    .then(<span class="function"><span class="params">()</span> =&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'初始化成功'</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//简化init()</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">init</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  login()</span><br><span class="line">    .then(getUserInfo)<span class="comment">//这里注意传进去的不是函数而是函数执行的结果</span></span><br><span class="line">    .then(getMyCourse)</span><br><span class="line">    .then(<span class="function"><span class="params">()</span> =&gt;</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'初始化成功'</span>);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">init();</span><br><span class="line">----------------------</span><br><span class="line">输出结果：</span><br><span class="line"></span><br><span class="line">登录成功</span><br><span class="line">获取用户信息成功</span><br><span class="line">获取课程信息成功</span><br><span class="line">初始化成功</span><br></pre></td></tr></table></figure>
-<p><code>Promise</code> 的用法和 <code>fetch</code> 很像。其实 <code>fetch</code> 本身就是一个 <code>Promise</code> ,只有 <code>promise</code> 才有 <code>.then</code> 这个方法。<br><a name="QBA4d"></a></p>
-<h4 id="ES7-async-amp-await"><a href="#ES7-async-amp-await" class="headerlink" title="ES7 async &amp; await"></a>ES7 async &amp; await</h4><p>ES7用 <code>async</code> 和 <code>await</code> 又做了简化， <code>await</code> 后面接的一定是 <code>promise</code> 的东西。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//异步</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">init</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="comment">//等待</span></span><br><span class="line">  <span class="keyword">await</span> login();</span><br><span class="line">  <span class="keyword">await</span> getUserInfo();</span><br><span class="line">  <span class="keyword">await</span> getMyCourse();</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'初始化成功'</span>);</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2020/10/07/JavaScript%E5%AE%9E%E7%94%A8%E6%8A%80%E5%B7%A7/" data-id="ckxehzo4f0002jkvbgn9zchfl" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2020/10/28/%E6%8E%92%E5%BA%8F/" data-id="cl5gii4cb000irsvb4366fpgf" class="article-share-link">Share</a>
       
       
     </footer>
@@ -622,7 +590,7 @@
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
   </nav>
 
 </section>
@@ -641,7 +609,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">October 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">September 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">October 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">September 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li></ul>
     </div>
   </div>
 
@@ -652,6 +620,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2022/07/11/%E5%B9%82%E7%AD%89%E6%80%A7/">幂等性</a>
+          </li>
         
           <li>
             <a href="/2021/12/20/%E3%80%8A%E4%B8%96%E7%95%8C%E5%B0%BD%E5%A4%B4%E7%9A%84%E5%92%96%E5%95%A1%E9%A6%86%E3%80%8B/">《世界尽头的咖啡馆》</a>
@@ -669,10 +641,6 @@
             <a href="/2021/10/11/%E3%80%8A%E5%B1%80%E5%A4%96%E4%BA%BA%E3%80%8B/">《局外人》</a>
           </li>
         
-          <li>
-            <a href="/2021/10/11/GIT%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/">GIT分支管理</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -685,7 +653,7 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2021 John Doe<br>
+      &copy; 2022 John Doe<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

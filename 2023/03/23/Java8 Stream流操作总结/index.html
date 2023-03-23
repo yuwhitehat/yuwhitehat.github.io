@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Java8 Stream流操作总结 | YU</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="一、简介Stream流一般用于对集合进行投影、转换、过滤、排序等。如下是常用的一些操作：    方法 中文 操作类型 类比SQL 使用的类型&#x2F;函数式接口 作用    filter 过滤&#x2F;筛选 中间 where Predicate 对流过滤，使元素符合传入条件   map 转换&#x2F;投影 中间 select Function&lt;T, R&gt; 使用传入的函数，对流中每一个元素进行转换   flat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java8 Stream流操作总结">
+<meta property="og:url" content="http://yoursite.com/2023/03/23/Java8%20Stream%E6%B5%81%E6%93%8D%E4%BD%9C%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="YU">
+<meta property="og:description" content="一、简介Stream流一般用于对集合进行投影、转换、过滤、排序等。如下是常用的一些操作：    方法 中文 操作类型 类比SQL 使用的类型&#x2F;函数式接口 作用    filter 过滤&#x2F;筛选 中间 where Predicate 对流过滤，使元素符合传入条件   map 转换&#x2F;投影 中间 select Function&lt;T, R&gt; 使用传入的函数，对流中每一个元素进行转换   flat">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.nlark.com/yuque/0/2023/png/564594/1679468050700-fa5fa73d-902c-4016-afb3-990890a32b59.png#averageHue=%23474c4f&clientId=u87e9785a-e0b7-4&from=ui&id=u26678f6b&name=image2023-3-21_11-27-2.png&originHeight=215&originWidth=654&originalType=binary&ratio=1.25&rotation=0&showTitle=false&size=21829&status=done&style=none&taskId=u68cfd75a-db02-423c-acfb-caaf2baee76&title=">
+<meta property="article:published_time" content="2023-03-23T02:37:37.000Z">
+<meta property="article:modified_time" content="2023-03-23T02:59:28.856Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.nlark.com/yuque/0/2023/png/564594/1679468050700-fa5fa73d-902c-4016-afb3-990890a32b59.png#averageHue=%23474c4f&clientId=u87e9785a-e0b7-4&from=ui&id=u26678f6b&name=image2023-3-21_11-27-2.png&originHeight=215&originWidth=654&originalType=binary&ratio=1.25&rotation=0&showTitle=false&size=21829&status=done&style=none&taskId=u68cfd75a-db02-423c-acfb-caaf2baee76&title=">
+  
+    <link rel="alternate" href="/atom.xml" title="YU" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">YU</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Think of Wind.</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Java8 Stream流操作总结" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2023/03/23/Java8%20Stream%E6%B5%81%E6%93%8D%E4%BD%9C%E6%80%BB%E7%BB%93/" class="article-date">
+  <time datetime="2023-03-23T02:37:37.000Z" itemprop="datePublished">2023-03-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Java8 Stream流操作总结
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h2><p>Stream流一般用于对集合进行投影、转换、过滤、排序等。<br>如下是常用的一些操作：</p>
+<table>
+<thead>
+<tr>
+<th><strong>方法</strong></th>
+<th><strong>中文</strong></th>
+<th><strong>操作类型</strong></th>
+<th><strong>类比SQL</strong></th>
+<th><strong>使用的类型/函数式接口</strong></th>
+<th><strong>作用</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>filter</td>
+<td>过滤/筛选</td>
+<td>中间</td>
+<td>where</td>
+<td>Predicate<T></td>
+<td>对流过滤，使元素符合传入条件</td>
+</tr>
+<tr>
+<td>map</td>
+<td>转换/投影</td>
+<td>中间</td>
+<td>select</td>
+<td>Function&lt;T, R&gt;</td>
+<td>使用传入的函数，对流中每一个元素进行转换</td>
+</tr>
+<tr>
+<td>flatMap</td>
+<td>展开/扁平化</td>
+<td>中间</td>
+<td>N/A</td>
+<td>Function&lt;T, Stream<R>&gt;</td>
+<td>相当于map+flat，通过map把每一个元素转换为一个流，</td>
+</tr>
+<tr>
+<td>然后把所有流链接到一起扁平化展示</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>sorted</td>
+<td>排序</td>
+<td>中间</td>
+<td>order by</td>
+<td>Comparator<T></td>
+<td>使用传入的比较器，对流中的元素排序</td>
+</tr>
+<tr>
+<td>distinct</td>
+<td>去重</td>
+<td>中间</td>
+<td>distinct</td>
+<td>long</td>
+<td>对流中元素去重（使用Object.equals判重）</td>
+</tr>
+<tr>
+<td>skip &amp; limit</td>
+<td>分页</td>
+<td>中间</td>
+<td>limit</td>
+<td>long</td>
+<td>跳过流中部分元素以及限制元素数量</td>
+</tr>
+<tr>
+<td>collect</td>
+<td>收集</td>
+<td>终结</td>
+<td>N/A</td>
+<td>Collector&lt;T,A,R&gt;</td>
+<td>对流进行终结操作，把流导出成为我们需要的数据结构</td>
+</tr>
+<tr>
+<td>forEach</td>
+<td>遍历</td>
+<td>终结</td>
+<td>N/A</td>
+<td>Consumer<T></td>
+<td>对每一个元素遍历进行消费</td>
+</tr>
+<tr>
+<td>anyMatch</td>
+<td>是否有元素匹配</td>
+<td>终结</td>
+<td>N/A</td>
+<td>Predicate<T></td>
+<td>使用谓词判断是否有任何一个元素满足匹配</td>
+</tr>
+<tr>
+<td>allMatch</td>
+<td>是否所有元素匹配</td>
+<td>终结</td>
+<td>N/A</td>
+<td>Predicate<T></td>
+<td>使用谓词判断是否所有元素都满足匹配</td>
+</tr>
+</tbody></table>
+<h2 id="二、操作详解"><a href="#二、操作详解" class="headerlink" title="二、操作详解"></a>二、操作详解</h2><h3 id="创建流"><a href="#创建流" class="headerlink" title="创建流"></a>创建流</h3><p>要使用流，就要先创建流。创建流一般有五种方式：<br>1、通过 stream 方法把 List 或数组转换为流；<br>2、通过 Stream.of 方法直接传入多个元素构成一个流；<br>3、通过 Stream.iterate 方法使用迭代的方式构造一个无限流，然后使用 limit 限制流元素个数；<br>4、通过 Stream.generate 方法从外部传入一个提供元素的 Supplier 来构造无限流，然后使用 limit 限制流元素个数；<br>5、通过 IntStream 或 DoubleStream 构造基本类型的流。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//通过stream方法把List或数组转换为流</span></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">stream</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Arrays.asList(<span class="string">"a1"</span>, <span class="string">"a2"</span>, <span class="string">"a3"</span>).stream().forEach(System.out::println);</span><br><span class="line">    Arrays.stream(<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>&#125;).forEach(System.out::println);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">//通过Stream.of方法直接传入多个元素构成一个流</span></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">of</span><span class="params">()</span></span>&#123;</span><br><span class="line">    String[] arr = &#123;<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>&#125;;</span><br><span class="line">    Stream.of(arr).forEach(System.out::println);</span><br><span class="line">    Stream.of(<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>).forEach(System.out::println);</span><br><span class="line">    Stream.of(<span class="number">1</span>, <span class="number">2</span>, <span class="string">"a"</span>).map(item -&gt; item.getClass().getName()).forEach(System.out::println);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">//通过Stream.iterate方法使用迭代的方式构造一个无限流，然后使用limit限制流元素个数</span></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">iterate</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Stream.iterate(<span class="number">2</span>, item -&gt; item * <span class="number">2</span>).limit(<span class="number">10</span>).forEach(System.out::println);</span><br><span class="line">    Stream.iterate(BigInteger.ZERO, n -&gt; n.add(BigInteger.TEN)).limit(<span class="number">10</span>).forEach(System.out::println);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">//通过Stream.generate方法从外部传入一个提供元素的Supplier来构造无限流，然后使用limit限制流元素个数</span></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">generate</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Stream.generate(() -&gt; <span class="string">"test"</span>).limit(<span class="number">3</span>).forEach(System.out::println);</span><br><span class="line">    Stream.generate(Math::random).limit(<span class="number">10</span>).forEach(System.out::println);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">//通过IntStream或DoubleStream构造基本类型的流</span></span><br><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">primitive</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">//演示IntStream和DoubleStream</span></span><br><span class="line">    IntStream.range(<span class="number">1</span>, <span class="number">3</span>).forEach(System.out::println);</span><br><span class="line">    IntStream.range(<span class="number">0</span>, <span class="number">3</span>).mapToObj(i -&gt; <span class="string">"x"</span>).forEach(System.out::println);</span><br><span class="line"> </span><br><span class="line">    IntStream.rangeClosed(<span class="number">1</span>, <span class="number">3</span>).forEach(System.out::println);</span><br><span class="line">    DoubleStream.of(<span class="number">1.1</span>, <span class="number">2.2</span>, <span class="number">3.3</span>).forEach(System.out::println);</span><br><span class="line"> </span><br><span class="line">    <span class="comment">//各种转换，后面注释代表了输出结果</span></span><br><span class="line">    System.out.println(IntStream.of(<span class="number">1</span>, <span class="number">2</span>).toArray().getClass()); <span class="comment">//class [I</span></span><br><span class="line">    System.out.println(Stream.of(<span class="number">1</span>, <span class="number">2</span>).mapToInt(Integer::intValue).toArray().getClass()); <span class="comment">//class [I</span></span><br><span class="line">    System.out.println(IntStream.of(<span class="number">1</span>, <span class="number">2</span>).boxed().toArray().getClass()); <span class="comment">//class [Ljava.lang.Object;</span></span><br><span class="line">    System.out.println(IntStream.of(<span class="number">1</span>, <span class="number">2</span>).asDoubleStream().toArray().getClass()); <span class="comment">//class [D</span></span><br><span class="line">    System.out.println(IntStream.of(<span class="number">1</span>, <span class="number">2</span>).asLongStream().toArray().getClass()); <span class="comment">//class [J</span></span><br><span class="line"> </span><br><span class="line">    <span class="comment">//注意基本类型流和装箱后的流的区别</span></span><br><span class="line">    Arrays.asList(<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>).stream()   <span class="comment">// Stream&lt;String&gt;</span></span><br><span class="line">            .mapToInt(String::length)       <span class="comment">// IntStream</span></span><br><span class="line">            .asLongStream()                 <span class="comment">// LongStream</span></span><br><span class="line">            .mapToDouble(x -&gt; x / <span class="number">10.0</span>)     <span class="comment">// DoubleStream</span></span><br><span class="line">            .boxed()                        <span class="comment">// Stream&lt;Double&gt;</span></span><br><span class="line">            .mapToLong(x -&gt; <span class="number">1L</span>)             <span class="comment">// LongStream</span></span><br><span class="line">            .mapToObj(x -&gt; <span class="string">""</span>)              <span class="comment">// Stream&lt;String&gt;</span></span><br><span class="line">            .collect(Collectors.toList());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接下来，通过模拟订单相关的场景来使用stream流进行操作，方便理解。<br>定义订单类、商品类、顾客类：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 商品类</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> LiuZiyu</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2023/03/18 18:19</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="meta">@NoArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OrderItem</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Long productId;</span><br><span class="line">    <span class="keyword">private</span> String productName;</span><br><span class="line">    <span class="keyword">private</span> Double productPrice;</span><br><span class="line">    <span class="keyword">private</span> Integer productQuantity;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 产品</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> LiuZiyu</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2023/03/18 18:21</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Product</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Double price;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;Product&gt; <span class="title">getData</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Arrays.asList(</span><br><span class="line">                <span class="keyword">new</span> Product(<span class="number">1L</span>, <span class="string">"苹果"</span>, <span class="number">1.0</span>),</span><br><span class="line">                <span class="keyword">new</span> Product(<span class="number">2L</span>, <span class="string">"桔子"</span>, <span class="number">2.0</span>),</span><br><span class="line">                <span class="keyword">new</span> Product(<span class="number">3L</span>, <span class="string">"香蕉"</span>, <span class="number">3.0</span>),</span><br><span class="line">                <span class="keyword">new</span> Product(<span class="number">4L</span>, <span class="string">"芒果"</span>, <span class="number">4.0</span>),</span><br><span class="line">                <span class="keyword">new</span> Product(<span class="number">5L</span>, <span class="string">"西瓜"</span>, <span class="number">5.0</span>),</span><br><span class="line">                <span class="keyword">new</span> Product(<span class="number">6L</span>, <span class="string">"葡萄"</span>, <span class="number">6.0</span>),</span><br><span class="line">                <span class="keyword">new</span> Product(<span class="number">7L</span>, <span class="string">"桃子"</span>, <span class="number">7.0</span>),</span><br><span class="line">                <span class="keyword">new</span> Product(<span class="number">8L</span>, <span class="string">"椰子"</span>, <span class="number">8.0</span>),</span><br><span class="line">                <span class="keyword">new</span> Product(<span class="number">9L</span>, <span class="string">"菠萝"</span>, <span class="number">9.0</span>),</span><br><span class="line">                <span class="keyword">new</span> Product(<span class="number">10L</span>, <span class="string">"石榴"</span>, <span class="number">10.0</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 顾客</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> LiuZiyu</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2023/03/18 18:22</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Customer</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;Customer&gt; <span class="title">getData</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Arrays.asList(</span><br><span class="line">                <span class="keyword">new</span> Customer(<span class="number">10L</span>, <span class="string">"小张"</span>),</span><br><span class="line">                <span class="keyword">new</span> Customer(<span class="number">11L</span>, <span class="string">"小王"</span>),</span><br><span class="line">                <span class="keyword">new</span> Customer(<span class="number">12L</span>, <span class="string">"小李"</span>),</span><br><span class="line">                <span class="keyword">new</span> Customer(<span class="number">13L</span>, <span class="string">"小朱"</span>),</span><br><span class="line">                <span class="keyword">new</span> Customer(<span class="number">14L</span>, <span class="string">"小徐"</span>)</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 订单类</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> LiuZiyu</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2023/03/18 18:18</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Order</span> </span>&#123;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line">    <span class="keyword">private</span> Long customerId;</span><br><span class="line">    <span class="keyword">private</span> String customerName;</span><br><span class="line">    <span class="keyword">private</span> List&lt;OrderItem&gt; orderItemList;</span><br><span class="line">    <span class="keyword">private</span> Double totalPrice;</span><br><span class="line">    <span class="keyword">private</span> LocalDateTime placedAt;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> List&lt;Order&gt; <span class="title">getData</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        List&lt;Product&gt; products = Product.getData();</span><br><span class="line">        List&lt;Customer&gt; customers = Customer.getData();</span><br><span class="line"> </span><br><span class="line">        Random random = <span class="keyword">new</span> Random();</span><br><span class="line">        <span class="keyword">return</span> LongStream.rangeClosed(<span class="number">1</span>, <span class="number">10</span>).mapToObj(i -&gt;</span><br><span class="line">        &#123;</span><br><span class="line">            Order order = <span class="keyword">new</span> Order();</span><br><span class="line">            order.setId(i);</span><br><span class="line">            order.setPlacedAt(LocalDateTime.now().minusHours(random.nextInt(<span class="number">24</span> * <span class="number">365</span>)));</span><br><span class="line"> </span><br><span class="line">            order.setOrderItemList(IntStream.rangeClosed(<span class="number">1</span>, random.ints(<span class="number">1</span>, <span class="number">1</span>, <span class="number">8</span>).findFirst().getAsInt()).mapToObj(j -&gt;</span><br><span class="line">            &#123;</span><br><span class="line">                OrderItem orderItem = <span class="keyword">new</span> OrderItem();</span><br><span class="line">                Product product = products.get(random.nextInt(products.size()));</span><br><span class="line">                orderItem.setProductId(product.getId());</span><br><span class="line">                orderItem.setProductName(product.getName());</span><br><span class="line">                orderItem.setProductPrice(product.getPrice());</span><br><span class="line">                orderItem.setProductQuantity(random.ints(<span class="number">1</span>, <span class="number">1</span>, <span class="number">5</span>).findFirst().getAsInt());</span><br><span class="line">                <span class="keyword">return</span> orderItem;</span><br><span class="line">            &#125;).collect(Collectors.toList()));</span><br><span class="line">            order.setTotalPrice(order.getOrderItemList().stream().mapToDouble(item -&gt; item.getProductPrice() * item.getProductQuantity()).sum());</span><br><span class="line"> </span><br><span class="line">            Customer customer = customers.get(random.nextInt(customers.size()));</span><br><span class="line">            order.setCustomerId(customer.getId());</span><br><span class="line">            order.setCustomerName(customer.getName());</span><br><span class="line"> </span><br><span class="line">            <span class="keyword">return</span> order;</span><br><span class="line">        &#125;).collect(Collectors.toList());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h3><p>filter 方法可以实现过滤操作，类似 SQL 中的 where。我们可以使用一行代码，通过 filter 方法实现查询所有订单中最近半年金额大于 40 的订单，通过连续叠加 filter 方法进行多次条件过滤：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//最近半年的金额大于40的订单</span></span><br><span class="line">orders.stream()</span><br><span class="line">        .filter(Objects::nonNull) <span class="comment">//过滤null值</span></span><br><span class="line">        .filter(order -&gt; order.getPlacedAt().isAfter(LocalDateTime.now().minusMonths(<span class="number">6</span>))) <span class="comment">//最近半年的订单</span></span><br><span class="line">        .filter(order -&gt; order.getTotalPrice() &gt; <span class="number">40</span>) <span class="comment">//金额大于40的订单</span></span><br><span class="line">        .forEach(System.out::println); </span><br><span class="line"><span class="comment">// 或</span></span><br><span class="line">orders.stream()</span><br><span class="line">        .filter(order -&gt; Objects.nonNull(order) &amp;&amp; order.getPlacedAt().isAfter(LocalDateTime.now().minusMonths(<span class="number">6</span>)) &amp;&amp; order.getTotalPrice() &gt; <span class="number">40</span>)</span><br><span class="line">        .forEach(System.out::println);</span><br></pre></td></tr></table></figure>
+<h3 id="map"><a href="#map" class="headerlink" title="map"></a>map</h3><p>map 操作可以做转换（或者说投影），类似 SQL 中的 select。这里用两种方式统计订单中所有商品的数量，前一种是通过两次遍历实现，后一种是通过两次 mapToLong+sum 方法实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//计算所有订单商品数量</span></span><br><span class="line"><span class="comment">//通过两次遍历实现</span></span><br><span class="line">LongAdder longAdder = <span class="keyword">new</span> LongAdder();</span><br><span class="line">orders.stream().forEach(order -&gt;</span><br><span class="line">        order.getOrderItemList().forEach(orderItem -&gt; longAdder.add(orderItem.getProductQuantity())));</span><br><span class="line"> </span><br><span class="line"><span class="comment">//使用两次mapToLong+sum方法实现</span></span><br><span class="line">orders.stream()</span><br><span class="line">        .mapToLong(order -&gt; order.getOrderItemList().stream().mapToLong(OrderItem::getProductQuantity).sum())</span><br><span class="line">        .sum();</span><br></pre></td></tr></table></figure>
+<h3 id="flatMap"><a href="#flatMap" class="headerlink" title="flatMap"></a>flatMap</h3><p>flatMap 展开或者叫扁平化操作，相当于 map+flat，通过 map 把每一个元素替换为一个流，然后展开这个流。比如，我们要统计所有订单的总价格，如果不依赖订单中的总价格字段，可以有两种方式：<br>第一种，直接通过原始商品列表的商品个数 * 商品单价进行统计，可以先把订单通过 flatMap 展开成商品清单，也就是把 Order 替换为 Stream，然后对每一个 OrderItem 用 mapToDouble 转换获得商品总价，最后进行一次 sum 求和；<br>第二种，利用 flatMapToDouble 方法把列表中每一项展开替换为一个 DoubleStream，也就是直接把每一个订单转换为每一个商品的总价，然后求和。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//依赖订单上的总价格字段</span></span><br><span class="line">orders.stream().mapToDouble(Order::getTotalPrice).sum();</span><br><span class="line"> </span><br><span class="line"><span class="comment">//直接展开订单商品进行价格统计</span></span><br><span class="line">orders.stream()</span><br><span class="line">        .flatMap(order -&gt; order.getOrderItemList().stream())</span><br><span class="line">        .mapToDouble(item -&gt; item.getProductQuantity() * item.getProductPrice()).sum();</span><br><span class="line"> </span><br><span class="line"><span class="comment">//另一种方式flatMap+mapToDouble=flatMapToDouble</span></span><br><span class="line">orders.stream()</span><br><span class="line">        .flatMapToDouble(order -&gt;</span><br><span class="line">                order.getOrderItemList()</span><br><span class="line">                        .stream().mapToDouble(item -&gt; item.getProductQuantity() * item.getProductPrice()))</span><br><span class="line">        .sum();</span><br></pre></td></tr></table></figure>
+<h3 id="sorted"><a href="#sorted" class="headerlink" title="sorted"></a>sorted</h3><p>sorted 操作可以用于行内排序的场景，类似 SQL 中的 order by。比如，要实现大于 50 元订单的按价格倒序取前 5，可以通过 Order::getTotalPrice 方法引用直接指定需要排序的依据字段，通过 reversed() 实现倒序：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//大于50的订单,按照订单价格倒序前5</span></span><br><span class="line">orders.stream()</span><br><span class="line">        .filter(order -&gt; order.getTotalPrice() &gt; <span class="number">50</span>)</span><br><span class="line">        .sorted(comparing(Order::getTotalPrice).reversed())</span><br><span class="line">        .limit(<span class="number">5</span>)</span><br><span class="line">        .forEach(System.out::println);</span><br></pre></td></tr></table></figure>
+<h3 id="distinct"><a href="#distinct" class="headerlink" title="distinct"></a>distinct</h3><p>distinct 操作的作用是去重，类似 SQL 中的 distinct。比如下面的代码实现：</p>
+<ul>
+<li><p>查询去重后的下单用户。使用 map 从订单提取出购买用户，然后使用 distinct 去重。</p>
+</li>
+<li><p>查询购买过的商品名。使用 flatMap+map 提取出订单中所有的商品名，然后使用 distinct 去重。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//去重的下单用户</span></span><br><span class="line">System.out.println(orders.stream().map(order -&gt; order.getCustomerName()).distinct().collect(joining(<span class="string">","</span>)));</span><br><span class="line"> </span><br><span class="line"><span class="comment">//所有购买过的商品</span></span><br><span class="line">System.out.println(orders.stream()</span><br><span class="line">        .flatMap(order -&gt; order.getOrderItemList().stream())</span><br><span class="line">        .map(OrderItem::getProductName)</span><br><span class="line">        .distinct().collect(joining(<span class="string">","</span>)));</span><br></pre></td></tr></table></figure>
+<h3 id="skip-amp-limit"><a href="#skip-amp-limit" class="headerlink" title="skip &amp; limit"></a>skip &amp; limit</h3><p>skip 和 limit 操作用于分页，类似 MySQL 中的 limit。其中，skip 实现跳过一定的项，limit 用于限制项总数。比如下面的两段代码：</p>
+</li>
+<li><p>按照下单时间排序，查询前 2 个订单的顾客姓名和下单时间；</p>
+</li>
+<li><p>按照下单时间排序，查询第 3 和第 4 个订单的顾客姓名和下单时间。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//按照下单时间排序，查询前2个订单的顾客姓名和下单时间</span></span><br><span class="line">orders.stream()</span><br><span class="line">        .sorted(comparing(Order::getPlacedAt))</span><br><span class="line">        .map(order -&gt; order.getCustomerName() + <span class="string">"@"</span> + order.getPlacedAt())</span><br><span class="line">        .limit(<span class="number">2</span>).forEach(System.out::println);</span><br><span class="line"> </span><br><span class="line"><span class="comment">//按照下单时间排序，查询第3和第4个订单的顾客姓名和下单时间</span></span><br><span class="line">orders.stream()</span><br><span class="line">        .sorted(comparing(Order::getPlacedAt))</span><br><span class="line">        .map(order -&gt; order.getCustomerName() + <span class="string">"@"</span> + order.getPlacedAt())</span><br><span class="line">        .skip(<span class="number">2</span>).limit(<span class="number">2</span>).forEach(System.out::println);</span><br></pre></td></tr></table></figure>
+<h3 id="collect"><a href="#collect" class="headerlink" title="collect"></a>collect</h3><p>collect 是收集操作，对流进行终结（终止）操作，把流导出为我们需要的数据结构。“终结”是指，导出后，无法再串联使用其他中间操作，比如 filter、map、flatmap、sorted、distinct、limit、skip。<br>接下来，通过 6 个例子，来演示下几种比较常用的 collect 操作：<br>1、实现了字符串拼接操作，生成一定位数的随机字符串。<br>2、通过 Collectors.toSet 静态方法收集为 Set 去重，得到去重后的下单用户，再通过 Collectors.joining 静态方法实现字符串拼接。<br>3、通过 Collectors.toCollection 静态方法获得指定类型的集合，比如把 List转换为 LinkedList。<br>4、通过 Collectors.toMap 静态方法将对象快速转换为 Map，Key 是订单 ID、Value 是下单用户名。<br>5、通过 Collectors.toMap 静态方法将对象转换为 Map。Key 是下单用户名，Value 是下单时间，一个用户可能多次下单，所以直接在这里进行了合并，只获取最近一次的下单时间。<br>6、使用 Collectors.summingInt 方法对商品数量求和，再使用 Collectors.averagingInt 方法对结果求平均值，以统计所有订单平均购买的商品数量。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//生成一定位数的随机字符串</span></span><br><span class="line">System.out.println(random.ints(<span class="number">48</span>, <span class="number">122</span>)</span><br><span class="line">    .filter(i -&gt; (i &lt; <span class="number">57</span> || i &gt; <span class="number">65</span>) &amp;&amp; (i &lt; <span class="number">90</span> || i &gt; <span class="number">97</span>))</span><br><span class="line">    .mapToObj(i -&gt; (<span class="keyword">char</span>) i)</span><br><span class="line">    .limit(<span class="number">20</span>)</span><br><span class="line">    .collect(StringBuilder::<span class="keyword">new</span>, StringBuilder::append, StringBuilder::append)</span><br><span class="line">    .toString());</span><br><span class="line"> </span><br><span class="line"><span class="comment">//所有下单的用户，使用toSet去重后实现字符串拼接</span></span><br><span class="line">System.out.println(orders.stream()</span><br><span class="line">    .map(order -&gt; order.getCustomerName()).collect(toSet())</span><br><span class="line">    .stream().collect(joining(<span class="string">","</span>, <span class="string">"["</span>, <span class="string">"]"</span>)));</span><br><span class="line"> </span><br><span class="line"><span class="comment">//用toCollection收集器指定集合类型</span></span><br><span class="line">System.out.println(orders.stream().limit(<span class="number">2</span>).collect(toCollection(LinkedList::<span class="keyword">new</span>)).getClass());</span><br><span class="line"> </span><br><span class="line"><span class="comment">//使用toMap获取订单ID+下单用户名的Map</span></span><br><span class="line">orders.stream()</span><br><span class="line">    .collect(toMap(Order::getId, Order::getCustomerName))</span><br><span class="line">    .entrySet().forEach(System.out::println);</span><br><span class="line"> </span><br><span class="line"><span class="comment">//使用toMap获取下单用户名+最近一次下单时间的Map</span></span><br><span class="line">orders.stream()</span><br><span class="line">    .collect(toMap(Order::getCustomerName, Order::getPlacedAt, (x, y) -&gt; x.isAfter(y) ? x : y))</span><br><span class="line">    .entrySet().forEach(System.out::println);</span><br><span class="line"> </span><br><span class="line"><span class="comment">//订单平均购买的商品数量</span></span><br><span class="line">System.out.println(orders.stream().collect(averagingInt(order -&gt;</span><br><span class="line">    order.getOrderItemList().stream()</span><br><span class="line">            .collect(summingInt(OrderItem::getProductQuantity)))));</span><br></pre></td></tr></table></figure>
+<p>下面为有关Collectors的静态方法：</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><strong>方法</strong></th>
+<th><strong>返回类型</strong></th>
+<th><strong>作用</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>toList</td>
+<td>List<T></td>
+<td>把流中的元素收集成为一个List</td>
+</tr>
+<tr>
+<td>toSet</td>
+<td>Set<T></td>
+<td>把流中的元素收集成为一个Set,去重</td>
+</tr>
+<tr>
+<td>toCollection</td>
+<td>Collection<T></td>
+<td>把流中的元素收集成为指定的集合</td>
+</tr>
+<tr>
+<td>counting</td>
+<td>Long</td>
+<td>计算流中的元素个数</td>
+</tr>
+<tr>
+<td>summingInt</td>
+<td>Integer</td>
+<td>对流中的某个整数属性求和</td>
+</tr>
+<tr>
+<td>averagingInt</td>
+<td>Double</td>
+<td>对流中元素的某个整数属性求平均值</td>
+</tr>
+<tr>
+<td>joining</td>
+<td>String</td>
+<td>连接流中元素toString后的字符串</td>
+</tr>
+<tr>
+<td>minBy</td>
+<td>Optional<T></td>
+<td>使用指定的比较器选出最小元素</td>
+</tr>
+<tr>
+<td>maxBy</td>
+<td>Optional<T></td>
+<td>使用指定的比较器选出最大元素</td>
+</tr>
+<tr>
+<td>collectingAndThen</td>
+<td>根据收集器的返回</td>
+<td>包裹另一个收集器，对结果进行转换</td>
+</tr>
+<tr>
+<td>groupingBy</td>
+<td>Map&lt;K, List<T>&gt;</td>
+<td>根据元素的某个属性值对元素进行分组，属性值作为key</td>
+</tr>
+<tr>
+<td>partitioningBy</td>
+<td>Map&lt;Boolean, List<T>&gt;</td>
+<td>根据流中元素应用谓词的结果，将元素分为true和false两个区</td>
+</tr>
+</tbody></table>
+<h3 id="groupBy"><a href="#groupBy" class="headerlink" title="groupBy"></a>groupBy</h3><p>groupBy 是分组统计操作，类似 SQL 中的 group by 子句。它和后面介绍的 partitioningBy 都是特殊的收集器，同样也是终结操作。<br>以下的8个例子帮助理解：<br>1、按照用户名分组，使用 Collectors.counting 方法统计每个人的下单数量，再按照下单数量倒序输出。<br>2、按照用户名分组，使用 Collectors.summingDouble 方法统计订单总金额，再按总金额倒序输出。<br>3、按照用户名分组，使用两次 Collectors.summingInt 方法统计商品采购数量，再按总数量倒序输出。<br>4、统计被采购最多的商品。先通过 flatMap 把订单转换为商品，然后把商品名作为 Key、Collectors.summingInt 作为 Value 分组统计采购数量，再按 Value 倒序获取第一个 Entry，最后查询 Key 就得到了售出最多的商品。<br>5、同样统计采购最多的商品。相比第四个案例排序 Map 的方式，这次直接使用 Collectors.maxBy 收集器获得最大的 Entry。<br>6、按照用户名分组，统计用户下的金额最高的订单。Key 是用户名，Value 是 Order，直接通过 Collectors.maxBy 方法拿到金额最高的订单，然后通过 collectingAndThen 实现 Optional.get 的内容提取，最后遍历 Key/Value 即可。<br>7、根据下单年月分组统计订单 ID 列表。Key 是格式化成年月后的下单时间，Value 直接通过 Collectors.mapping 方法进行了转换，把订单列表转换为订单 ID 构成的 List。<br>8、根据下单年月 + 用户名两次分组统计订单 ID 列表，相比上一个案例多了一次分组操作，第二次分组是按照用户名进行分组。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//按照用户名分组，统计下单数量</span></span><br><span class="line">System.out.println(orders.stream().collect(groupingBy(Order::getCustomerName, counting()))</span><br><span class="line">        .entrySet().stream().sorted(Map.Entry.&lt;String, Long&gt;comparingByValue().reversed()).collect(toList()));</span><br><span class="line"> </span><br><span class="line"><span class="comment">//按照用户名分组，统计订单总金额</span></span><br><span class="line">System.out.println(orders.stream().collect(groupingBy(Order::getCustomerName, summingDouble(Order::getTotalPrice)))</span><br><span class="line">        .entrySet().stream().sorted(Map.Entry.&lt;String, Double&gt;comparingByValue().reversed()).collect(toList()));</span><br><span class="line"> </span><br><span class="line"><span class="comment">//按照用户名分组，统计商品采购数量</span></span><br><span class="line">System.out.println(orders.stream().collect(groupingBy(Order::getCustomerName,</span><br><span class="line">        summingInt(order -&gt; order.getOrderItemList().stream()</span><br><span class="line">                .collect(summingInt(OrderItem::getProductQuantity)))))</span><br><span class="line">        .entrySet().stream().sorted(Map.Entry.&lt;String, Integer&gt;comparingByValue().reversed()).collect(toList()));</span><br><span class="line"> </span><br><span class="line"><span class="comment">//统计最受欢迎的商品，倒序后取第一个</span></span><br><span class="line">orders.stream()</span><br><span class="line">        .flatMap(order -&gt; order.getOrderItemList().stream())</span><br><span class="line">        .collect(groupingBy(OrderItem::getProductName, summingInt(OrderItem::getProductQuantity)))</span><br><span class="line">        .entrySet().stream()</span><br><span class="line">        .sorted(Map.Entry.&lt;String, Integer&gt;comparingByValue().reversed())</span><br><span class="line">        .map(Map.Entry::getKey)</span><br><span class="line">        .findFirst()</span><br><span class="line">        .ifPresent(System.out::println);</span><br><span class="line"> </span><br><span class="line"><span class="comment">//统计最受欢迎的商品的另一种方式，直接利用maxBy</span></span><br><span class="line">orders.stream()</span><br><span class="line">        .flatMap(order -&gt; order.getOrderItemList().stream())</span><br><span class="line">        .collect(groupingBy(OrderItem::getProductName, summingInt(OrderItem::getProductQuantity)))</span><br><span class="line">        .entrySet().stream()</span><br><span class="line">        .collect(maxBy(Map.Entry.comparingByValue()))</span><br><span class="line">        .map(Map.Entry::getKey)</span><br><span class="line">        .ifPresent(System.out::println);</span><br><span class="line"> </span><br><span class="line"><span class="comment">//按照用户名分组，选用户下的总金额最大的订单</span></span><br><span class="line">orders.stream().collect(groupingBy(Order::getCustomerName, collectingAndThen(maxBy(comparingDouble(Order::getTotalPrice)), Optional::get)))</span><br><span class="line">        .forEach((k, v) -&gt; System.out.println(k + <span class="string">"#"</span> + v.getTotalPrice() + <span class="string">"@"</span> + v.getPlacedAt()));</span><br><span class="line"> </span><br><span class="line"><span class="comment">//根据下单年月分组，统计订单ID列表</span></span><br><span class="line">System.out.println(orders.stream().collect</span><br><span class="line">        (groupingBy(order -&gt; order.getPlacedAt().format(DateTimeFormatter.ofPattern(<span class="string">"yyyyMM"</span>)),</span><br><span class="line">                mapping(order -&gt; order.getId(), toList()))));</span><br><span class="line"> </span><br><span class="line"><span class="comment">//根据下单年月+用户名两次分组，统计订单ID列表</span></span><br><span class="line">System.out.println(orders.stream().collect</span><br><span class="line">        (groupingBy(order -&gt; order.getPlacedAt().format(DateTimeFormatter.ofPattern(<span class="string">"yyyyMM"</span>)),</span><br><span class="line">                groupingBy(order -&gt; order.getCustomerName(),</span><br><span class="line">                        mapping(order -&gt; order.getId(), toList())))));</span><br></pre></td></tr></table></figure>
+<h3 id="partitionBy"><a href="#partitionBy" class="headerlink" title="partitionBy"></a>partitionBy</h3><p>partitioningBy 用于分区，分区是特殊的分组，只有 true 和 false 两组。比如，把用户按照是否下单进行分区，给 partitioningBy 方法传入一个 Predicate 作为数据分区的区分，输出是 Map&lt;boolean, list<T>&gt;;<br>partitioningBy 配合 anyMatch，可以把用户分为下过订单和没下过订单两组：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//根据是否有下单记录进行分区</span></span><br><span class="line">System.out.println(Customer.getData().stream().collect(</span><br><span class="line">        partitioningBy(customer -&gt; orders.stream().mapToLong(Order::getCustomerId)</span><br><span class="line">                .anyMatch(id -&gt; id == customer.getId()))));</span><br></pre></td></tr></table></figure>
+<h2 id="三、一些思考"><a href="#三、一些思考" class="headerlink" title="三、一些思考"></a>三、一些思考</h2><p>1、以下两个操作的性能比较？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//计算所有订单商品数量</span></span><br><span class="line"><span class="comment">//通过两次遍历实现</span></span><br><span class="line">LongAdder longAdder = <span class="keyword">new</span> LongAdder();</span><br><span class="line">orders.stream().forEach(order -&gt;</span><br><span class="line">        order.getOrderItemList().forEach(orderItem -&gt; longAdder.add(orderItem.getProductQuantity())));</span><br><span class="line"> </span><br><span class="line"><span class="comment">//使用两次mapToLong+sum方法实现</span></span><br><span class="line">orders.stream()</span><br><span class="line">        .mapToLong(order -&gt; order.getOrderItemList().stream().mapToLong(OrderItem::getProductQuantity).sum())</span><br><span class="line">        .sum();</span><br></pre></td></tr></table></figure>
+<p>2、如果仅有2条数据，skip跳过两条后取数据如果取不到会报错嘛？<br>例子如下，order会生成10条数据，这里直接跳过20条，结果为[]</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">List&lt;String&gt; results = orders.stream()</span><br><span class="line">                .sorted(comparing(Order::getPlacedAt))</span><br><span class="line">                .map(order -&gt; order.getCustomerName() + <span class="string">"@"</span> + order.getPlacedAt())</span><br><span class="line">                .skip(<span class="number">20</span>).limit(<span class="number">2</span>).collect(toList());</span><br><span class="line">System.out.println(results);<span class="comment">// []</span></span><br></pre></td></tr></table></figure>
+
+<p>3、关于distinct去重，是否可以对有相同属性内容的不同对象去重?<br>写了个例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 产品2</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> LiuZiyu</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@date</span> 2023/03/18 18:21</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Product2</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Long id;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> Double price;</span><br><span class="line">    <span class="keyword">private</span> Product product;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Product2 product1 = <span class="keyword">new</span> Product2(<span class="number">1L</span>, <span class="string">"橘子"</span>, <span class="number">33.0</span>, <span class="keyword">new</span> Product(<span class="number">1L</span>, <span class="string">"橘子"</span>, <span class="number">33.0</span>));</span><br><span class="line">    Product2 product2 = <span class="keyword">new</span> Product2(<span class="number">1L</span>, <span class="string">"橘子"</span>, <span class="number">33.0</span>, <span class="keyword">new</span> Product(<span class="number">1L</span>, <span class="string">"橘子"</span>, <span class="number">33.0</span>));<span class="comment">// 和第一条内容一致</span></span><br><span class="line">    Product2 product3 = <span class="keyword">new</span> Product2(<span class="number">2L</span>, <span class="string">"香蕉"</span>, <span class="number">33.0</span>, <span class="keyword">new</span> Product(<span class="number">1L</span>, <span class="string">"橘子"</span>, <span class="number">33.0</span>));</span><br><span class="line">    Product2 product4 = <span class="keyword">new</span> Product2(<span class="number">3L</span>, <span class="string">"苹果"</span>, <span class="number">33.0</span>, <span class="keyword">new</span> Product(<span class="number">1L</span>, <span class="string">"橘子"</span>, <span class="number">33.0</span>));</span><br><span class="line">    Product2 product5 = <span class="keyword">new</span> Product2(<span class="number">4L</span>, <span class="string">"樱桃"</span>, <span class="number">33.0</span>, <span class="keyword">new</span> Product(<span class="number">1L</span>, <span class="string">"橘子"</span>, <span class="number">33.0</span>));</span><br><span class="line"> </span><br><span class="line">    List&lt;Product2&gt; list = Lists.newArrayList();</span><br><span class="line">    list.add(product1);</span><br><span class="line">    list.add(product2);</span><br><span class="line">    list.add(product3);</span><br><span class="line">    list.add(product4);</span><br><span class="line">    list.add(product5);</span><br><span class="line"> </span><br><span class="line">    List&lt;Product2&gt; distinctList = list.stream().distinct().collect(toList());</span><br><span class="line">    System.out.println(JsonUtil.toString(distinctList));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结果：相同属性内容的对象可以进行去重</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[&#123;<span class="attr">"id"</span>:<span class="number">1</span>,<span class="attr">"name"</span>:<span class="string">"橘子"</span>,<span class="attr">"price"</span>:<span class="number">33.0</span>,<span class="attr">"product"</span>:&#123;<span class="attr">"id"</span>:<span class="number">1</span>,<span class="attr">"name"</span>:<span class="string">"橘子"</span>,<span class="attr">"price"</span>:<span class="number">33.0</span>&#125;&#125;,&#123;<span class="attr">"id"</span>:<span class="number">2</span>,<span class="attr">"name"</span>:<span class="string">"香蕉"</span>,<span class="attr">"price"</span>:<span class="number">33.0</span>,<span class="attr">"product"</span>:&#123;<span class="attr">"id"</span>:<span class="number">1</span>,<span class="attr">"name"</span>:<span class="string">"橘子"</span>,<span class="attr">"price"</span>:<span class="number">33.0</span>&#125;&#125;,&#123;<span class="attr">"id"</span>:<span class="number">3</span>,<span class="attr">"name"</span>:<span class="string">"苹果"</span>,<span class="attr">"price"</span>:<span class="number">33.0</span>,<span class="attr">"product"</span>:&#123;<span class="attr">"id"</span>:<span class="number">1</span>,<span class="attr">"name"</span>:<span class="string">"橘子"</span>,<span class="attr">"price"</span>:<span class="number">33.0</span>&#125;&#125;,&#123;<span class="attr">"id"</span>:<span class="number">4</span>,<span class="attr">"name"</span>:<span class="string">"樱桃"</span>,<span class="attr">"price"</span>:<span class="number">33.0</span>,<span class="attr">"product"</span>:&#123;<span class="attr">"id"</span>:<span class="number">1</span>,<span class="attr">"name"</span>:<span class="string">"橘子"</span>,<span class="attr">"price"</span>:<span class="number">33.0</span>&#125;&#125;]</span><br></pre></td></tr></table></figure>
+
+<p>但是！如果把实体类的@Data去掉就不能去重了<br>为啥呢？<br>我们知道distinct判重使用的Object.equals方法，默认情况下，equals比较的是两个对象的引用地址是否相同，对象的地址不同就不可能去重，能够去重是因为@Data重写了equals方法，这个方法会比较对象的属性是否相等，所以才能去重成功。（@Data是Lombok库中的一个注解，用于自动生成Java类的getter、setter、equals()、hashCode()、toString()等方法。如果我们在一个类上使用了@Data注解，equals()方法会自动生成并比较所有的字段，而不是比较对象的引用是否相等）</p>
+<p>但是还需要注意，如果在派生子类上用@Data注解，会有个提示：<br><img src="https://cdn.nlark.com/yuque/0/2023/png/564594/1679468050700-fa5fa73d-902c-4016-afb3-990890a32b59.png#averageHue=%23474c4f&clientId=u87e9785a-e0b7-4&from=ui&id=u26678f6b&name=image2023-3-21_11-27-2.png&originHeight=215&originWidth=654&originalType=binary&ratio=1.25&rotation=0&showTitle=false&size=21829&status=done&style=none&taskId=u68cfd75a-db02-423c-acfb-caaf2baee76&title=" alt="image2023-3-21_11-27-2.png"><br>大致意思是默认重写生成子类的equals和hashCode方法，不会包含或者考虑父类的属性。如果这是我们想要的操作，建议加上@EqualsAndHashCode(callSuper = false)注解。<br>也就是说，用@EqualsAndHashCode(callSuper = false)时，在用equals比较时仅会比较子类的内容是否相同，不会管父类是否一致，如果改成@EqualsAndHashCode(callSuper = true),在比较时就会连同父类属性一起比较。可以参考这篇：<a href="https://juejin.cn/post/7055571573050179620" target="_blank" rel="noopener">https://juejin.cn/post/7055571573050179620</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2023/03/23/Java8%20Stream%E6%B5%81%E6%93%8D%E4%BD%9C%E6%80%BB%E7%BB%93/" data-id="clfkizvcy0000o4vbfr7eduvc" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2023/03/23/ThreadPoolExecutor%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%8B%92%E7%BB%9D%E7%AD%96%E7%95%A5/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          ThreadPoolExecutor的四种拒绝策略
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2022/07/11/%E5%B9%82%E7%AD%89%E6%80%A7/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">幂等性</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">March 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">July 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">December 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">October 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/09/">September 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">August 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">July 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/10/">October 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/03/23/ThreadPoolExecutor%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%8B%92%E7%BB%9D%E7%AD%96%E7%95%A5/">ThreadPoolExecutor的四种拒绝策略</a>
+          </li>
+        
+          <li>
+            <a href="/2023/03/23/Java8%20Stream%E6%B5%81%E6%93%8D%E4%BD%9C%E6%80%BB%E7%BB%93/">Java8 Stream流操作总结</a>
+          </li>
+        
+          <li>
+            <a href="/2022/07/11/%E5%B9%82%E7%AD%89%E6%80%A7/">幂等性</a>
+          </li>
+        
+          <li>
+            <a href="/2021/12/20/%E3%80%8A%E4%B8%96%E7%95%8C%E5%B0%BD%E5%A4%B4%E7%9A%84%E5%92%96%E5%95%A1%E9%A6%86%E3%80%8B/">《世界尽头的咖啡馆》</a>
+          </li>
+        
+          <li>
+            <a href="/2021/10/18/%E9%87%8D%E6%96%B0%E5%87%BA%E5%8F%91/">重新出发</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

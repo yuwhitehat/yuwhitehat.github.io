@@ -7,15 +7,15 @@
   
   <title>ThreadPoolExecutor的四种拒绝策略 | YU</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Java 提供的线程池相关的工具类中，最核心的是 ThreadPoolExecutor，我们先了解一下线程池默认的工作行为。  不会初始化核心线程（可定义），而是有任务来了才创建工作线程； 当核心线程满了之后不会立即扩容线程池，而是把任务堆积到工作队列（可定义）中； 当工作队列满了后扩容线程池，一直到达到最大线程数（可定义）为止； 如果队列已满且达到了最大线程后还有任务进来，按照拒绝策略处理（可定">
+  <meta name="description" content="ThreadPoolExecutor介绍Java 提供的线程池相关的工具类中，最核心的是 ThreadPoolExecutor，我们先了解一下线程池默认的工作行为。  不会初始化核心线程（可定义），而是有任务来了才创建工作线程； 当核心线程满了之后不会立即扩容线程池，而是把任务堆积到工作队列（可定义）中； 当工作队列满了后扩容线程池，一直到达到最大线程数（可定义）为止； 如果队列已满且达到了最大线">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ThreadPoolExecutor的四种拒绝策略">
 <meta property="og:url" content="http://yoursite.com/2023/03/23/ThreadPoolExecutor%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%8B%92%E7%BB%9D%E7%AD%96%E7%95%A5/index.html">
 <meta property="og:site_name" content="YU">
-<meta property="og:description" content="Java 提供的线程池相关的工具类中，最核心的是 ThreadPoolExecutor，我们先了解一下线程池默认的工作行为。  不会初始化核心线程（可定义），而是有任务来了才创建工作线程； 当核心线程满了之后不会立即扩容线程池，而是把任务堆积到工作队列（可定义）中； 当工作队列满了后扩容线程池，一直到达到最大线程数（可定义）为止； 如果队列已满且达到了最大线程后还有任务进来，按照拒绝策略处理（可定">
+<meta property="og:description" content="ThreadPoolExecutor介绍Java 提供的线程池相关的工具类中，最核心的是 ThreadPoolExecutor，我们先了解一下线程池默认的工作行为。  不会初始化核心线程（可定义），而是有任务来了才创建工作线程； 当核心线程满了之后不会立即扩容线程池，而是把任务堆积到工作队列（可定义）中； 当工作队列满了后扩容线程池，一直到达到最大线程数（可定义）为止； 如果队列已满且达到了最大线">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-03-23T02:38:53.000Z">
-<meta property="article:modified_time" content="2023-03-23T02:54:35.601Z">
+<meta property="article:modified_time" content="2023-03-23T02:58:33.713Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -92,7 +92,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Java 提供的线程池相关的工具类中，最核心的是 ThreadPoolExecutor，我们先了解一下线程池默认的工作行为。</p>
+        <h2 id="ThreadPoolExecutor介绍"><a href="#ThreadPoolExecutor介绍" class="headerlink" title="ThreadPoolExecutor介绍"></a><strong>ThreadPoolExecutor介绍</strong></h2><p>Java 提供的线程池相关的工具类中，最核心的是 ThreadPoolExecutor，我们先了解一下线程池默认的工作行为。</p>
 <ul>
 <li>不会初始化核心线程（可定义），而是有任务来了才创建工作线程；</li>
 <li>当核心线程满了之后不会立即扩容线程池，而是把任务堆积到工作队列（可定义）中；</li>
@@ -135,7 +135,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2023/03/23/ThreadPoolExecutor%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%8B%92%E7%BB%9D%E7%AD%96%E7%95%A5/" data-id="clfkitt9w0003isvbeqhnb3l3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2023/03/23/ThreadPoolExecutor%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%8B%92%E7%BB%9D%E7%AD%96%E7%95%A5/" data-id="clfkizvdq0006o4vb2cty2bgz" class="article-share-link">Share</a>
       
       
     </footer>
@@ -145,9 +145,9 @@
 <nav id="article-nav">
   
   
-    <a href="/2023/03/23/Stream%E6%B5%81%E6%93%8D%E4%BD%9C%E6%80%BB%E7%BB%93/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2023/03/23/Java8%20Stream%E6%B5%81%E6%93%8D%E4%BD%9C%E6%80%BB%E7%BB%93/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Stream流操作总结</div>
+      <div class="article-nav-title">Java8 Stream流操作总结</div>
     </a>
   
 </nav>
@@ -188,7 +188,7 @@
           </li>
         
           <li>
-            <a href="/2023/03/23/Stream%E6%B5%81%E6%93%8D%E4%BD%9C%E6%80%BB%E7%BB%93/">Stream流操作总结</a>
+            <a href="/2023/03/23/Java8%20Stream%E6%B5%81%E6%93%8D%E4%BD%9C%E6%80%BB%E7%BB%93/">Java8 Stream流操作总结</a>
           </li>
         
           <li>

@@ -5,13 +5,17 @@
   
 
   
-  <title>YU</title>
+  <title>ThreadPoolExecutor的四种拒绝策略 | YU</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="YU">
-<meta property="og:url" content="http://yoursite.com/index.html">
+  <meta name="description" content="Java 提供的线程池相关的工具类中，最核心的是 ThreadPoolExecutor，我们先了解一下线程池默认的工作行为。  不会初始化核心线程（可定义），而是有任务来了才创建工作线程； 当核心线程满了之后不会立即扩容线程池，而是把任务堆积到工作队列（可定义）中； 当工作队列满了后扩容线程池，一直到达到最大线程数（可定义）为止； 如果队列已满且达到了最大线程后还有任务进来，按照拒绝策略处理（可定">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ThreadPoolExecutor的四种拒绝策略">
+<meta property="og:url" content="http://yoursite.com/2023/03/23/ThreadPoolExecutor%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%8B%92%E7%BB%9D%E7%AD%96%E7%95%A5/index.html">
 <meta property="og:site_name" content="YU">
+<meta property="og:description" content="Java 提供的线程池相关的工具类中，最核心的是 ThreadPoolExecutor，我们先了解一下线程池默认的工作行为。  不会初始化核心线程（可定义），而是有任务来了才创建工作线程； 当核心线程满了之后不会立即扩容线程池，而是把任务堆积到工作队列（可定义）中； 当工作队列满了后扩容线程池，一直到达到最大线程数（可定义）为止； 如果队列已满且达到了最大线程后还有任务进来，按照拒绝策略处理（可定">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-03-23T02:38:53.000Z">
+<meta property="article:modified_time" content="2023-03-23T02:54:35.601Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
   
@@ -66,9 +70,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-ThreadPoolExecutor的四种拒绝策略" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-ThreadPoolExecutor的四种拒绝策略" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2023/03/23/ThreadPoolExecutor%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%8B%92%E7%BB%9D%E7%AD%96%E7%95%A5/" class="article-date">
   <time datetime="2023-03-23T02:38:53.000Z" itemprop="datePublished">2023-03-23</time>
@@ -81,8 +83,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2023/03/23/ThreadPoolExecutor%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%8B%92%E7%BB%9D%E7%AD%96%E7%95%A5/">ThreadPoolExecutor的四种拒绝策略</a>
+    <h1 class="article-title" itemprop="name">
+      ThreadPoolExecutor的四种拒绝策略
     </h1>
   
 
@@ -139,426 +141,19 @@
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="java8-Stream流操作总结" class="article article-type-java8" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2023/03/23/Stream%E6%B5%81%E6%93%8D%E4%BD%9C%E6%80%BB%E7%BB%93/" class="article-date">
-  <time datetime="2023-03-23T02:37:37.000Z" itemprop="datePublished">2023-03-23</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2023/03/23/Stream%E6%B5%81%E6%93%8D%E4%BD%9C%E6%80%BB%E7%BB%93/">Stream流操作总结</a>
-    </h1>
+    <a href="/2023/03/23/Stream%E6%B5%81%E6%93%8D%E4%BD%9C%E6%80%BB%E7%BB%93/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Stream流操作总结</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2023/03/23/Stream%E6%B5%81%E6%93%8D%E4%BD%9C%E6%80%BB%E7%BB%93/" data-id="clfkitta10005isvbdfct8cmt" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
   
 </article>
-
-
-  
-    <article id="post-幂等性" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2022/07/11/%E5%B9%82%E7%AD%89%E6%80%A7/" class="article-date">
-  <time datetime="2022-07-11T08:56:44.000Z" itemprop="datePublished">2022-07-11</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/07/11/%E5%B9%82%E7%AD%89%E6%80%A7/">幂等性</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="什么是幂等性"><a href="#什么是幂等性" class="headerlink" title="什么是幂等性"></a>什么是幂等性</h2><p>保证幂等性就是保证同一个请求，不论请求多少次，对资源的作用都是一样的（不是结果一样），也就是保证结果的唯一性。用数学的语言来表达就是：f(x) = f(f(x))。比如，求绝对值的函数，abs(x) = abs(abs(x))。<br>例如这样的一个场景，A系统请求B系统接口创建单据，由于网络超时或者其他可能原因，<br>1、A系统的请求可能还没到达B系统就丢失了<br>2、或者B系统已经收到B系统的请求并且已经创建了单据，但是A系统没有收到B系统的响应结果<br>A系统进行重试的时候，如果是第2种情况，那B系统就有可能再次重复创建单据，这个时候，就对B系统产生了不一样的作用，正常情况下，同一个单据只会创建一次，而由于上述的原因，同一个单据重复创建了两次，说明这个接口需要做幂等性校验。</p>
-<h2 id="如何实现幂等性"><a href="#如何实现幂等性" class="headerlink" title="如何实现幂等性"></a>如何实现幂等性</h2><ol>
-<li>全局ID（SnowFlake）</li>
-</ol>
-<p>每次A系统调用B系统时传一个全局唯一ID，B系统先看是否已有这个全局唯一ID，如果有，说明已经创建了，不需要再次创建。A系统重试时要保证是同一个全局ID。</p>
-<ol start="2">
-<li>先通过分布式锁防止并发，再select、insert保证幂等</li>
-</ol>
-<p>A系统的请求过来以后，B系统先去select是否已有，如果没有再insert，如果有则不做处理，也能保证幂等性，但如果有并发的问题，比如当A系统同时有两个请求过来（比如用户连续点击两次这样的情况），第一个请求还没有insert，第二个请求接着来了，B系统select后发现没有也会进行insert，然后就会insert两条重复数据。所以需要前置条件就是防止并发。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2022/07/11/%E5%B9%82%E7%AD%89%E6%80%A7/" data-id="clfkittac000gisvb2unp4jgx" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-《世界尽头的咖啡馆》" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2021/12/20/%E3%80%8A%E4%B8%96%E7%95%8C%E5%B0%BD%E5%A4%B4%E7%9A%84%E5%92%96%E5%95%A1%E9%A6%86%E3%80%8B/" class="article-date">
-  <time datetime="2021-12-20T09:47:12.000Z" itemprop="datePublished">2021-12-20</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/12/20/%E3%80%8A%E4%B8%96%E7%95%8C%E5%B0%BD%E5%A4%B4%E7%9A%84%E5%92%96%E5%95%A1%E9%A6%86%E3%80%8B/">《世界尽头的咖啡馆》</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>“有一天，我们坐在一段漂流木上，吃着新鲜的芒果，看着海浪冲上美得不可思议的海滩。我们在接近30摄氏度的水中玩人体冲浪，玩一个下午。日落时分，我们心情很放松，看着天空从明亮的蓝色变成粉红、橘红，再到正红。”</p>
-</blockquote>
-<hr>
-<p>想象自己置身于美得不可思议的海滩上，看着天空从明亮的蓝色变成粉红、橘红，再到正红。<br />​<br /><br><a name="YcrxQ"></a></p>
-<h3 id="你为什么来这里？"><a href="#你为什么来这里？" class="headerlink" title="你为什么来这里？"></a>你为什么来这里？</h3><p>因为我不满足，想找出真正令人满足和幸福的事物，也就是自己为什么存在。<br />对我来说，最难的在于如何找到自己真正喜欢的事物，以此才能知道自己存在的意义，书中给了一些指引。</p>
-<blockquote>
-<p>“所以，你的意思是说，人不能刚迈出第一步，就站在原地等待。如果有人真想知道他为什么存在，他就得为自己找出答案。”</p>
-</blockquote>
-<blockquote>
-<p>“体验不同的事物，接触不同的理念，留意自己对各种事物的反应，这些都有助于我们寻找答案。”</p>
-</blockquote>
-<p><a name="Vi4Qm"></a></p>
-<h3 id="你害怕死亡吗？"><a href="#你害怕死亡吗？" class="headerlink" title="你害怕死亡吗？"></a>你害怕死亡吗？</h3><p>害怕死亡的来临是因为还有很多想做的事没有做。</p>
-<blockquote>
-<p>“如果你已经做成想做的事，或者每天都在做想做的事，那就没理由害怕失去做这些事的机会。”</p>
-</blockquote>
-<p><a name="qz8Sb"></a></p>
-<h3 id="你满足吗？"><a href="#你满足吗？" class="headerlink" title="你满足吗？"></a>你满足吗？</h3><blockquote>
-<p>“只有当你弄清自己为什么存在，并且开始为这个存在意义做出实际努力后，你才能感到满足。”</p>
-</blockquote>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2021/12/20/%E3%80%8A%E4%B8%96%E7%95%8C%E5%B0%BD%E5%A4%B4%E7%9A%84%E5%92%96%E5%95%A1%E9%A6%86%E3%80%8B/" data-id="clfkitta6000bisvba5tv0vhr" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-重新出发" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2021/10/18/%E9%87%8D%E6%96%B0%E5%87%BA%E5%8F%91/" class="article-date">
-  <time datetime="2021-10-18T02:51:43.000Z" itemprop="datePublished">2021-10-18</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/10/18/%E9%87%8D%E6%96%B0%E5%87%BA%E5%8F%91/">重新出发</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>总是希望生活有点波澜。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2021/10/18/%E9%87%8D%E6%96%B0%E5%87%BA%E5%8F%91/" data-id="clfkittaf000lisvbecxh0oyl" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-早上好" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2021/10/12/%E6%97%A9%E4%B8%8A%E5%A5%BD/" class="article-date">
-  <time datetime="2021-10-12T01:44:48.000Z" itemprop="datePublished">2021-10-12</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/10/12/%E6%97%A9%E4%B8%8A%E5%A5%BD/">早上好</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>今天阳光很好，是不是？</p>
-<p>这两天有一种即将可以掌控自己生活的感觉，语言匮乏，不知道怎么准确描述这种感觉，总之，有什么东西在心中要破茧而出，这是比较关键的时间段，两种结果：一是破解而出，获得对自己生活的掌控感；二是那个东西消失，至于消失会带来什么我还不能感知。总之，我期望自己变得更年轻，有更多的好奇心，不断尝试新事物，找到自己真正喜欢的事。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2021/10/12/%E6%97%A9%E4%B8%8A%E5%A5%BD/" data-id="clfkittac000hisvbdfuw1a7f" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-《局外人》" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2021/10/11/%E3%80%8A%E5%B1%80%E5%A4%96%E4%BA%BA%E3%80%8B/" class="article-date">
-  <time datetime="2021-10-11T08:11:57.000Z" itemprop="datePublished">2021-10-11</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/10/11/%E3%80%8A%E5%B1%80%E5%A4%96%E4%BA%BA%E3%80%8B/">《局外人》</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>刚开始读《西西弗神话》时，也许是对很多哲学概念都不了解再加上翻译的问题吧，觉得里面的内容晦涩难懂，偶然看到书后面有一个导读—-在荒诞中弃绝希望，挺身反抗。第一部分介绍背景、体裁与前期准备中，说到：</p>
-<blockquote>
-<p>在1941年2月21日的一则笔记中，加缪这样写道：“完笔西西弗。三荒诞完成。自由之发端。”</p>
-</blockquote>
-<p>所谓三荒诞指小说《局外人》、戏剧《卡里古拉》以及随笔《西西弗神话》。</p>
-<blockquote>
-<p>在加缪的构思中，“三荒诞”其实从属于“一部作品”，三者密不可分，因此加缪希望三者能够被读者同时了解，</p>
-</blockquote>
-<p>所以我去读了《局外人》，大学某个暑假时读过一次，给我的感觉是主人公的性格有点像村上所喜爱的主人公性格，我也觉得他的性格没什么问题，但故事情节没有太懂。<br>这次再读这本书，发现故事情节其实很好懂，但是这次不怎么喜欢主人公的性格，因为这次我除了把自己代入主人公本身，也通过那些其他身份的角色看待主人公，发现其实在真实生活中，确实没有太多人会喜欢这样的人，因为大家看不到这样的人的内心到底是怎样的。书中主人公的自我内心描述非常多，但是真实生活中没人会看到一个人最真实的内心，当我站在一个和主人公仅有几面之缘的人的角度来看，大概也是愤怒的希望他上断头台吧。但是即使这样看起来孤僻的人，也有喜欢他的女友（而且她的女友也正是被他的这样特别的性格所吸引，即使他妈妈下葬的第二天就和她一起去看电影做爱），也有希望和他做兄弟的人。<br>我认为主人公非常尊重自己的内心，但也是因为他太真实，最终被审判一死。他追求自由，追求真实，他明白人终有一死，所以对什么都无所谓，女友问他希望和她结婚吗，他说都可以，只要你想我们就可以结婚，女友问他如果是别人，也会这样爱别人嘛，他说显而易见会。朋友问他可以和他做兄弟嘛，他说都行….<br>似乎他从未对什么有些许期待和希望，而无视希望，也正是对荒诞的反抗。<br>​</p>
-<p>以上是我自己的理解，这本书给我的感觉不是很好，也许再过几年，经历的事情多点以后再读，会有新的不同的感受。</p>
-<p>补充：对抗世界的荒诞，可以像西西弗那样享受推石上山的过程，我的理解是活在当下，也如罗曼罗兰说的世界上的英雄主义，明白生活的真相也能继续热爱生活。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2021/10/11/%E3%80%8A%E5%B1%80%E5%A4%96%E4%BA%BA%E3%80%8B/" data-id="clfkitta9000disvb58qvgyit" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-GIT分支管理" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2021/10/11/GIT%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/" class="article-date">
-  <time datetime="2021-10-11T02:10:26.000Z" itemprop="datePublished">2021-10-11</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/10/11/GIT%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/">GIT分支管理</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="创建分支"><a href="#创建分支" class="headerlink" title="创建分支"></a>创建分支</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch 会列出所有分支，当前分支前会有一个*</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git branch dev 创建一个分支名为dev</span><br><span class="line">git checkout dev 切换到dev分支</span><br></pre></td></tr></table></figure>
-<p>上面的两条命令可以合并为 一条</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b dev</span><br></pre></td></tr></table></figure>
-<p>实际上，切换分支用<code>switch</code>更科学，因此，GIT提供新的<code>git switch</code>命令来切换分支</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git switch -c dev 创建并切换到新的分支</span><br><span class="line"></span><br><span class="line">git switch master 切换到已有分支</span><br></pre></td></tr></table></figure>
-<h3 id="合并分支"><a href="#合并分支" class="headerlink" title="合并分支"></a>合并分支</h3><p>在<code>dev</code>分支上提交后，切换到<code>master</code>分支，把<code>dev</code>分支合并到<code>master</code></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge dev 合并指定分支到当前分支</span><br></pre></td></tr></table></figure>
-<h3 id="删除分支"><a href="#删除分支" class="headerlink" title="删除分支"></a>删除分支</h3><p>合并完成后，可以放心删除分支了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git branch -d dev </span><br><span class="line"></span><br><span class="line">git branch -D dev 强制删除</span><br><span class="line"></span><br><span class="line">git push origin --delete dev  删除远程分支</span><br></pre></td></tr></table></figure>
-<h3 id="分支管理策略"><a href="#分支管理策略" class="headerlink" title="分支管理策略"></a>分支管理策略</h3><p>通常合并分支时，GIT会用<code>Fast forward</code>模式，但是这种模式下，删除分支后，会丢掉分支信息。如果要强制禁用<code>Fast forward</code>模式，Git就会在merge时生成一个新的<code>commit</code>，这样，从分支历史上就可以看出分支信息。<br>合并<code>dev</code>分支时，用<code>--no-ff</code>参数表示禁用<code>Fast forword</code>模式<br>因为本次合并要创建一个新的commit，所以加上-m参数，把commit描述写进去。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge --no-ff -m &quot;merge with no--ff&quot; dev</span><br></pre></td></tr></table></figure>
-<p>合并后，用<code>git log</code>查看分支历史</p>
-<h3 id="储藏当前工作"><a href="#储藏当前工作" class="headerlink" title="储藏当前工作"></a>储藏当前工作</h3><p>场景：当工作进行到一半，突然有个bug需要紧急修复，但是当前工作没办法提交，就可以用GIT提供的<code>stash</code>功能，把当前工作现场先存储起来。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git stash</span><br></pre></td></tr></table></figure>
-<p>用<code>git status</code>查看工作区是干净的，就可以放心创建分支修复bug。<br>修复完后，<code>git switch dev</code>切换到dev分支，可以用<code>git stash list</code>命令查看之前存的工作现场。然后进行恢复。<br>两种方式：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git stash apply</span><br><span class="line">此命令恢复后，stash内容并没有删除，需要用git stash drop删除</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git stash pop</span><br><span class="line">此命令恢复的同时会将stash内容一同删除</span><br></pre></td></tr></table></figure>
-<h3 id="复制特定提交到另一个分支"><a href="#复制特定提交到另一个分支" class="headerlink" title="复制特定提交到另一个分支"></a>复制特定提交到另一个分支</h3><p>我们只想复制<code>4c805e2 fix bug 101</code>这个提交所做的修改，并不是把整个master分支merge过来。<br>为了方便操作，Git专门提供了一个<code>cherry-pick</code>命令，让我们能复制一个特定的提交到当前分支：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git cherry-pick 4c8052e</span><br></pre></td></tr></table></figure>
-<h3 id="Feature分支"><a href="#Feature分支" class="headerlink" title="Feature分支"></a>Feature分支</h3><p>开发一个新feature，最好新建一个分支；<br>如果要丢弃一个没有被合并过的分支，可以通过<code>git branch -D &lt;name&gt;</code>强行删除。</p>
-<p>参考：<a href="https://www.liaoxuefeng.com/wiki/896043488029600" target="_blank" rel="noopener">https://www.liaoxuefeng.com/wiki/896043488029600</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2021/10/11/GIT%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/" data-id="clfkitt9t0001isvb48xmhwf8" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-GIT时光穿梭" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2021/09/28/GIT%E6%97%B6%E5%85%89%E7%A9%BF%E6%A2%AD/" class="article-date">
-  <time datetime="2021-09-28T07:19:43.000Z" itemprop="datePublished">2021-09-28</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/09/28/GIT%E6%97%B6%E5%85%89%E7%A9%BF%E6%A2%AD/">GIT时光穿梭</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="git-status"><a href="#git-status" class="headerlink" title="git status"></a><code>git status</code></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git status 帮助我们掌握仓库当前的状态</span><br></pre></td></tr></table></figure>
-<h3 id="git-diff"><a href="#git-diff" class="headerlink" title="git diff"></a><code>git diff</code></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff 帮助我们查看具体的改动</span><br></pre></td></tr></table></figure>
-<h3 id="git-log"><a href="#git-log" class="headerlink" title="git log"></a><code>git log</code></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log 可以查看历史记录</span><br></pre></td></tr></table></figure>
-<h3 id="git-reset-hard-HEAD"><a href="#git-reset-hard-HEAD" class="headerlink" title="git reset --hard HEAD^"></a><code>git reset --hard HEAD^</code></h3><p><code>HEAD</code>表示当前版本</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard HEAD^ 表示回退到上一个版本</span><br><span class="line">git reset --hard HEAD^^ 表示回退到上上个版本</span><br><span class="line">...</span><br><span class="line">git reset --hard HEAD~100 表示回退到前100个版本</span><br><span class="line">git reset --hard commit_id 表示到具体的某个版本（commit id表示版本号，是一个SHA1计算出来的一个非常大的数字，用十六进制表示）</span><br></pre></td></tr></table></figure>
-<h3 id="git-reflog"><a href="#git-reflog" class="headerlink" title="git reflog"></a><code>git reflog</code></h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reflog 查看历史命令</span><br></pre></td></tr></table></figure>
-<h3 id="git的工作区和暂存区"><a href="#git的工作区和暂存区" class="headerlink" title="git的工作区和暂存区"></a>git的工作区和暂存区</h3><p>工作区就是能够看到的目录，工作区有一个隐藏目录<code>.git</code>，这个不算工作区，而是Git的版本库。版本库里存放了一个名为<code>stage</code>的暂存区，<br>还有<code>git</code>为我们创建的分支<code>master</code>，以及指向指向<code>master</code>的指针<code>HEAD</code></p>
-<ol>
-<li>在执行<code>git add</code>的命令时，就是将改动的文件放入暂存区</li>
-<li>执行<code>git commit</code>后，会将暂存区的文件添加到当前分支</li>
-</ol>
-<h3 id="git的撤销和修改"><a href="#git的撤销和修改" class="headerlink" title="git的撤销和修改"></a>git的撤销和修改</h3><p>以下三个场景：</p>
-<ol>
-<li>想要撤销工作区的修改时，用命令<code>git checkout --file</code></li>
-<li>当工作区的修改添加到了暂存区，但是想要撤销时，分两步 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> git reset HEAD &lt;file&gt; 用来撤销暂存区的修改（unstage）</span><br><span class="line">git checkout --file 撤销工作区的修改（实际上是用版本库中的版本替换工作区的版本）</span><br></pre></td></tr></table></figure></li>
-<li>当修改已经提交到分支里了，但是没有推送到远程仓库，可以用<code>git reset --hard HEAD^</code> 回退到前一个版本</li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2021/09/28/GIT%E6%97%B6%E5%85%89%E7%A9%BF%E6%A2%AD/" data-id="clfkitt9u0002isvbh9ztb0o7" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-去重" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2021/08/02/%E5%8E%BB%E9%87%8D/" class="article-date">
-  <time datetime="2021-08-02T06:21:12.000Z" itemprop="datePublished">2021-08-02</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/08/02/%E5%8E%BB%E9%87%8D/">去重</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="利用TreeSet去重"><a href="#利用TreeSet去重" class="headerlink" title="利用TreeSet去重"></a>利用TreeSet去重</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 利用TreeSet去重</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> msgReceiverDTOList</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> List&lt;MsgReceiverDTO&gt; <span class="title">distinctByTreeSet</span><span class="params">(List&lt;MsgReceiverDTO&gt; msgReceiverDTOList)</span> </span>&#123;</span><br><span class="line">    Set&lt;MsgReceiverDTO&gt; set = <span class="keyword">new</span> TreeSet&lt;&gt;((o1, o2)-&gt;o1.getEmployeeNumber().compareTo(o2.getEmployeeNumber()));</span><br><span class="line">    set.addAll(msgReceiverDTOList);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> ArrayList&lt;MsgReceiverDTO&gt;(set);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="利用stream流去重"><a href="#利用stream流去重" class="headerlink" title="利用stream流去重"></a>利用stream流去重</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * java8 stream流</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> msgReceiverDTOList</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> List&lt;MsgReceiverDTO&gt; <span class="title">distinctByStream</span><span class="params">(List&lt;MsgReceiverDTO&gt; msgReceiverDTOList)</span> </span>&#123;</span><br><span class="line">    List&lt;MsgReceiverDTO&gt; resultList = msgReceiverDTOList.stream().collect(</span><br><span class="line">            Collectors.collectingAndThen(</span><br><span class="line">                    Collectors.toCollection(() -&gt; <span class="keyword">new</span> TreeSet&lt;&gt;(Comparator.comparing(MsgReceiverDTO::getEmployeeNumber))), ArrayList::<span class="keyword">new</span>)</span><br><span class="line">    );</span><br><span class="line">    <span class="keyword">return</span> resultList;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>collectingAndThen</code> 这个方法的意思是: 将收集的结果转换为另一种类型,因此上面的方法可以理解为,把 <code>new TreeSet&lt;&gt;(Comparator.comparingLong(BookInfoVo::getRecordId))</code>这个<code>set</code>转换为 <code>ArrayList</code></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2021/08/02/%E5%8E%BB%E9%87%8D/" data-id="clfkittab000fisvb6rrifzql" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-
-
-  <nav id="page-nav">
-    
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
-  </nav>
 
 </section>
         

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport" />
+  <title>
+    
+    git和hexo创建博客 丨
+    
+
+    typo
+  </title>
+
+  
+  <link rel="shortcut icon" href="/icon.svg">
+  
+
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  
+  <link id="theme" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.css">
+  <script src="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/highlight.min.js"></script>
+  
+
+  <!-- 字体 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+
+  
+<link rel="stylesheet" href="/css/root.css">
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+<link rel="stylesheet" href="/css/post.css">
+
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+<body>
+  <header class="header">
+  <section class="header-container">
+    <a class="logo" href="/">池主的博客</a>
+    <ul class="nav">
+      
+      <li><a href="/archives">archives</a></li>
+      
+      <li><a href="/about">about</a></li>
+      
+    </ul>
+  </section>
+</header>
+  <main class="main">
+    <article class="post">
+  
+  <div class="post-title">git和hexo创建博客</div>
+  <div class="post-meta">
+    <div class="date">2020 July 6th</div>
+    <div class="tags">
+      
+    </div>
+  </div>
+  
+
+  <main class="post-content"><blockquote>
+<p>“当我们让自己的光芒闪耀，无意中我们也允许了他人散发光芒。一旦我们从自我的恐惧中解放出来，我们的存在， 也会让他人得到解放。”</p>
+</blockquote>
+<h2 id="五分钟创建一个博客">五分钟创建一个博客</h2>
+<ol>
+<li>在GitHub上创建一个仓库，仓库名的格式为 <code>你的github上的username.github.io</code> 这是一个固定格式。</li>
+<li>创建完后找到 <code>setting</code> ，然后找到 <code>GitHub pages</code> ，如下图，我的站点在 <a target="_blank" rel="noopener" href="https://xn--5mqs3fae50w23ytuaq02m/">https://刚刚创建的仓库名/</a> 访问就可以了，自己的博客已经创建成功，可以新建md文件发布新的博客。可能五分钟都不到~</li>
+</ol>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/jpeg/564594/1594443330997-e9767bbb-fed9-4ca1-866c-5baaf20700f9.jpeg#align=left&amp;display=inline&amp;height=462&amp;margin=%5Bobject%20Object%5D&amp;name=image.jpg&amp;originHeight=462&amp;originWidth=1148&amp;size=39017&amp;status=done&amp;style=none&amp;width=1148" alt="image.jpg"></p>
+<ol start="3">
+<li>但是由于界面比较丑，所以要用到 <code>hexo</code> 框架，安装之前需要安装 <code>git</code> 以及 <code>node.js</code> ，可以看官方文档 <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/">hexo安装</a>。</li>
+<li>可以在本地，在命令行输入 <code>hexo init blog</code> ，创建一个博客文件夹blog，之后的步骤可以看下面的命令<strong>8~10</strong>，然后访问博客地址，就会发现变好看了，也可以自己修改一下框架让其更适合自己，用hexo的发布三部曲命令提交。**</li>
+<li>之后可以用 <code>hexo new 新的md文件的名字，比如hexo new hello</code> ,就是创建一个hello.md文件，然后编辑博客内容，用hexo的发布三部曲提交发布。</li>
+</ol>
+<h2 id="使用到的命令">使用到的命令</h2>
+<ol>
+<li>查看是否生成ssh，若没有则为空</li>
+</ol>
+<pre><code class="highlight plaintext">cat ~/.ssh/id\_rsa.pub</code></pre>
+<ol start="2">
+<li>生成ssh的命令</li>
+</ol>
+<pre><code class="highlight plaintext">ssh-keygen -t rsa -b 4096 -C &quot;your\_email@example.com&quot;</code></pre>
+<ol start="3">
+<li>git的全局配置用户名和邮箱，只需配置一次</li>
+</ol>
+<pre><code class="highlight plaintext">git config --global user.name &quot;你的名字&quot;  
+git config --global user.email &quot;你的邮箱&quot;</code></pre>
+<ol start="4">
+<li>克隆仓库到本地</li>
+</ol>
+<pre><code class="highlight plaintext">git clone 仓库地址（用ssh）</code></pre>
+<ol start="5">
+<li>提交三部曲</li>
+</ol>
+<p>注意<code>git push</code>的时候，<code>origin</code>是默认的仓库名，如果有两个远程仓库比如GitHub和gitee，就需要写实际的仓库名。</p>
+<pre><code class="highlight plaintext">第一步 选中所有  
+git add -A  
+或  
+git add .  
+第二步 提交的名称  
+git commit -m &quot;修改的备注名称&quot;  
+第三步 推到远程仓库(以下三种情况)  
+git push origin master(第一次提交)  
+git push (第2~n次提交)  
+git push origin b(提交到分支b)</code></pre>
+<ol start="6">
+<li>抓取远程仓库的所有内容</li>
+</ol>
+<p>在多人协同开发的时候会经常用到，在<code>push</code>之前先<code>git pull</code>是很好的习惯。（本地仓库和远程仓库是一方相对另一方是真子集的时候才能提交）</p>
+<pre><code class="highlight plaintext">git pull</code></pre>
+<ol start="7">
+<li><strong>将本地文件夹提交到远程仓库</strong>时，一般需要先在远程仓库建立一个同名仓库。注意是创建一个空仓库。</li>
+</ol>
+<p>创建完空仓库后，要在本地的同名文件夹下进行git初始化</p>
+<pre><code class="highlight plaintext">git init</code></pre>
+<p>然后绑定远程仓库，初始化的文件夹一般都没有绑定过。而克隆的仓库都绑定过了。注意都是在同名文件夹下。</p>
+<pre><code class="highlight plaintext">查看是否绑定过  
+git remote -v  
+绑定  
+git remote add origin 仓库地址  
+如果绑定错误  
+git remote remove origin</code></pre>
+<ol start="8">
+<li><code>hexo</code> 创建博客文件夹</li>
+</ol>
+<pre><code class="highlight plaintext">hexo init 文件夹名称</code></pre>
+<ol start="9">
+<li>安装发布工具,注意要在博客文件夹里安装</li>
+</ol>
+<pre><code class="highlight plaintext">npm install hexo-deployer-git --save</code></pre>
+<p>在博客文件夹里找到<code>_config.yml</code>文件,配置一下</p>
+<pre><code class="highlight plaintext">theme: landscape  
+deploy:  
+  type: git  
+  repository: 你的GitHub仓库地址(ssh)  
+  branch: master</code></pre>
+<ol start="10">
+<li><code>hexo</code>提交的三个命令</li>
+</ol>
+<pre><code class="highlight plaintext">清除缓存，更快生效  
+hexo clean</code></pre>
+<pre><code class="highlight plaintext">生成新的静态文件，可简写为 hexo g  
+hexo generate</code></pre>
+<pre><code class="highlight plaintext">把生成的文件部署到博客上，可简写为hexo d  
+hexo deploy</code></pre>
+<ol start="11">
+<li><code>hexo</code>创建新博客，下面的命令会创建一个新的md文件，在文件里写好博客，然后利用提交命令发布新博客就可以了。</li>
+</ol>
+<pre><code class="highlight plaintext">hexo new 博客名字</code></pre>
+<ol start="12">
+<li>更换<code>hexo</code>的主题为<code>next</code></li>
+</ol>
+<pre><code class="highlight plaintext">首先克隆仓库到本地博客文件夹下的主题文件夹下  
+git clone next主题的仓库地址 themes/next  
+git clone https://github.com/iissnan/hexo-theme-next themes/next  
+然后在配置文件\_config.yml里更改一下主题的配置  
+theme: next  
+```     
+
+13.  git分支</code></pre>
+<p>创建分支<br>
+git branch dev(分支名)<br>
+切换到新分支，例如dev<br>
+git checkout dev<br>
+命令合并使用，创建分支dev并切换<br>
+git checkout -b dev</p>
+<pre><code class="highlight plaintext">     
+
+14.  安装 `hexo`(注意要先安装`git`以及`node`)</code></pre>
+<p>npm install -g hexo-cli</p>
+<pre><code class="highlight plaintext">     
+15.  克隆分支上的项目到本地</code></pre>
+<p>git clone -b 分支名 仓库地址</p>
+<pre><code></code></pre>
+</main>
+
+</article>
+
+
+<script src="/js/highlight.js"></script>
+
+  </main>
+  <footer class="footer">
+  
+  <span>Copyright © 2024 typo</span>
+  
+</footer>
+  
+<script src="/js/theme.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport" />
+  <title>
+    
+    常用设计模式 丨
+    
+
+    typo
+  </title>
+
+  
+  <link rel="shortcut icon" href="/icon.svg">
+  
+
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  
+  <link id="theme" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-light.css">
+  <script src="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/highlight.min.js"></script>
+  
+
+  <!-- 字体 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap" rel="stylesheet">
+
+  
+<link rel="stylesheet" href="/css/root.css">
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+<link rel="stylesheet" href="/css/post.css">
+
+<meta name="generator" content="Hexo 8.1.2"></head>
+
+<body>
+  <header class="header">
+  <section class="header-container">
+    <a class="logo" href="/">池主的博客</a>
+    <ul class="nav">
+      
+      <li><a href="/archives">archives</a></li>
+      
+      <li><a href="/about">about</a></li>
+      
+    </ul>
+  </section>
+</header>
+  <main class="main">
+    <article class="post">
+  
+  <div class="post-title">常用设计模式</div>
+  <div class="post-meta">
+    <div class="date">2020 September 28th</div>
+    <div class="tags">
+      
+    </div>
+  </div>
+  
+
+  <main class="post-content"><blockquote>
+<p>最困难的时候，也就是离成功不远的时候。—拿破仑</p>
+</blockquote>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/564594/1601214513621-50e37d7a-6a70-4124-a589-aa4b25097b02.png" alt="画板"></p>
+<h2 id="单例模式">单例模式</h2>
+<p>一个班级只能有一个班主任，所以就要保证一个班主任类只有一个实例，单例模式就是为了解决这种问题，<strong>保证一个类仅有一个实例</strong>。</p>
+<p>核心办法就是把构造函数设置为私有 <code>private</code> 的。这意味着除了 <code>ClassMaster</code> 自己，其他任何类都不能实例化 <code>ClassMaster</code> 对象。</p>
+<pre><code class="highlight java"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ClassMaster</span> &#123;
+  <span class="keyword">private</span> String id;
+  <span class="comment">// 班主任名称</span>
+  <span class="keyword">private</span> String name;
+  <span class="keyword">private</span> String gender;
+    
+  <span class="comment">//唯一实例 必须用static修饰符 ，否则会造成递归的严重的错误</span>
+  <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">ClassMaster</span> <span class="variable">instance</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClassMaster</span>();
+    
+  <span class="comment">//将构造函数设置为私有的</span>
+  <span class="keyword">private</span> <span class="title function_">ClassMaster</span><span class="params">()</span> &#123;
+  &#125;
+&#125;</code></pre>
+<p>我们需要增加一个方法允许其他类访问这个单例的实例，因为类 <code>new</code> 出一个实例的目的就是要给其他类使用的。</p>
+<pre><code class="highlight java"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ClassMaster</span> &#123;
+  <span class="keyword">private</span> String id;
+  <span class="comment">// 班主任名称</span>
+  <span class="keyword">private</span> String name;
+  <span class="keyword">private</span> String gender;
+
+  <span class="comment">// 唯一实例</span>
+  <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">ClassMaster</span> <span class="variable">instance</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClassMaster</span>();
+
+  <span class="keyword">private</span> <span class="title function_">ClassMaster</span><span class="params">()</span> &#123;
+  &#125;
+
+  <span class="comment">// 外部类可以通过这个方法访问唯一的实例</span>
+  <span class="keyword">public</span> <span class="keyword">static</span> ClassMaster <span class="title function_">getInstance</span><span class="params">()</span> &#123;
+      <span class="keyword">return</span> instance;
+  &#125;
+&#125;</code></pre>
+<h3 id="spring中的单例思想">spring中的单例思想</h3>
+<p>有时候从技术角度出发为了节省系统资源，在Spring中类变量使用 <code>@Autowried</code> 注解，能够实现自动注入实例对象。任何 <strong>自动</strong> 注入实例对象，默认只有一个实例对象，是单例的。</p>
+<pre><code class="highlight java"><span class="meta">@Autowired</span>
+<span class="keyword">private</span> UsersService usersService;</code></pre>
+<p>Spring 会保证只生成一个 <code>UsersServiceImpl</code> 实例注入到多个 <code>Service</code> 或 <code>Control</code> 中。</p>
+<h2 id="简单工厂模式">简单工厂模式</h2>
+<p>程序中的工厂就是生产 <strong>实例对象</strong> 的地方。</p>
+<h3 id="命名">命名</h3>
+<p>一般来说，工厂类命名为 <code>XXXXFactory</code> ,以 <code>Factory</code> 作为后缀可以提高辨识度，易于理解这个类的作用。</p>
+<p>使用简单工厂完成功能开发时，重点就是要明确 <strong>什么条件下</strong> 创建 <strong>什么实例对象</strong> 的需求逻辑。</p>
+<h3 id="例子">例子</h3>
+<p><strong>需求：</strong></p>
+<p>第二汽车制造厂可以生产“富康牌”轿车以及“爱丽舍”轿车。要求4S店告诉工厂汽车品牌名称即可提取相应的轿车。</p>
+<p><strong>分析：</strong></p>
+<p>我们需要将具体的汽车类抽象出一个接口 <code>Car</code> ，让具体的汽车类实现接口中的方法，让汽车工厂 <code>CarFactory </code> 生产实例对象就可以了。</p>
+<p><strong>类图：</strong></p>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/svg/564594/1601195281591-e2e8d4e5-1df2-4235-bdfc-326ee9ba67a0.svg" alt=""></p>
+<p>注意类图中有一个抽象类 <code>AbstractCar</code> ，这是为了防止代码重复而创建，因为每个汽车的实现类都要写：</p>
+<pre><code class="highlight java"><span class="keyword">private</span> String brand;
+   <span class="keyword">public</span> String <span class="title function_">getBrand</span><span class="params">()</span> &#123;
+       <span class="keyword">return</span> brand;
+   &#125;
+   <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setBrand</span><span class="params">(String brand)</span> &#123;
+       <span class="built_in">this</span>.brand = brand;
+   &#125;</code></pre>
+<p>所以使用抽象类可以避免每个轿车重复定义 <code>brand</code> 属性。轿车类不再直接实现接口，而是继承 <code>AbstractCar</code> ，这样的话</p>
+<ul>
+<li>抽象类存放公共属性和方法</li>
+<li>每个实现类存放自己特有的属性和方法</li>
+</ul>
+<p><strong>代码实现：</strong></p>
+<pre><code class="highlight java"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CarShop</span> &#123;
+    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;
+        <span class="type">CarFactory</span> <span class="variable">carFactory</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">CarFactory</span>();
+        <span class="type">Car</span> <span class="variable">fukang</span> <span class="operator">=</span> carFactory.makeCar(<span class="string">&quot;fukang&quot;</span>);
+        System.out.println(fukang.getBrand());
+
+        <span class="type">Car</span> <span class="variable">elysee</span> <span class="operator">=</span> carFactory.makeCar(<span class="string">&quot;elysee&quot;</span>);
+        System.out.println(elysee.getBrand());
+    &#125;
+&#125;</code></pre>
+<pre><code class="highlight java"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CarFactory</span> &#123;
+    <span class="keyword">public</span> Car <span class="title function_">makeCar</span><span class="params">(String brand)</span> &#123;
+        <span class="type">Car</span> <span class="variable">car</span> <span class="operator">=</span> <span class="literal">null</span>;
+        <span class="keyword">if</span> (<span class="string">&quot;fukang&quot;</span>.equals(brand)) &#123;
+            <span class="type">FuKang</span> <span class="variable">fukang</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FuKang</span>();
+            fukang.setBrand(<span class="string">&quot;富康&quot;</span>);
+            car = fukang;
+        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">&quot;elysee&quot;</span>.equals(brand)) &#123;
+            <span class="type">Elysee</span> <span class="variable">elysee</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Elysee</span>();
+            elysee.setBrand(<span class="string">&quot;爱丽舍&quot;</span>);
+            car = elysee;
+        &#125;
+
+        <span class="keyword">return</span> car;
+    &#125;
+&#125;</code></pre>
+<pre><code class="highlight java"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">Car</span> &#123;
+
+    <span class="keyword">public</span> String <span class="title function_">getBrand</span><span class="params">()</span>;
+&#125;</code></pre>
+<pre><code class="highlight java"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="keyword">class</span> <span class="title class_">AbstractFood</span> <span class="keyword">implements</span> <span class="title class_">Food</span> &#123;
+    
+	<span class="keyword">private</span> String Name;
+    
+    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setName</span><span class="params">(String name)</span> &#123;
+      <span class="built_in">this</span>.name =  name;
+    &#125;
+    
+    <span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span> &#123;
+      <span class="keyword">return</span> name;
+    &#125;   
+&#125;</code></pre>
+<pre><code class="highlight java"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Elysee</span> <span class="keyword">extends</span> <span class="title class_">AbstractFood</span>&#123;
+    
+&#125;</code></pre>
+<pre><code class="highlight java"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">fukang</span> <span class="keyword">extends</span> <span class="title class_">AbstractFood</span>&#123;
+    
+&#125;</code></pre>
+<h2 id="抽象工厂模式">抽象工厂模式</h2>
+<p>简单工厂是将多个产品抽象，使用一个工厂统一创建，抽象工厂的主要作用就是把多个工厂进一步抽象。</p>
+<p>比如水果工厂只生产水果，而饮料工厂只生产饮料，但是超市既有水果也有饮料，这个时候就需要多个工厂搭配。</p>
+<h3 id="类图">类图</h3>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/svg/564594/1601203933934-ebd15de6-aabe-4a92-b1e7-d990824eacc9.svg" alt=""></p>
+<p>进一步抽象出了工厂接口 <code>SnacksFactory</code> 。</p>
+<ol>
+<li>工厂接口规定工厂应该提供的商品种类，所以包含所有工厂的方法。</li>
+</ol>
+<pre><code class="highlight java"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FruitFactory</span> <span class="keyword">implements</span> <span class="title class_">SnacksFactory</span> &#123;
+    <span class="keyword">public</span> Fruit <span class="title function_">getFruit</span><span class="params">(Customer customer)</span> &#123;
+        <span class="type">Fruit</span> <span class="variable">fruit</span> <span class="operator">=</span> <span class="literal">null</span>;
+        <span class="keyword">if</span> (<span class="string">&quot;sweet&quot;</span>.equals(customer.getFlavor())) &#123;
+            fruit = <span class="keyword">new</span> <span class="title class_">Watermelon</span>();
+        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">&quot;acid&quot;</span>.equals(customer.getFlavor())) &#123;
+            fruit = <span class="keyword">new</span> <span class="title class_">Lemon</span>();
+        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="string">&quot;smelly&quot;</span>.equals(customer.getFlavor())) &#123;
+            fruit = <span class="keyword">new</span> <span class="title class_">Durian</span>();
+        &#125;
+        <span class="keyword">return</span> fruit;
+    &#125;
+    <span class="comment">//水果工厂不提供饮料，水果工厂实现工厂接口后，必须实现getDrink()方法，直接返回null即可</span>
+    <span class="keyword">public</span> Drink <span class="title function_">getDrink</span><span class="params">(Customer customer)</span> &#123;
+        <span class="keyword">return</span> <span class="literal">null</span>;
+    &#125;
+&#125;</code></pre>
+<ol start="2">
+<li><code>SnacksFactroyBuilder</code> 称之为 <strong>生产工厂的工厂</strong> ，工厂用来生产产品实例， <code>SnacksFactroyBuilder</code> 用来生产工厂实例。</li>
+</ol>
+<pre><code class="highlight java"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SnacksFactoryBuilder</span> &#123;
+    <span class="keyword">public</span> SnacksFactory <span class="title function_">buildFactory</span><span class="params">(String choice)</span> &#123;
+        <span class="keyword">if</span> (choice.equalsIgnoreCase(<span class="string">&quot;fruit&quot;</span>)) &#123;
+            <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">FruitFactory</span>();
+        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (choice.equalsIgnoreCase(<span class="string">&quot;drink&quot;</span>)) &#123;
+            <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">DrinkFactory</span>();
+        &#125;
+        <span class="keyword">return</span> <span class="literal">null</span>;
+    &#125;
+&#125;</code></pre>
+<h3 id="扩展">扩展</h3>
+<p>不提倡在工厂中定义 <code>static</code> 方法，</p>
+<ol>
+<li>因为复杂场景下，实例方法可以被继承，扩展性较好</li>
+<li>在使用 <code>Spring</code> 框架的时候，可以为 <code>SnacksFactoryBuilder</code> 加上 <code>@Component</code> 注解，可以让框架管理实例：</li>
+</ol>
+<pre><code class="highlight java"><span class="meta">@Component</span>
+<span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SnacksFactoryBuilder</span> &#123;
+    <span class="keyword">public</span> SnacksFactory <span class="title function_">buildFactory</span><span class="params">(String choice)</span> &#123;
+    &#125;
+&#125;</code></pre>
+<pre><code class="highlight java"><span class="meta">@Service</span>
+<span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">XxxxxServiceImpl</span> <span class="keyword">implements</span> <span class="title class_">XxxxxService</span> &#123;
+
+    <span class="meta">@Autowired</span>
+    <span class="keyword">private</span> SnacksFactoryBuilder snacksFactoryBuilder;
+&#125;</code></pre>
+<h2 id="观察者模式">观察者模式</h2>
+<h3 id="例子-2">例子</h3>
+<h4 id="1-被观察类-Observable">1. 被观察类 - Observable</h4>
+<p>比如天气变化的通知，核心是观察天气，先抽象出天气信息对象。</p>
+<pre><code class="highlight java"><span class="keyword">import</span> java.util.Observable;
+<span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">WeatherData</span> <span class="keyword">extends</span> <span class="title class_">Observable</span> &#123;
+    <span class="comment">// 城市</span>
+    <span class="keyword">private</span> String cityName;
+    <span class="comment">// 时间</span>
+    <span class="keyword">private</span> String time;
+    <span class="comment">// 温度</span>
+    <span class="keyword">private</span> String temp;
+    <span class="comment">// 城市固定了就不变了</span>
+    <span class="keyword">public</span> <span class="title function_">WeatherData</span><span class="params">(String cityName)</span> &#123;
+        <span class="built_in">this</span>.cityName = cityName;
+    &#125;
+    <span class="comment">// 打印天气信息</span>
+    <span class="keyword">public</span> String <span class="title function_">toString</span><span class="params">()</span> &#123;
+        <span class="keyword">return</span> cityName + <span class="string">&quot;，&quot;</span> + LocalDate.now().toString() + <span class="string">&quot; &quot;</span> + time + <span class="string">&quot;，气温：&quot;</span> + temp + <span class="string">&quot;摄氏度。&quot;</span>;
+    &#125;
+    <span class="keyword">public</span> String <span class="title function_">getCityName</span><span class="params">()</span> &#123;
+        <span class="keyword">return</span> cityName;
+    &#125;
+    <span class="keyword">public</span> String <span class="title function_">getTime</span><span class="params">()</span> &#123;
+        <span class="keyword">return</span> time;
+    &#125;
+    <span class="keyword">public</span> String <span class="title function_">getTemp</span><span class="params">()</span> &#123;
+        <span class="keyword">return</span> temp;
+    &#125;
+&#125;</code></pre>
+<p>天气对象类继承了 <code>Observable</code> 类，这个类时Java提供的，继承后就表示是核心的、需要被观察的类。还需要注意的是，这个设计不太一样的地方是没有 <code>setter</code> 方法，因为一个 <code>WeatherData</code> 代表一个城市的天气，初始化后就不能改变了。</p>
+<h4 id="2-数据变化后发起通知">2. 数据变化后发起通知</h4>
+<p>什么时间的气温是多少是要被监听的重要信息，所以要在 <code>WeatherData</code> 中增加一个新的方法来专门处理</p>
+<pre><code class="highlight java"><span class="keyword">import</span> java.util.Observable;
+
+<span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">WeatherData</span> <span class="keyword">extends</span> <span class="title class_">Observable</span> &#123;
+    <span class="comment">/**</span>
+<span class="comment">     * 一个城市的气温在某个时刻发生了变化</span>
+<span class="comment">     */</span>
+    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">changeTemp</span><span class="params">(String time, String temp)</span> &#123;
+        <span class="keyword">if</span>(time == <span class="literal">null</span> || temp == <span class="literal">null</span>) &#123;
+            <span class="comment">// 输入数据为空是有问题的，不处理</span>
+            <span class="keyword">return</span>;
+        &#125;
+
+        <span class="comment">// 与原数据不同，说明发生了变化</span>
+        <span class="keyword">if</span>(!time.equals(<span class="built_in">this</span>.time) || !temp.equals(<span class="built_in">this</span>.temp)) &#123;
+            <span class="comment">// 标记变化</span>
+            <span class="built_in">super</span>.setChanged();
+            <span class="built_in">this</span>.time = time;
+            <span class="built_in">this</span>.temp = temp;
+            <span class="comment">// 发出通知 this表示把数据对象自己发送出去</span>
+            <span class="built_in">super</span>.notifyObservers(<span class="built_in">this</span>);
+        &#125;
+    &#125;
+&#125;</code></pre>
+<h4 id="3-谁接收通知-Observer">3. 谁接收通知 - Observer</h4>
+<p><code>Observer</code> 是Java提供的观察者类，实现此接口表示作为观察者。并且要自己实现 <code>update()</code> 方法，方法签名是接口定义好的，属于固定写法。方法的作用就是接收通知。</p>
+<pre><code class="highlight java"><span class="keyword">import</span> java.util.Observable;
+<span class="keyword">import</span> java.util.Observer;
+
+<span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">WeatherObserver</span> <span class="keyword">implements</span> <span class="title class_">Observer</span> &#123;
+    <span class="keyword">private</span> String name;
+
+    <span class="meta">@Override</span>
+    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">update</span><span class="params">(Observable o, Object arg)</span> &#123;
+        <span class="keyword">if</span> (arg <span class="keyword">instanceof</span> WeatherData) &#123;
+            System.out.print(<span class="built_in">this</span>.name + <span class="string">&quot; 观察到天气变化为：&quot;</span>);
+            System.out.println(arg.toString());
+        &#125;
+    &#125;
+
+    <span class="keyword">public</span> String <span class="title function_">getName</span><span class="params">()</span> &#123;
+        <span class="keyword">return</span> name;
+    &#125;
+
+    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setName</span><span class="params">(String name)</span> &#123;
+        <span class="built_in">this</span>.name = name;
+    &#125;
+&#125;</code></pre>
+<h4 id="4-调用">4. 调用</h4>
+<p>观察者可以有多个，观察者对象与被观察者对象谁先 <code>new</code> 出来都可以，但是必须调用 <code>addObserver()</code> 方法把 <strong>观察者对象实例</strong>  添加到 **被观察者实例 ** 中，然后再调用自定义的 <code>changeTemp</code> 方法变更天气，才能触发自动通知。</p>
+<pre><code class="highlight java"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">WeatherTest</span> &#123;
+    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;
+        <span class="comment">// 在天气变化后发邮件的观察者</span>
+        <span class="type">WeatherObserver</span> <span class="variable">w1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">WeatherObserver</span>();
+        w1.setName(<span class="string">&quot;天气邮件观察者&quot;</span>);
+
+        <span class="comment">// 在天气变化后发短信的观察者</span>
+        <span class="type">WeatherObserver</span> <span class="variable">w2</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">WeatherObserver</span>();
+        w2.setName(<span class="string">&quot;天气短信观察者&quot;</span>);
+
+        <span class="comment">// 城市天气数据</span>
+        <span class="type">WeatherData</span> <span class="variable">weatherData</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">WeatherData</span>(<span class="string">&quot;余杭&quot;</span>);
+        <span class="comment">// 添加观察者</span>
+        weatherData.addObserver(w1);
+        weatherData.addObserver(w2);
+
+        <span class="comment">// 气温变化</span>
+        weatherData.changeTemp(<span class="string">&quot;11:08&quot;</span>, <span class="string">&quot;32.8&quot;</span>);
+        <span class="comment">// 气温变化</span>
+        weatherData.changeTemp(<span class="string">&quot;14:46&quot;</span>, <span class="string">&quot;29.3&quot;</span>);
+    &#125;
+&#125;</code></pre>
+<h3 id="总结">总结</h3>
+<p>跟工厂模式不同的是，观察者模式主要描述的是类的行为，而不是如何创建。</p>
+<p>跟工厂模式相同的是，观察者模式让 观察者和被观察者双方的耦合度降到最低。</p>
+</main>
+
+</article>
+
+
+<script src="/js/highlight.js"></script>
+
+  </main>
+  <footer class="footer">
+  
+  <span>Copyright © 2024 typo</span>
+  
+</footer>
+  
+<script src="/js/theme.js"></script>
+
+</body>
+
+</html>
